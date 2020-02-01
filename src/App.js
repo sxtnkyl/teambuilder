@@ -13,6 +13,9 @@ import { DexState } from "./context/globalContext";
 import DexProvider from "./context/globalContext";
 import DexReducer from "./context/dexReducer";
 
+import Dex from "./components/dex/mainDex";
+import TrainerCard from "./components/trainerCard/trainerCard";
+
 const App = () => {
   console.log(DexState);
   return (
@@ -20,15 +23,18 @@ const App = () => {
       <CssBaseline />
       <DexProvider initialState={DexState} reducer={DexReducer}>
         <Container disableGutters maxWidth={false}>
-          {/* <Overlay />
+          <SpringModalMenu />
+          <Shell>
+            <Dex />
+            {/* <TrainerCard /> */}
+            {/* <Overlay />
         <Header />
         <Footer />
         <Route exact path="/trainercard" component={trainerCard} />
         <Route exact path="/" component={Dex} />
         <Route exact path="/teambuilder" component={teamBuilder} />
         <Route exact path="/typecalc" component={typeCalc} /> */}
-          <Shell />
-          <SpringModalMenu />
+          </Shell>
         </Container>
       </DexProvider>
     </MuiThemeProvider>

@@ -59,6 +59,9 @@ const theme = createMuiTheme({
         overflow: "hidden"
       }
     },
+    MuiGrid: {
+      container: { height: "100%" }
+    },
     MuiBackdrop: {
       root: {
         backgroundColor: fade(defaultTheme.palette.secondary.dark, 0.7)

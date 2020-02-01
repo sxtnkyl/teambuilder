@@ -27,14 +27,17 @@ import {
   Divider,
   ButtonGroup,
   Backdrop,
-  Modal
+  Modal,
+  Fade
 } from "@material-ui/core";
 
 import {
   KeyboardArrowLeft,
   KeyboardArrowRight,
   RotateLeftRounded,
-  DoneRounded
+  DoneRounded,
+  ArrowUpward,
+  ArrowDownward
 } from "@material-ui/icons";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -76,5 +79,8 @@ export {
   Divider,
   ButtonGroup,
   Backdrop,
-  Modal
+  Modal,
+  Fade,
+  ArrowUpward,
+  ArrowDownward
 };

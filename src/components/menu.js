@@ -58,7 +58,7 @@ const Fade = React.forwardRef(function Fade(props, ref) {
 });
 
 Fade.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.object,
   in: PropTypes.bool.isRequired
 };
 

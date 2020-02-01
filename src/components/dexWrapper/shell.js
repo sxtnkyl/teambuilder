@@ -39,6 +39,10 @@ const screenInlineShadow =
 const screenShadow =
   "inset hsla(199, 100%, 40%, 1) 0px 0px 2px 2px, hsla(0,0%,15%,  1) 0  0px 0px 4px,  hsla(0,0%,15%, .8) 0 -1px 5px 4px,  hsla(0,0%,0%, .25) 0 -1px 0px 7px,  hsla(0,0%,100%,.7) 0  2px 1px 7px, inset hsla(0,0%, 0%,.15) 0 -5px 6px 2px";
 
+//grid for screen
+const bpLines =
+  "linear-gradient(white 2px, transparent 2px), linear-gradient(90deg, white 2px, transparent 2px), linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px)";
+
 //speaker hole pattern
 const speakerHoles =
   "radial-gradient(black 15%, transparent 16%) 0 0, radial-gradient(black 15%, transparent 16%) 8px 8px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px";
@@ -165,8 +169,10 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     zIndex: "90",
     left: "20%",
-    background: theme.palette.secondary.light,
-    // background: theme.palette.primary.dark,
+    backgroundImage: bpLines,
+    backgroundColor: theme.palette.secondary.main,
+    backgroundSize: "100px 100px, 100px 100px, 20px 20px, 20px 20px",
+    packgroundPosition: "-2px -2px, -2px -2px, -1px -1px, -1px -1px",
     boxShadow: screenShadow,
     borderRadius: theme.shape.borderRadius * 2
   },
@@ -228,7 +234,7 @@ const useStyles = makeStyles(theme => ({
 //SPRING CHANGES FOR EACH COMPONENT
 //Order:screen, lensArm, shell
 
-const Shell = () => {
+const Shell = ({ children }) => {
   const classes = useStyles();
   const [{ open }, dispatch] = useDexContext();
 
@@ -324,7 +330,9 @@ const Shell = () => {
   );
 
   const screen = (
-    <animated.div style={screenSpring} className={classes.screen} />
+    <animated.div style={screenSpring} className={classes.screen}>
+      {open && children}
+    </animated.div>
   );
   const innerBody = <div className={classes.innerBody} />;
 
