@@ -14,15 +14,15 @@ import Slider from "./slider";
 
 const useStyles = makeStyles(theme => ({
   navs: {
-    background: "red"
+    background: ""
   },
   stretch: {
     flex: "1",
     textAlign: "right",
-    background: "purple"
+    background: ""
   },
   slideSide: {
-    background: "pink",
+    background: "",
     flex: "1"
   }
 }));
@@ -38,14 +38,13 @@ const SpriteSide = props => {
     // prevPropsGoToSlide: 0,
     // newSlide: false
   });
-  console.log(state);
 
   //confirm data types
   SpriteSide.propTypes = {
     slides: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.any,
-        content: PropTypes.object
+        img: PropTypes.object
       })
     ).isRequired,
     // goToSlide: PropTypes.number,
@@ -54,15 +53,16 @@ const SpriteSide = props => {
   };
 
   function mod(a, b) {
+    // console.log(a, b, a % b, (a % b) + b, ((a % b) + b) % b);
     return ((a % b) + b) % b;
   }
 
   const modBySlidesLength = index => {
-    console.log(mod(index, slides.length));
     return mod(index, slides.length);
   };
 
   //////need to set limit on renders//////
+  //pass 1 or -1 as direction
   const moveSlide = direction => {
     setState({
       ...state,
@@ -96,7 +96,7 @@ const SpriteSide = props => {
     return presentableSlides;
   };
 
-  //////need to fix rerender issue on MOVESLIDE
+  //////need to fix rerender issue on MOVESLIDE- too many rerenders
   // useEffect(() => {
   //   document.addEventListener("keydown", event => {
   //     if (event.isComposing || event.keyCode === 229) {
@@ -120,7 +120,7 @@ const SpriteSide = props => {
         <IconButton onClick={() => moveSlide(-1)}>
           <ArrowUpward />
         </IconButton>
-        <Typography className={classes.stretch}>Name</Typography>
+        <Typography className={classes.stretch}>future use- typings</Typography>
       </Toolbar>
     </Grid>
   );
@@ -132,7 +132,7 @@ const SpriteSide = props => {
         {getPresentableSlides().map((slide, index) => (
           <Slider
             key={slide.key}
-            content={slide.content}
+            img={slide.img}
             moveSlide={moveSlide}
             offsetRadius={clampOffsetRadius(offsetRadius)}
             index={index}

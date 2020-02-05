@@ -5,32 +5,44 @@ import { withGesture } from "react-with-gesture";
 
 const useStyles = makeStyles(theme => ({
   singleItem: {
-    background: "gray",
+    background: "",
     position: "absolute",
-    top: "50%",
+    top: "0%",
+    left: "10%",
     transformOrigin: "50% 50%",
     width: "40%",
-    height: "40%",
+    height: "70%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center"
+  },
+  img: {
+    height: "100%",
+    width: "auto"
+  },
+  indicator: {
+    height: "100%",
+    width: "auto",
+    border: "5px solid red",
+    clipPath:
+      "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)"
   }
 }));
 
 //content = sprite
-const Slider = ({ content, offsetRadius, index, moveSlide, delta }) => {
+const Slider = ({ img, offsetRadius, index, moveSlide, delta }) => {
   const classes = useStyles();
   //calculated for each +2/-2 from index
-  console.log(index, offsetRadius);
+  // console.log(index, offsetRadius);
 
   const offsetFromMiddle = index - offsetRadius;
   const totalPresentables = 2 * offsetRadius + 1;
-  //for opacity
-  const distanceFactor = 1 - Math.abs(offsetFromMiddle / (offsetRadius + 1));
+  //for opacity- increase denominator to increase opacity (ex. ofsetRadius+1)
+  const distanceFactor = 1 - Math.abs(offsetFromMiddle / offsetRadius);
 
   //value for spring- dist from center  //////need to formulate closer offsets that works for offsetRadius of both 1(1) and 2(25)
   const translateYoffset =
-    5 * (Math.abs(offsetFromMiddle) / (offsetRadius + 1));
+    15 * (Math.abs(offsetFromMiddle) / (offsetRadius + 1));
   let translateY = -50;
 
   if (offsetRadius !== 0) {
@@ -58,6 +70,9 @@ const Slider = ({ content, offsetRadius, index, moveSlide, delta }) => {
   else if (offsetFromMiddle < 0) {
     translateY -= translateYoffset;
   }
+
+  const hasIndicator = offsetFromMiddle === 0 ? classes.indicator : classes.img;
+
   return (
     <Spring
       to={{
@@ -77,7 +92,7 @@ const Slider = ({ content, offsetRadius, index, moveSlide, delta }) => {
             zIndex: Math.abs(Math.abs(offsetFromMiddle) - 2)
           }}
         >
-          {content}
+          <img className={hasIndicator} src={img} alt="poke-sprite" />
         </div>
       )}
     </Spring>

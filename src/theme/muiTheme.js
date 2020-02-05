@@ -60,7 +60,7 @@ const theme = createMuiTheme({
       }
     },
     MuiGrid: {
-      container: { height: "100%" }
+      container: { height: "100%", overflow: "hidden" }
     },
     MuiBackdrop: {
       root: {

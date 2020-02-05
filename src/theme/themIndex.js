@@ -28,7 +28,10 @@ import {
   ButtonGroup,
   Backdrop,
   Modal,
-  Fade
+  Fade,
+  List,
+  ListItem,
+  ListItemText
 } from "@material-ui/core";
 
 import {
@@ -82,5 +85,8 @@ export {
   Modal,
   Fade,
   ArrowUpward,
-  ArrowDownward
+  ArrowDownward,
+  List,
+  ListItem,
+  ListItemText
 };
