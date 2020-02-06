@@ -40,7 +40,8 @@ import {
   RotateLeftRounded,
   DoneRounded,
   ArrowUpward,
-  ArrowDownward
+  ArrowDownward,
+  Details
 } from "@material-ui/icons";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -88,5 +89,6 @@ export {
   ArrowDownward,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  Details
 };

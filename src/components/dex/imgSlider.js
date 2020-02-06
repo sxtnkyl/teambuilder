@@ -7,10 +7,9 @@ const useStyles = makeStyles(theme => ({
   singleItem: {
     background: "",
     position: "absolute",
-    top: "0%",
-    left: "10%",
+    left: "20%",
     transformOrigin: "50% 50%",
-    width: "40%",
+    width: "auto",
     height: "70%",
     display: "flex",
     alignItems: "center",
@@ -40,9 +39,9 @@ const Slider = ({ img, offsetRadius, index, moveSlide, delta }) => {
   //for opacity- increase denominator to increase opacity (ex. ofsetRadius+1)
   const distanceFactor = 1 - Math.abs(offsetFromMiddle / offsetRadius);
 
-  //value for spring- dist from center  //////need to formulate closer offsets that works for offsetRadius of both 1(1) and 2(25)
+  //value for spring- dist from center
   const translateYoffset =
-    15 * (Math.abs(offsetFromMiddle) / (offsetRadius + 1));
+    50 * (Math.abs(offsetFromMiddle) / (offsetRadius + 1));
   let translateY = -50;
 
   if (offsetRadius !== 0) {
@@ -56,6 +55,7 @@ const Slider = ({ img, offsetRadius, index, moveSlide, delta }) => {
   if (offsetFromMiddle === 0) {
     translateY += delta[1] / (offsetRadius + 1);
     if (translateY > -40) {
+      //////need to fix rerender issue on MOVESLIDE- too many rerenders
       moveSlide(-1);
     }
     if (translateY < -100) {

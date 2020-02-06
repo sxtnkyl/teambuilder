@@ -10,7 +10,7 @@ import {
   ArrowDownward
 } from "../../theme/themIndex";
 import PropTypes from "prop-types";
-import Slider from "./slider";
+import Slider from "./imgSlider";
 
 const useStyles = makeStyles(theme => ({
   navs: {
@@ -18,26 +18,34 @@ const useStyles = makeStyles(theme => ({
   },
   stretch: {
     flex: "1",
-    textAlign: "right",
+    textAlign: "center",
     background: ""
   },
   slideSide: {
     background: "",
-    flex: "1"
+    flex: "1",
+    position: "relative"
   }
 }));
 
 const SpriteSide = props => {
   const classes = useStyles();
-  const { slides, offsetRadius, showNavigation } = props;
+  const {
+    slides,
+    index,
+    offsetRadius,
+    showNavigation,
+    moveSlide,
+    modBySlidesLength
+  } = props;
 
-  const [state, setState] = useState({
-    //current center display
-    index: 0
-    // goToSlide: null,
-    // prevPropsGoToSlide: 0,
-    // newSlide: false
-  });
+  // const [state, setState] = useState({
+  //   //current center display
+  //   index: 0
+  //   // goToSlide: null,
+  //   // prevPropsGoToSlide: 0,
+  //   // newSlide: false
+  // });
 
   //confirm data types
   SpriteSide.propTypes = {
@@ -52,24 +60,24 @@ const SpriteSide = props => {
     offsetRadius: PropTypes.number
   };
 
-  function mod(a, b) {
-    // console.log(a, b, a % b, (a % b) + b, ((a % b) + b) % b);
-    return ((a % b) + b) % b;
-  }
+  // function mod(a, b) {
+  //   // console.log(a, b, a % b, (a % b) + b, ((a % b) + b) % b);
+  //   return ((a % b) + b) % b;
+  // }
 
-  const modBySlidesLength = index => {
-    return mod(index, slides.length);
-  };
+  // const modBySlidesLength = index => {
+  //   return mod(index, slides.length);
+  // };
 
   //////need to set limit on renders//////
   //pass 1 or -1 as direction
-  const moveSlide = direction => {
-    setState({
-      ...state,
-      // goToSlide: null,
-      index: modBySlidesLength(state.index + direction)
-    });
-  };
+  // const moveSlide = direction => {
+  //   setState({
+  //     ...state,
+  //     // goToSlide: null,
+  //     index: modBySlidesLength(state.index + direction)
+  //   });
+  // };
 
   const clampOffsetRadius = offsetRadius => {
     const upperBound = Math.floor((slides.length - 1) / 2);
@@ -85,7 +93,6 @@ const SpriteSide = props => {
   };
 
   const getPresentableSlides = () => {
-    const { index } = state;
     const newOffsetRadius = clampOffsetRadius(offsetRadius);
     const presentableSlides = [];
 
@@ -127,11 +134,10 @@ const SpriteSide = props => {
 
   return (
     <>
-      {showNavigation ? navigationButtons : null}
       <Grid item className={classes.slideSide}>
         {getPresentableSlides().map((slide, index) => (
           <Slider
-            key={slide.key}
+            key={slide.dexNo}
             img={slide.img}
             moveSlide={moveSlide}
             offsetRadius={clampOffsetRadius(offsetRadius)}
@@ -139,6 +145,7 @@ const SpriteSide = props => {
           />
         ))}
       </Grid>
+      {showNavigation ? navigationButtons : null}
     </>
   );
 };

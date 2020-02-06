@@ -42,6 +42,12 @@ const theme = createMuiTheme({
       fontWeight: "700",
       padding: defaultTheme.spacing(3),
       width: "100%"
+    },
+    body1: {
+      textTransform: "uppercase",
+      textAlign: "center",
+      color: defaultTheme.palette.primary.main,
+      fontWeight: "700"
     }
   },
   overrides: {
@@ -57,6 +63,13 @@ const theme = createMuiTheme({
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden"
+      }
+    },
+    MuiButton: {
+      outlined: {
+        "&:hover": {
+          background: "white"
+        }
       }
     },
     MuiGrid: {
