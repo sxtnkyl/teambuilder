@@ -49,13 +49,12 @@ const gens = [
 
 export const DexState = {
   open: true,
-  page: 0,
   filters: "",
   pokemon: [],
   //store pokes list(name,url,number,img)
   genList: gens,
   //currently selected gen to display in dex component
-  currentDexGen: 3,
+  currentDexGen: 1,
   loading: false
 };
 

@@ -49,11 +49,6 @@ const makeSlides = (genNum, genList, dispatch) => {
     }
   };
 
-  //gen has pokes already
-  // if (selectedGen.pokes.length) {
-  //   //return pokes
-  // }
-
   //gen does not have pokes yet
   if (selectedGen.pokes.length === 0) {
     //fetch the pokes and make their data

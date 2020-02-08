@@ -15,14 +15,10 @@ const useStyles = makeStyles(theme => ({
   leftHalf: {
     background: "",
     maxHeight: "100%"
-    // marginTop: theme.spacing(2),
-    // marginBottom: theme.spacing(2)
   },
   rightHalf: {
     background: "",
     maxHeight: "100%"
-    // marginTop: theme.spacing(2),
-    // marginBottom: theme.spacing(2)
   }
 }));
 
@@ -85,6 +81,7 @@ const Dex = () => {
           showNavigation={state.showNavigation}
           moveSlide={moveSlide}
           modBySlidesLength={modBySlidesLength}
+          moveIndexBySlider={moveIndexBySlider}
         />
       </Grid>
       <Grid

@@ -21,7 +21,6 @@ const IndexSlider = ({ index, slides, moveIndexBySlider }) => {
     marks.push({ value: slides.length - 1 });
     return marks;
   };
-  console.log();
 
   const handleSliderChange = (e, newval) => {
     moveIndexBySlider(newval);

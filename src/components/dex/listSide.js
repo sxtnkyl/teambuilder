@@ -54,14 +54,6 @@ const ListSide = props => {
     moveIndexBySlider
   } = props;
 
-  // const [state, setState] = useState({
-  //   //current center display
-  //   index: 0
-  //   // goToSlide: null,
-  //   // prevPropsGoToSlide: 0,
-  //   // newSlide: false
-  // });
-
   //confirm data types
   ListSide.propTypes = {
     slides: PropTypes.arrayOf(
@@ -98,13 +90,6 @@ const ListSide = props => {
 
     return presentableSlides;
   };
-
-  //////need to fix rerender issue on MOVESLIDE- too many rerenders
-  // useEffect(() => {
-  //   document.addEventListener("scroll", event => {
-  //     console.log(event);
-  //   });
-  // });
 
   const navigationButtons = (
     <Grid item className={classes.navs}>

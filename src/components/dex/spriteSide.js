@@ -10,16 +10,16 @@ import {
   ArrowDownward
 } from "../../theme/themIndex";
 import PropTypes from "prop-types";
-import Slider from "./imgSlider";
+import Slider from "./spriteSlider";
+import { useDexContext } from "../../context/globalContext";
 
 const useStyles = makeStyles(theme => ({
   navs: {
     background: "",
     marginLeft: theme.spacing(1)
   },
-  stretch: {
-    flex: "1",
-    textAlign: "center",
+  genLabel: {
+    marginLeft: theme.spacing(1),
     background: ""
   },
   slideSide: {
@@ -37,16 +37,10 @@ const SpriteSide = props => {
     offsetRadius,
     showNavigation,
     moveSlide,
-    modBySlidesLength
+    modBySlidesLength,
+    moveIndexBySlider
   } = props;
-
-  // const [state, setState] = useState({
-  //   //current center display
-  //   index: 0
-  //   // goToSlide: null,
-  //   // prevPropsGoToSlide: 0,
-  //   // newSlide: false
-  // });
+  const [{ currentDexGen, genList }, dispatch] = useDexContext();
 
   //confirm data types
   SpriteSide.propTypes = {
@@ -104,31 +98,40 @@ const SpriteSide = props => {
     return presentableSlides;
   };
 
-  //////need to fix rerender issue on MOVESLIDE- too many rerenders
-  // useEffect(() => {
-  //   document.addEventListener("keydown", event => {
-  //     if (event.isComposing || event.keyCode === 229) {
-  //       return;
-  //     }
-  //     if (event.keyCode === 38) {
-  //       moveSlide(-1);
-  //     }
-  //     if (event.keyCode === 40) {
-  //       moveSlide(1);
-  //     }
-  //   });
-  // }, [moveSlide]);
+  //+1 for up, -1 for down
+  const handleGenChange = direction => {
+    let num = currentDexGen;
+    if (direction < 0) {
+      if (currentDexGen === 1) {
+        num = 7;
+      } else {
+        num -= 1;
+      }
+    }
+    if (direction > 0) {
+      if (currentDexGen === 7) {
+        //set to 1
+        num = 1;
+      } else {
+        num += 1;
+      }
+    }
+    dispatch({ type: "updateCurrentDexGen", newGen: num });
+    moveIndexBySlider(0);
+  };
 
   const navigationButtons = (
     <Grid item className={classes.navs}>
       <Toolbar disableGutters>
-        <IconButton onClick={() => moveSlide(1)}>
+        <IconButton onClick={() => handleGenChange(-1)}>
           <ArrowDownward />
         </IconButton>
-        <IconButton onClick={() => moveSlide(-1)}>
+        <IconButton onClick={() => handleGenChange(1)}>
           <ArrowUpward />
         </IconButton>
-        <Typography className={classes.stretch}>future use- typings</Typography>
+        <Typography className={classes.genLabel}>
+          Gen: {currentDexGen}
+        </Typography>
       </Toolbar>
     </Grid>
   );
