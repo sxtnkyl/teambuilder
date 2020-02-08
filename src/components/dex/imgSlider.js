@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
   singleItem: {
     background: "",
     position: "absolute",
-    left: "20%",
+    left: "15%",
     transformOrigin: "50% 50%",
     width: "auto",
     height: "70%",
@@ -22,14 +22,14 @@ const useStyles = makeStyles(theme => ({
   indicator: {
     height: "100%",
     width: "auto",
-    border: "5px solid red",
+    border: `${theme.palette.secondary.wrappers.main} 8px solid`,
     clipPath:
       "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)"
   }
 }));
 
 //content = sprite
-const Slider = ({ img, offsetRadius, index, moveSlide, delta }) => {
+const Slider = ({ img, offsetRadius, index, delta }) => {
   const classes = useStyles();
   //calculated for each +2/-2 from index
   // console.log(index, offsetRadius);
@@ -44,24 +44,26 @@ const Slider = ({ img, offsetRadius, index, moveSlide, delta }) => {
     50 * (Math.abs(offsetFromMiddle) / (offsetRadius + 1));
   let translateY = -50;
 
-  if (offsetRadius !== 0) {
-    if (index === 0) {
-      translateY = 0;
-    } else if (index === totalPresentables - 1) {
-      translateY = -100;
-    }
-  }
+  ///////for future gesture  use
+  // if (offsetRadius !== 0) {
+  //   if (index === 0) {
+  //     translateY = 0;
+  //   } else if (index === totalPresentables - 1) {
+  //     translateY = -100;
+  //   }
+  // }
 
-  if (offsetFromMiddle === 0) {
-    translateY += delta[1] / (offsetRadius + 1);
-    if (translateY > -40) {
-      //////need to fix rerender issue on MOVESLIDE- too many rerenders
-      moveSlide(-1);
-    }
-    if (translateY < -100) {
-      moveSlide(1);
-    }
-  }
+  // if (offsetFromMiddle === 0) {
+  //   translateY += delta[1] / (offsetRadius + 1);
+  //   if (translateY > -40) {
+  //     //////need to fix rerender issue on MOVESLIDE- too many rerenders
+  //     moveSlide(-1);
+  //   }
+  //   if (translateY < -100) {
+  //     moveSlide(1);
+  //   }
+  // }
+
   //below center
   if (offsetFromMiddle > 0) {
     translateY += translateYoffset;
@@ -99,4 +101,4 @@ const Slider = ({ img, offsetRadius, index, moveSlide, delta }) => {
   );
 };
 
-export default withGesture()(Slider);
+export default Slider;

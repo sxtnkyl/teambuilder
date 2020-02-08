@@ -31,7 +31,8 @@ import {
   Fade,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  Slider
 } from "@material-ui/core";
 
 import {
@@ -90,5 +91,6 @@ export {
   List,
   ListItem,
   ListItemText,
-  Details
+  Details,
+  Slider
 };

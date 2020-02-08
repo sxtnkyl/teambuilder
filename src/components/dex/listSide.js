@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Slider from "./listSlider";
+import IndexSlider from "./indexSlider";
 import {
   Grid,
   makeStyles,
@@ -19,7 +20,8 @@ import {
 const useStyles = makeStyles(theme => ({
   navs: {
     background: "",
-    marginLeft: "auto"
+    marginLeft: "auto",
+    marginRight: theme.spacing(1)
   },
   listSide: {
     flex: "1",
@@ -29,6 +31,13 @@ const useStyles = makeStyles(theme => ({
     height: "100%",
     background: "",
     position: "relative"
+  },
+  indexSlider: {
+    background: "",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 }));
 
@@ -41,7 +50,8 @@ const ListSide = props => {
     offsetRadius,
     showNavigation,
     moveSlide,
-    modBySlidesLength
+    modBySlidesLength,
+    moveIndexBySlider
   } = props;
 
   // const [state, setState] = useState({
@@ -57,7 +67,7 @@ const ListSide = props => {
     slides: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.any,
-        img: PropTypes.object
+        img: PropTypes.string
       })
     ).isRequired,
     // goToSlide: PropTypes.number,
@@ -111,19 +121,28 @@ const ListSide = props => {
 
   return (
     <>
-      <Grid item className={classes.listSide}>
-        <List item disablePadding className={classes.list}>
-          {getPresentableSlides().map((slide, index) => (
-            <Slider
-              key={slide.dexNo}
-              dexNo={slide.dexNo}
-              name={slide.name}
-              moveSlide={moveSlide}
-              offsetRadius={clampOffsetRadius(offsetRadius)}
-              index={index}
-            />
-          ))}
-        </List>
+      <Grid item container className={classes.listSide}>
+        <Grid item xs={10}>
+          <List disablePadding className={classes.list}>
+            {getPresentableSlides().map((slide, index) => (
+              <Slider
+                key={slide.dexNo}
+                dexNo={slide.dexNo}
+                name={slide.name}
+                moveSlide={moveSlide}
+                offsetRadius={clampOffsetRadius(offsetRadius)}
+                index={index}
+              />
+            ))}
+          </List>
+        </Grid>
+        <Grid item xs={2} className={classes.indexSlider}>
+          <IndexSlider
+            index={index}
+            slides={slides}
+            moveIndexBySlider={moveIndexBySlider}
+          />
+        </Grid>
       </Grid>
       {showNavigation ? navigationButtons : null}
     </>

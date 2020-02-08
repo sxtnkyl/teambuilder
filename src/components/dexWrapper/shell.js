@@ -73,8 +73,8 @@ const useStyles = makeStyles(theme => ({
     zIndex: "70",
     position: "absolute",
     left: "10%",
-    borderTopLeftRadius: "40px",
-    borderTopRightRadius: "40px",
+    borderTopLeftRadius: theme.spacing(5),
+    borderTopRightRadius: theme.spacing(5),
     boxShadow: shellShadow,
     background: shellGradientTop
   },
@@ -98,8 +98,8 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     top: "0%",
     right: "0%",
-    borderBottomLeftRadius: "40px",
-    borderTopRightRadius: "40px",
+    borderBottomLeftRadius: theme.spacing(5),
+    borderTopRightRadius: theme.spacing(5),
     boxShadow: cornerShadow
   },
   //relative to top
@@ -122,8 +122,8 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     left: "10%",
     bottom: "0%",
-    borderBottomLeftRadius: "40px",
-    borderBottomRightRadius: "40px",
+    borderBottomLeftRadius: theme.spacing(5),
+    borderBottomRightRadius: theme.spacing(5),
     boxShadow: shellShadow,
     backgroundImage: shellGradientBottom
   },
@@ -147,8 +147,8 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     bottom: "0%",
     right: "0%",
-    borderTopLeftRadius: "40px",
-    borderBottomRightRadius: "40px",
+    borderTopLeftRadius: theme.spacing(5),
+    borderBottomRightRadius: theme.spacing(5),
     boxShadow: cornerShadow
   },
   //relative to bottom
@@ -178,11 +178,11 @@ const useStyles = makeStyles(theme => ({
   },
   //////relative to wrap
   lensArm: {
-    height: "8vw",
-    width: "15vw",
+    height: "7vw",
+    width: "13vw",
     zIndex: "55",
     position: "absolute",
-    top: "42%",
+    top: "43%",
     left: "10%",
     borderRadius: theme.shape.borderRadius,
     borderStyle: "black 3px double",
@@ -195,7 +195,7 @@ const useStyles = makeStyles(theme => ({
     width: "16vw",
     position: "absolute",
     top: "34%",
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.spacing(5),
     borderStyle: "black 3px double",
     boxShadow: shellShadow,
     background: shellGradientBottom
@@ -255,7 +255,8 @@ const Shell = ({ children }) => {
   const underGlow = useSpring({
     background: !hover
       ? "radial-gradient(circle at center, hsla(199, 100%, 60%, 1) 60%, hsla(199,100%,75%, .07) 70%)"
-      : "radial-gradient(circle at center, hsla(199, 100%, 70%, 1) 60%, hsla(199,100%,85%, .2) 73%)"
+      : "radial-gradient(circle at center, hsla(199, 100%, 70%, 1) 60%, hsla(199,100%,85%, .2) 73%)",
+    borderRadius: theme.spacing(5)
   });
   const lensRetract = useSpring({
     x: open ? 0 : 1

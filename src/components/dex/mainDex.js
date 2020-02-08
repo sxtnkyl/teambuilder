@@ -3,12 +3,14 @@ import { Grid, makeStyles } from "../../theme/themIndex";
 import theme from "../../theme/muiTheme";
 import SpriteSide from "./spriteSide";
 import ListSide from "./listSide";
+import makeSlides from "../../utility/makeSlides";
+import { useDexContext } from "../../context/globalContext";
 
 const useStyles = makeStyles(theme => ({
   container: {
     background: "",
     borderRadius: theme.shape.borderRadius * 2,
-    justifyContent: "center"
+    justifyContent: ""
   },
   leftHalf: {
     background: "",
@@ -24,103 +26,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-////gets a list of 20 pokes, number, spriteUrl, api url
-
-const slides = [
-  {
-    dexNo: 1,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png`,
-    name: "bulbasaur"
-  },
-  {
-    dexNo: 2,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png`,
-    name: "ivysaur"
-  },
-  {
-    dexNo: 3,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png`,
-    name: "venosaur"
-  },
-  {
-    dexNo: 4,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png`,
-    name: "charmander"
-  },
-  {
-    dexNo: 5,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png`,
-    name: "charmeleon"
-  },
-  {
-    dexNo: 6,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png`,
-    name: "charizard"
-  },
-  {
-    dexNo: 7,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png`,
-    name: "squirtle"
-  },
-  {
-    dexNo: 8,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png`,
-    name: "wartortle"
-  },
-  {
-    dexNo: 9,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png`,
-    name: "blastoise"
-  },
-  {
-    dexNo: 10,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png`,
-    name: "caterpie"
-  },
-  {
-    dexNo: 11,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png`,
-    name: "asdf"
-  },
-  {
-    dexNo: 12,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png`,
-    name: "venosdfgsaur"
-  },
-  {
-    dexNo: 13,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/13.png`,
-    name: "chadfhgjrmander"
-  },
-  {
-    dexNo: 14,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/14.png`,
-    name: "tretruy"
-  },
-  {
-    dexNo: 15,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/15.png`,
-    name: "dfghfdg"
-  },
-  {
-    dexNo: 16,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png`,
-    name: "qwewqr"
-  },
-  {
-    dexNo: 17,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/17.png`,
-    name: "bnmvbn"
-  },
-  {
-    dexNo: 18,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png`,
-    name: "poiupoiu"
-  }
-];
-
 const Dex = () => {
   const classes = useStyles();
+  const [{ genList, currentDexGen }, dispatch] = useDexContext();
+  const slides = genList[currentDexGen - 1].pokes;
 
   const [state, setState] = useState({
     goToSlide: 0,
@@ -129,6 +38,17 @@ const Dex = () => {
     index: 0,
     showNavigation: true
   });
+  useEffect(() => {
+    makeSlides(currentDexGen, genList, dispatch);
+  }, [currentDexGen]);
+
+  const moveIndexBySlider = i => {
+    setState({
+      ...state,
+      // goToSlide: null,
+      index: i
+    });
+  };
 
   //////need to set limit on renders//////
   //pass 1 or -1 as direction
@@ -181,6 +101,7 @@ const Dex = () => {
           showNavigation={state.showNavigation}
           moveSlide={moveSlide}
           modBySlidesLength={modBySlidesLength}
+          moveIndexBySlider={moveIndexBySlider}
         />
       </Grid>
     </Grid>

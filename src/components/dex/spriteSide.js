@@ -14,7 +14,8 @@ import Slider from "./imgSlider";
 
 const useStyles = makeStyles(theme => ({
   navs: {
-    background: ""
+    background: "",
+    marginLeft: theme.spacing(1)
   },
   stretch: {
     flex: "1",
@@ -52,7 +53,7 @@ const SpriteSide = props => {
     slides: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.any,
-        img: PropTypes.object
+        img: PropTypes.string
       })
     ).isRequired,
     // goToSlide: PropTypes.number,
