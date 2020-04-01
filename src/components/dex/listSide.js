@@ -3,56 +3,23 @@
 //https://material-ui.com/components/lists/
 //lazy loading adds to held list
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Slider from "./listSlider";
-import IndexSlider from "./indexSlider";
-import {
-  Grid,
-  makeStyles,
-  List,
-  Toolbar,
-  IconButton,
-  ArrowUpward,
-  ArrowDownward
-} from "../../theme/themIndex";
+import { Grid, makeStyles } from "../../theme/themIndex";
 
 const useStyles = makeStyles(theme => ({
-  navs: {
+  nameList: {
     background: "",
-    marginLeft: "auto",
-    marginRight: theme.spacing(1)
-  },
-  listSide: {
-    flex: "1",
-    background: ""
-  },
-  list: {
-    height: "100%",
-    background: "",
-    position: "relative"
-  },
-  indexSlider: {
-    background: "",
-    height: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    position: "relative",
+    overflow: "hidden"
   }
 }));
 
 const ListSide = props => {
   const classes = useStyles();
 
-  const {
-    slides,
-    index,
-    offsetRadius,
-    showNavigation,
-    moveSlide,
-    modBySlidesLength,
-    moveIndexBySlider
-  } = props;
+  const { slides, index, offsetRadius, moveSlide, modBySlidesLength } = props;
 
   //confirm data types
   ListSide.propTypes = {
@@ -91,46 +58,19 @@ const ListSide = props => {
     return presentableSlides;
   };
 
-  const navigationButtons = (
-    <Grid item className={classes.navs}>
-      <Toolbar disableGutters>
-        <IconButton onClick={() => moveSlide(1)}>
-          <ArrowDownward />
-        </IconButton>
-        <IconButton onClick={() => moveSlide(-1)}>
-          <ArrowUpward />
-        </IconButton>
-      </Toolbar>
-    </Grid>
-  );
-
   return (
-    <>
-      <Grid item container className={classes.listSide}>
-        <Grid item xs={10}>
-          <List disablePadding className={classes.list}>
-            {getPresentableSlides().map((slide, index) => (
-              <Slider
-                key={slide.dexNo}
-                dexNo={slide.dexNo}
-                name={slide.name}
-                moveSlide={moveSlide}
-                offsetRadius={clampOffsetRadius(offsetRadius)}
-                index={index}
-              />
-            ))}
-          </List>
-        </Grid>
-        <Grid item xs={2} className={classes.indexSlider}>
-          <IndexSlider
-            index={index}
-            slides={slides}
-            moveIndexBySlider={moveIndexBySlider}
-          />
-        </Grid>
-      </Grid>
-      {showNavigation ? navigationButtons : null}
-    </>
+    <Grid item xs={6} container justify="center" className={classes.nameList}>
+      {getPresentableSlides().map((slide, index) => (
+        <Slider
+          key={slide.dexNo}
+          dexNo={slide.dexNo}
+          name={slide.name}
+          moveSlide={moveSlide}
+          offsetRadius={clampOffsetRadius(offsetRadius)}
+          index={index}
+        />
+      ))}
+    </Grid>
   );
 };
 

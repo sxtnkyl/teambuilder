@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { animated, useSpring, config } from "react-spring";
 import theme from "../../theme/muiTheme";
 import { makeStyles, Button } from "../../theme/themIndex";
@@ -274,7 +274,7 @@ const Shell = ({ children }) => {
 
   const powerLight = <div className={classes.powerLight} />;
   const screenInlineTop = <div className={classes.screenInlineTop} />;
-  const shoulderTop = <Button className={classes.shoulderTop}></Button>;
+  const shoulderTop = <Button className={classes.shoulderTop}>{""}</Button>;
   const topShell = (
     <animated.div style={shellTopSpring} className={classes.top}>
       {powerLight}
@@ -284,7 +284,9 @@ const Shell = ({ children }) => {
   );
   const speakerHoles = <div className={classes.speakerHoles} />;
   const screenInlineBottom = <div className={classes.screenInlineBottom} />;
-  const shoulderBottom = <Button className={classes.shoulderBottom}></Button>;
+  const shoulderBottom = (
+    <Button className={classes.shoulderBottom}>{""}</Button>
+  );
   const botShell = (
     <animated.div style={shellBottomSpring} className={classes.bottom}>
       {speakerHoles}

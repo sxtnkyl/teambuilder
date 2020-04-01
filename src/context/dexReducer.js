@@ -7,10 +7,11 @@ const DexReducer = (state, action) => {
         open: !state.open
       };
     case "updateGenList":
+      let updatedGenList = state.genList.slice();
+      updatedGenList[state.currentDexGen - 1].pokes = action.newPokemon;
       return {
         ...state,
-        /////////////////////////WHY DOES THIS
-        genList: [...state.genList]
+        genList: updatedGenList
       };
     case "updateCurrentDexGen":
       return {

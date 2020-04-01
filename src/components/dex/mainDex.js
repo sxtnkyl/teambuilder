@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { Grid, makeStyles } from "../../theme/themIndex";
-import theme from "../../theme/muiTheme";
+import {
+  Grid,
+  makeStyles,
+  Typography,
+  IconButton,
+  ArrowDownward,
+  ArrowUpward
+} from "../../theme/themIndex";
+import TopNav from "./topNav";
+import BotNav from "./botNav";
 import SpriteSide from "./spriteSide";
 import ListSide from "./listSide";
+import IndexSlider from "./indexSlider";
 import makeSlides from "../../utility/makeSlides";
 import { useDexContext } from "../../context/globalContext";
 
 const useStyles = makeStyles(theme => ({
   container: {
     background: "",
-    borderRadius: theme.shape.borderRadius * 2,
-    justifyContent: ""
+    height: "100%",
+    overflow: "hidden",
+    borderRadius: theme.shape.borderRadius * 2
   },
-  leftHalf: {
+  middleContent: {
     background: "",
-    maxHeight: "100%"
-  },
-  rightHalf: {
-    background: "",
-    maxHeight: "100%"
+    flexGrow: "1"
   }
 }));
 
@@ -32,11 +38,17 @@ const Dex = () => {
     offsetRadiusSprite: 2,
     offsetRadiusList: 4,
     index: 0,
-    showNavigation: true
+    showNavigation: true,
+    singlePokeOpen: false
   });
   useEffect(() => {
     makeSlides(currentDexGen, genList, dispatch);
   }, [currentDexGen]);
+
+  const activePoke =
+    typeof slides[state.index] !== "undefined"
+      ? slides[state.index]
+      : "Loading...";
 
   const moveIndexBySlider = i => {
     setState({
@@ -65,15 +77,43 @@ const Dex = () => {
     return mod(index, slides.length);
   };
 
+  //+1 for up, -1 for down
+  const handleGenChange = direction => {
+    let num = currentDexGen;
+    if (direction < 0) {
+      if (currentDexGen === 1) {
+        num = 7;
+      } else {
+        num -= 1;
+      }
+    }
+    if (direction > 0) {
+      if (currentDexGen === 7) {
+        //set to 1
+        num = 1;
+      } else {
+        num += 1;
+      }
+    }
+    dispatch({ type: "updateCurrentDexGen", newGen: num });
+    moveIndexBySlider(0);
+  };
+
+  const toggleSinglePokeOpen = () => {
+    setState({
+      ...state,
+      singlePokeOpen: !state.singlePokeOpen
+    });
+  };
+
   return (
-    <Grid container className={classes.container}>
-      <Grid
-        item
-        xs={6}
-        container
-        direction="column"
-        className={classes.leftHalf}
-      >
+    <Grid container direction="column" className={classes.container}>
+      <TopNav
+        activePoke={activePoke}
+        singlePokeOpen={state.singlePokeOpen}
+        toggleSinglePokeOpen={toggleSinglePokeOpen}
+      />
+      <Grid item container direction="row" className={classes.middleContent}>
         <SpriteSide
           slides={slides}
           index={state.index}
@@ -83,14 +123,6 @@ const Dex = () => {
           modBySlidesLength={modBySlidesLength}
           moveIndexBySlider={moveIndexBySlider}
         />
-      </Grid>
-      <Grid
-        item
-        xs={6}
-        container
-        direction="column"
-        className={classes.rightHalf}
-      >
         <ListSide
           slides={slides}
           index={state.index}
@@ -100,7 +132,13 @@ const Dex = () => {
           modBySlidesLength={modBySlidesLength}
           moveIndexBySlider={moveIndexBySlider}
         />
+        <IndexSlider
+          index={state.index}
+          slides={slides}
+          moveIndexBySlider={moveIndexBySlider}
+        />
       </Grid>
+      <BotNav handleGenChange={handleGenChange} moveSlide={moveSlide} />
     </Grid>
   );
 };

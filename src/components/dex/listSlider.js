@@ -8,24 +8,26 @@ import {
   Details
 } from "../../theme/themIndex";
 import { Spring, config } from "react-spring/renderprops";
-import { withGesture } from "react-with-gesture";
+// import { withGesture } from "react-with-gesture";
 
 const useStyles = makeStyles(theme => ({
   indicator: {
     background: "white",
+    boxShadow: `2px 2px 3px ${theme.palette.primary.dark}`,
     borderRadius: theme.spacing(5),
     border: `${theme.palette.secondary.wrappers.main} 2px solid`,
     position: "absolute",
-    left: "0%",
-    transformOrigin: "50% 50%"
+    transformOrigin: "50% 50%",
+    width: "95%"
   },
   tag: {
-    background: theme.palette.secondary.wrappers.main,
+    background: "linear-gradient(145deg, #dc3c31, #ff483a)",
+    boxShadow: `4px 4px 6px ${theme.palette.primary.dark}`,
     borderRadius: theme.spacing(5),
     border: `${theme.palette.primary.main} 2px solid`,
     position: "absolute",
-    left: "0%",
-    transformOrigin: "50% 50%"
+    transformOrigin: "50% 50%",
+    width: "90%"
   },
   button: {
     border: "none",
@@ -36,17 +38,18 @@ const useStyles = makeStyles(theme => ({
   },
   leftPointer: {
     transform: "rotate(90deg)",
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    color: theme.palette.secondary.wrappers.main
   }
 }));
 
 //content = sprite
-const Slider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
+const ListSlider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
   //delta for future gesture use
   const classes = useStyles();
 
   const offsetFromMiddle = index - offsetRadius;
-  const totalPresentables = 2 * offsetRadius + 1;
+  // const totalPresentables = 2 * offsetRadius + 1;
   //for opacity- increase denominator to increase opacity (ex. ofsetRadius+1)
   const distanceFactor = 1 - Math.abs(offsetFromMiddle / offsetRadius);
 
@@ -92,44 +95,38 @@ const Slider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
   //if lastPoke = dexNo & offsetFromMiddle = offsetRadius
 
   return (
-    <>
-      <Spring
-        to={{
-          transform: `translateX(0%) translateY(${translateY}%)`,
-          top: `${
-            offsetRadius === 0
-              ? 50
-              : 50 + (offsetFromMiddle * 50) / offsetRadius
-          }%`,
-          opacity: distanceFactor > 0 ? 1 : 0
-        }}
-        config={config.gentle}
-      >
-        {style => (
-          <ListItem
-            style={{
-              ...style,
-              zIndex: Math.abs(Math.abs(offsetFromMiddle) - 2)
-            }}
-            className={hasIndicator}
+    <Spring
+      to={{
+        transform: `translateX(0%) translateY(${translateY}%)`,
+        top: `${
+          offsetRadius === 0 ? 50 : 50 + (offsetFromMiddle * 50) / offsetRadius
+        }%`,
+        opacity: distanceFactor > 0 ? 1 : 0
+      }}
+      config={config.gentle}
+    >
+      {style => (
+        <ListItem
+          style={{
+            ...style,
+            zIndex: Math.abs(Math.abs(offsetFromMiddle) - 2)
+          }}
+          className={hasIndicator}
+        >
+          {distanceFactor === 1 && <Details className={classes.leftPointer} />}
+          <Button
+            variant="outlined"
+            className={classes.button}
+            onClick={handleButtonClick}
+            disabled={!(distanceFactor > 0)}
           >
-            {distanceFactor === 1 && (
-              <Details className={classes.leftPointer} />
-            )}
-            <Button
-              variant="outlined"
-              className={classes.button}
-              onClick={handleButtonClick}
-              disabled={!(distanceFactor > 0)}
-            >
-              <Typography variant="h6">{dexNo}</Typography>
-              <ListItemText>{name}</ListItemText>
-            </Button>
-          </ListItem>
-        )}
-      </Spring>
-    </>
+            <Typography variant="h6">{dexNo}</Typography>
+            <ListItemText>{name}</ListItemText>
+          </Button>
+        </ListItem>
+      )}
+    </Spring>
   );
 };
 
-export default Slider;
+export default ListSlider;

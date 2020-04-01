@@ -9,12 +9,14 @@ const makeSlides = (genNum, genList, dispatch) => {
 
   const makeInfo = poke => {
     //returns object with name no url img
+    //url = https://pokeapi.co/api/v2/pokemon-species/123/
     const { name, url } = poke;
     const obj = {
       name: "",
       dexNo: 0,
       img: "",
-      url: url
+      url: url,
+      nameUrl: ""
     };
 
     const dexname = name
@@ -24,10 +26,12 @@ const makeSlides = (genNum, genList, dispatch) => {
       .join(" ");
     const dexno = parseInt(url.split("/")[url.split("/").length - 2]);
     const pokeimg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${dexno}.png`;
+    const nameUrl = `https://pokeapi.co/api/v2/pokemon/${dexname}/`;
 
     obj.name = dexname;
     obj.dexNo = dexno;
     obj.img = pokeimg;
+    obj.nameUrl = nameUrl;
     return obj;
   };
 
@@ -42,7 +46,8 @@ const makeSlides = (genNum, genList, dispatch) => {
       //update context- find index of gen, change pokes property
       dispatch({
         type: "updateGenList",
-        newPokemon: (selectedGen.pokes = pokeArr)
+        // newPokemon: (selectedGen.pokes = pokeArr)
+        newPokemon: pokeArr
       });
     } catch (e) {
       console.log("the error is", e);

@@ -6,7 +6,7 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 const carbon =
   "linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424)";
 
-const checker = `linear-gradient(45deg, ${blueGrey[700]} 25%, transparent 25%, transparent 75%, ${blueGrey[700]} 75%, ${blueGrey[700]}), linear-gradient(45deg, ${blueGrey[700]} 25%, transparent 25%, transparent 75%, ${blueGrey[700]} 75%, ${blueGrey[700]})`;
+// const checker = `linear-gradient(45deg, ${blueGrey[700]} 25%, transparent 25%, transparent 75%, ${blueGrey[700]} 75%, ${blueGrey[700]}), linear-gradient(45deg, ${blueGrey[700]} 25%, transparent 25%, transparent 75%, ${blueGrey[700]} 75%, ${blueGrey[700]})`;
 
 const defaultTheme = createMuiTheme({
   palette: {
@@ -73,10 +73,12 @@ const theme = createMuiTheme({
       }
     },
     MuiGrid: {
-      container: { height: "100%", overflow: "hidden" }
+      container: {}
     },
     MuiIconButton: {
       root: {
+        marginLeft: defaultTheme.spacing(1),
+        marginRight: defaultTheme.spacing(1),
         color: defaultTheme.palette.primary.dark
       }
     },
@@ -102,25 +104,21 @@ const theme = createMuiTheme({
       rail: {
         color: defaultTheme.palette.primary.light,
         width: `50% !important`,
-        opacity: "0.75",
-        left: "0%"
+        opacity: "0.75"
       },
       track: {
-        color: defaultTheme.palette.primary.main,
-        width: `50% !important`,
-        left: "0%"
+        color: "transparent",
+        width: `50% !important`
       },
       mark: {
-        width: "50%",
-        left: "0%"
+        width: "50%"
       },
       thumb: {
         color: defaultTheme.palette.secondary.wrappers.main,
         width: `90% !important`,
         height: `10px !important`,
         border: `2px solid ${defaultTheme.palette.primary.main}`,
-        borderRadius: defaultTheme.spacing(2),
-        left: "0%"
+        borderRadius: defaultTheme.spacing(2)
       }
     }
   }

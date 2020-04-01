@@ -1,27 +1,24 @@
 import React from "react";
-import { makeStyles, Paper } from "../../theme/themIndex";
+import { makeStyles } from "../../theme/themIndex";
 import { Spring, config } from "react-spring/renderprops";
-import { withGesture } from "react-with-gesture";
+// import { withGesture } from "react-with-gesture";
 
 const useStyles = makeStyles(theme => ({
   singleItem: {
     background: "",
     position: "absolute",
-    left: "15%",
     transformOrigin: "50% 50%",
-    width: "auto",
     height: "70%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center"
+    // boxShadow: `inset 1px 1px 4px ${theme.palette.primary.dark}, inset -1px -1px 4px ${theme.palette.primary.dark}`
   },
   img: {
-    height: "100%",
-    width: "auto"
+    height: "100%"
   },
   indicator: {
     height: "100%",
-    width: "auto",
     border: `${theme.palette.secondary.wrappers.main} 8px solid`,
     clipPath:
       "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)"
@@ -35,7 +32,7 @@ const Slider = ({ img, offsetRadius, index, delta }) => {
   // console.log(index, offsetRadius);
 
   const offsetFromMiddle = index - offsetRadius;
-  const totalPresentables = 2 * offsetRadius + 1;
+  // const totalPresentables = 2 * offsetRadius + 1;
   //for opacity- increase denominator to increase opacity (ex. ofsetRadius+1)
   const distanceFactor = 1 - Math.abs(offsetFromMiddle / offsetRadius);
 

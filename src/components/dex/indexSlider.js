@@ -1,7 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Slider } from "../../theme/themIndex";
+import React from "react";
+import { Slider, Grid, makeStyles } from "../../theme/themIndex";
+
+const useStyles = makeStyles(theme => ({
+  indexSlider: {
+    background: ""
+  }
+}));
 
 const IndexSlider = ({ index, slides, moveIndexBySlider }) => {
+  const classes = useStyles();
+
   //find min/max/marks
   let max = slides.length - 1;
   let min = 0;
@@ -27,14 +35,23 @@ const IndexSlider = ({ index, slides, moveIndexBySlider }) => {
   };
 
   return (
-    <Slider
-      orientation="vertical"
-      value={index}
-      onChange={handleSliderChange}
-      marks={makeMarks()}
-      max={max}
-      min={min}
-    />
+    <Grid
+      item
+      xs={1}
+      container
+      justify="center"
+      alignItems="center"
+      className={classes.indexSlider}
+    >
+      <Slider
+        orientation="vertical"
+        value={index}
+        onChange={handleSliderChange}
+        marks={makeMarks()}
+        max={max}
+        min={min}
+      />
+    </Grid>
   );
 };
 

@@ -1,46 +1,25 @@
 //https://codesandbox.io/s/react-vertical-carousel-d6mu7
-import React, { useState, useEffect } from "react";
-import {
-  Grid,
-  Toolbar,
-  Typography,
-  makeStyles,
-  IconButton,
-  ArrowUpward,
-  ArrowDownward
-} from "../../theme/themIndex";
+import React from "react";
+import { Grid, makeStyles } from "../../theme/themIndex";
 import PropTypes from "prop-types";
 import Slider from "./spriteSlider";
-import { useDexContext } from "../../context/globalContext";
 
 const useStyles = makeStyles(theme => ({
-  navs: {
+  // navs: {
+  //   background: "",
+  //   paddingLeft: theme.spacing(1),
+  //   boxShadow: `4px 0px 6px ${theme.palette.primary.dark}`
+  // },
+  spriteSlider: {
     background: "",
-    marginLeft: theme.spacing(1)
-  },
-  genLabel: {
-    marginLeft: theme.spacing(1),
-    background: ""
-  },
-  slideSide: {
-    background: "",
-    flex: "1",
-    position: "relative"
+    position: "relative",
+    overflow: "hidden"
   }
 }));
 
 const SpriteSide = props => {
   const classes = useStyles();
-  const {
-    slides,
-    index,
-    offsetRadius,
-    showNavigation,
-    moveSlide,
-    modBySlidesLength,
-    moveIndexBySlider
-  } = props;
-  const [{ currentDexGen, genList }, dispatch] = useDexContext();
+  const { slides, index, offsetRadius, moveSlide, modBySlidesLength } = props;
 
   //confirm data types
   SpriteSide.propTypes = {
@@ -98,59 +77,24 @@ const SpriteSide = props => {
     return presentableSlides;
   };
 
-  //+1 for up, -1 for down
-  const handleGenChange = direction => {
-    let num = currentDexGen;
-    if (direction < 0) {
-      if (currentDexGen === 1) {
-        num = 7;
-      } else {
-        num -= 1;
-      }
-    }
-    if (direction > 0) {
-      if (currentDexGen === 7) {
-        //set to 1
-        num = 1;
-      } else {
-        num += 1;
-      }
-    }
-    dispatch({ type: "updateCurrentDexGen", newGen: num });
-    moveIndexBySlider(0);
-  };
-
-  const navigationButtons = (
-    <Grid item className={classes.navs}>
-      <Toolbar disableGutters>
-        <IconButton onClick={() => handleGenChange(-1)}>
-          <ArrowDownward />
-        </IconButton>
-        <IconButton onClick={() => handleGenChange(1)}>
-          <ArrowUpward />
-        </IconButton>
-        <Typography className={classes.genLabel}>
-          Gen: {currentDexGen}
-        </Typography>
-      </Toolbar>
-    </Grid>
-  );
-
   return (
-    <>
-      <Grid item className={classes.slideSide}>
-        {getPresentableSlides().map((slide, index) => (
-          <Slider
-            key={slide.dexNo}
-            img={slide.img}
-            moveSlide={moveSlide}
-            offsetRadius={clampOffsetRadius(offsetRadius)}
-            index={index}
-          />
-        ))}
-      </Grid>
-      {showNavigation ? navigationButtons : null}
-    </>
+    <Grid
+      item
+      xs={5}
+      container
+      justify="center"
+      className={classes.spriteSlider}
+    >
+      {getPresentableSlides().map((slide, index) => (
+        <Slider
+          key={slide.dexNo}
+          img={slide.img}
+          moveSlide={moveSlide}
+          offsetRadius={clampOffsetRadius(offsetRadius)}
+          index={index}
+        />
+      ))}
+    </Grid>
   );
 };
 
