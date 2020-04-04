@@ -72,6 +72,10 @@ const Slider = ({ img, offsetRadius, index, delta }) => {
 
   const hasIndicator = offsetFromMiddle === 0 ? classes.indicator : classes.img;
 
+  function imgError() {
+    return "Poke image unavailable";
+  }
+
   return (
     <Spring
       to={{
@@ -91,7 +95,12 @@ const Slider = ({ img, offsetRadius, index, delta }) => {
             zIndex: Math.abs(Math.abs(offsetFromMiddle) - 2)
           }}
         >
-          <img className={hasIndicator} src={img} alt="poke-sprite" />
+          <img
+            className={hasIndicator}
+            src={img}
+            alt="poke-sprite"
+            onError={imgError}
+          />
         </div>
       )}
     </Spring>

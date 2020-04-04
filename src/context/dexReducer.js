@@ -18,6 +18,20 @@ const DexReducer = (state, action) => {
         ...state,
         currentDexGen: action.newGen
       };
+    case "updateGlobalIndex":
+      return {
+        ...state,
+        globalIndex: action.newIndex
+      };
+    case "updateSinglePokeUrl":
+      let currentSinglePoke = state.genList.slice();
+      currentSinglePoke[state.currentDexGen - 1].pokes[
+        state.globalIndex
+      ].urlObj = action.updatedNewPoke;
+      return {
+        ...state,
+        genList: currentSinglePoke
+      };
     case "updateLoading":
       return {
         ...state,

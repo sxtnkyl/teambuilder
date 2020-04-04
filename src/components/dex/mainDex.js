@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 
 const Dex = () => {
   const classes = useStyles();
-  const [{ genList, currentDexGen }, dispatch] = useDexContext();
+  const [{ genList, currentDexGen, globalIndex }, dispatch] = useDexContext();
   const slides = genList[currentDexGen - 1].pokes;
 
   const [state, setState] = useState({
@@ -43,7 +43,17 @@ const Dex = () => {
   });
   useEffect(() => {
     makeSlides(currentDexGen, genList, dispatch);
-  }, [currentDexGen]);
+
+    //made global state 'globalIndex' to use in dispatch for updateSinglePoke url/name objects
+    if (globalIndex !== state.index) {
+      dispatch({
+        type: "updateGlobalIndex",
+        // newPokemon: (selectedGen.pokes = pokeArr)
+        newIndex: state.index
+      });
+    }
+    console.log(genList);
+  }, [currentDexGen, state.index]);
 
   const activePoke =
     typeof slides[state.index] !== "undefined"
@@ -112,6 +122,7 @@ const Dex = () => {
         activePoke={activePoke}
         singlePokeOpen={state.singlePokeOpen}
         toggleSinglePokeOpen={toggleSinglePokeOpen}
+        index={state.index}
       />
       <Grid item container direction="row" className={classes.middleContent}>
         <SpriteSide

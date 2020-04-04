@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { animated, useSpring, config } from "react-spring";
+import { Spring } from "react-spring/renderprops";
 import {
   Grid,
+  Tabs,
+  Tab,
   makeStyles,
   Typography,
   IconButton,
@@ -15,41 +18,78 @@ const useStyles = makeStyles(theme => ({
   topNav: {
     zIndex: "2",
     boxShadow: `-4px 0px 6px ${theme.palette.primary.dark}`
+  },
+  top: {
+    background: `linear-gradient(135deg, white 20%, transparent 20%)`,
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(1),
+    alignSelf: "flex-start"
   }
 }));
 
-const TopNav = ({ activePoke, singlePokeOpen, toggleSinglePokeOpen }) => {
+const TopNav = ({
+  activePoke,
+  singlePokeOpen,
+  toggleSinglePokeOpen,
+  index
+}) => {
   const classes = useStyles();
 
-  const AnimatedNav = animated(Grid);
-  const openSinglePoke = useSpring({
-    height: singlePokeOpen ? "92%" : "8%",
-    background: singlePokeOpen
-      ? `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.dark})`
-      : `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.main})`
-  });
-
-  const closedTopNav = (
-    <>
-      <Typography variant="h5">{activePoke.name}</Typography>
-      <IconButton onClick={toggleSinglePokeOpen}>
-        {singlePokeOpen ? <ArrowUpward /> : <ArrowDownward />}
-      </IconButton>
-    </>
+  const [tabs, setTabs] = useState(0);
+  const handleTabs = (e, newtab) => {
+    setTabs(newtab);
+  };
+  const headers = ["Details", "Moves", "Stats", "Breeding"];
+  const headerTabs = (
+    <Tabs value={tabs} onChange={handleTabs}>
+      {headers.map((header, index) => (
+        <Tab key={index} label={`${header}`} />
+      ))}
+    </Tabs>
   );
 
-  return (
-    <AnimatedNav
-      style={openSinglePoke}
+  const closedTopNav = (
+    <Grid
       item
       container
       justify="space-between"
       alignItems="center"
-      className={classes.topNav}
+      className={classes.top}
     >
-      {closedTopNav}
-      {singlePokeOpen && <SinglePoke />}
-    </AnimatedNav>
+      <Typography variant="h5">{activePoke.name}</Typography>
+      {singlePokeOpen && headerTabs}
+      <IconButton onClick={toggleSinglePokeOpen}>
+        {singlePokeOpen ? <ArrowUpward /> : <ArrowDownward />}
+      </IconButton>
+    </Grid>
+  );
+
+  return (
+    <Spring
+      to={{
+        height: !singlePokeOpen ? "7%" : "92%",
+        paddingTop: !singlePokeOpen ? "0px" : "10px",
+        background: singlePokeOpen
+          ? `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.dark})`
+          : `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.main})`
+      }}
+    >
+      {style => (
+        <Grid
+          style={style}
+          item
+          container
+          direction="row"
+          alignItems="center"
+          className={classes.topNav}
+        >
+          {closedTopNav}
+          {singlePokeOpen && (
+            <SinglePoke activePoke={activePoke} index={index} />
+          )}
+        </Grid>
+      )}
+    </Spring>
   );
 };
 

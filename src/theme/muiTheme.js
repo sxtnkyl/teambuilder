@@ -43,6 +43,10 @@ const theme = createMuiTheme({
       padding: defaultTheme.spacing(3),
       width: "100%"
     },
+    h5: {
+      color: defaultTheme.palette.primary.main,
+      fontWeight: "700"
+    },
     body1: {
       textTransform: "uppercase",
       textAlign: "center",
@@ -93,6 +97,19 @@ const theme = createMuiTheme({
         backgroundColor: fade(defaultTheme.palette.secondary.dark, 0.2),
         backdropFilter: "blur(15px)",
         boxShadow: defaultTheme.shadows[20]
+      }
+    },
+    MuiTabs: {
+      root: {},
+      indicator: {
+        background: defaultTheme.palette.primary.dark
+      }
+    },
+    MuiTab: {
+      wrapper: {
+        color: defaultTheme.palette.primary.dark,
+        fontSize: defaultTheme.typography.body1.fontSize,
+        fontWeight: "700"
       }
     },
     MuiSlider: {

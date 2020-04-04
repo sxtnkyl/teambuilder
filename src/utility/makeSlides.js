@@ -16,7 +16,9 @@ const makeSlides = (genNum, genList, dispatch) => {
       dexNo: 0,
       img: "",
       url: url,
-      nameUrl: ""
+      nameUrl: "",
+      urlObj: {},
+      nameUrlObj: {}
     };
 
     const dexname = name

@@ -55,6 +55,7 @@ export const DexState = {
   genList: gens,
   //currently selected gen to display in dex component
   currentDexGen: 1,
+  globalIndex: 0,
   loading: false
 };
 
