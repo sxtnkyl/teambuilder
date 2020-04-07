@@ -14,44 +14,44 @@ const makeSinglePoke = (currentSinglePoke, dispatch) => {
   //url: https://pokeapi.co/api/v2/pokemon-species/123/
   //nameUrl : https://pokeapi.co/api/v2/pokemon/pokemonsName/
   //and stores all relevant info into urlObj and nameUrlObj in global state
-  console.log(currentSinglePoke);
 
-  const { name, dexNo, img, url, nameUrl, urlObj, nameObj } = currentSinglePoke;
+  const { name, dexNo } = currentSinglePoke;
 
-  const fetchNameData = async () => {
-    try {
-      const res = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon-species/${dexNo}`
-      );
-      const fetchedPoke = res.data;
-      console.log(fetchedPoke);
-      //dispatch obj into global context
-      dispatch({
-        type: "updateSinglePokeUrl",
-        // newPokemon: (selectedGen.pokes = pokeArr)
-        updatedNewPoke: fetchedPoke
-      });
-    } catch (e) {
-      console.log("the error is", e);
-    }
+  const fetchUrlData = () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon-species/${dexNo}`)
+        .then((res) => {
+          resolve(res.data);
+        })
+
+        .catch((e) => {
+          console.error(e);
+          reject(e);
+        });
+    });
   };
-  fetchNameData();
-  // const fetchUrlData = async () => {
-  //   try {
-  //     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/`);
-  //     const fetchedPokes = res.data["results"];
-  //     const pokeArr = [];
-  //     fetchedPokes.forEach(p => pokeArr.push(makeUrlInfo(p)));
-  //     //update context- find index of gen, change pokes property
-  //     dispatch({
-  //       type: "updateGenList",
-  //       // newPokemon: (selectedGen.pokes = pokeArr)
-  //       newPokemon: pokeArr
-  //     });
-  //   } catch (e) {
-  //     console.log("the error is", e);
-  //   }
-  // };
+
+  const fetchNameData = () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
+        .then((res) => {
+          resolve(res.data);
+        })
+        //dispatch obj into global context
+        .catch((e) => {
+          console.error(e);
+          reject(e);
+        });
+    });
+  };
+
+  return Promise.all([fetchUrlData(), fetchNameData()]).then(
+    ([urldata, namedata]) => {
+      return { urldata, namedata };
+    }
+  );
 };
 
 export default makeSinglePoke;

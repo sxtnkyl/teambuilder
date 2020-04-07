@@ -7,7 +7,7 @@ import axios from "axios";
 const makeSlides = (genNum, genList, dispatch) => {
   const selectedGen = genList[genNum - 1];
 
-  const makeInfo = poke => {
+  const makeInfo = (poke) => {
     //returns object with name no url img
     //url = https://pokeapi.co/api/v2/pokemon-species/123/
     const { name, url } = poke;
@@ -17,14 +17,14 @@ const makeSlides = (genNum, genList, dispatch) => {
       img: "",
       url: url,
       nameUrl: "",
-      urlObj: {},
-      nameUrlObj: {}
+      urlObj: { flavor_text_entries: [] },
+      nameUrlObj: { types: [] },
     };
 
     const dexname = name
       .toLowerCase()
       .split(" ")
-      .map(letter => letter.charAt(0).toUpperCase() + letter.substring(1))
+      .map((letter) => letter.charAt(0).toUpperCase() + letter.substring(1))
       .join(" ");
     const dexno = parseInt(url.split("/")[url.split("/").length - 2]);
     const pokeimg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${dexno}.png`;
@@ -44,12 +44,12 @@ const makeSlides = (genNum, genList, dispatch) => {
       );
       const fetchedPokes = res.data["results"];
       const pokeArr = [];
-      fetchedPokes.forEach(p => pokeArr.push(makeInfo(p)));
+      fetchedPokes.forEach((p) => pokeArr.push(makeInfo(p)));
       //update context- find index of gen, change pokes property
       dispatch({
         type: "updateGenList",
         // newPokemon: (selectedGen.pokes = pokeArr)
-        newPokemon: pokeArr
+        newPokemon: pokeArr,
       });
     } catch (e) {
       console.log("the error is", e);

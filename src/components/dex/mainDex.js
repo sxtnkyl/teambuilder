@@ -5,27 +5,27 @@ import {
   Typography,
   IconButton,
   ArrowDownward,
-  ArrowUpward
+  ArrowUpward,
 } from "../../theme/themIndex";
 import TopNav from "./topNav";
 import BotNav from "./botNav";
-import SpriteSide from "./spriteSide";
-import ListSide from "./listSide";
-import IndexSlider from "./indexSlider";
+import SpriteSide from "./list_view_components/spriteSide";
+import ListSide from "./list_view_components/listSide";
+import IndexSlider from "./list_view_components/indexSlider";
 import makeSlides from "../../utility/makeSlides";
 import { useDexContext } from "../../context/globalContext";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     background: "",
     height: "100%",
     overflow: "hidden",
-    borderRadius: theme.shape.borderRadius * 2
+    borderRadius: theme.shape.borderRadius * 2,
   },
   middleContent: {
     background: "",
-    flexGrow: "1"
-  }
+    flexGrow: "1",
+  },
 }));
 
 const Dex = () => {
@@ -39,7 +39,7 @@ const Dex = () => {
     offsetRadiusList: 4,
     index: 0,
     showNavigation: true,
-    singlePokeOpen: false
+    singlePokeOpen: false,
   });
   useEffect(() => {
     makeSlides(currentDexGen, genList, dispatch);
@@ -49,10 +49,9 @@ const Dex = () => {
       dispatch({
         type: "updateGlobalIndex",
         // newPokemon: (selectedGen.pokes = pokeArr)
-        newIndex: state.index
+        newIndex: state.index,
       });
     }
-    console.log(genList);
   }, [currentDexGen, state.index]);
 
   const activePoke =
@@ -60,21 +59,21 @@ const Dex = () => {
       ? slides[state.index]
       : "Loading...";
 
-  const moveIndexBySlider = i => {
+  const moveIndexBySlider = (i) => {
     setState({
       ...state,
       // goToSlide: null,
-      index: i
+      index: i,
     });
   };
 
   //////need to set limit on renders//////
   //pass 1 or -1 as direction
-  const moveSlide = direction => {
+  const moveSlide = (direction) => {
     setState({
       ...state,
       // goToSlide: null,
-      index: modBySlidesLength(state.index + direction)
+      index: modBySlidesLength(state.index + direction),
     });
   };
 
@@ -83,12 +82,12 @@ const Dex = () => {
     return ((a % b) + b) % b;
   }
 
-  const modBySlidesLength = index => {
+  const modBySlidesLength = (index) => {
     return mod(index, slides.length);
   };
 
   //+1 for up, -1 for down
-  const handleGenChange = direction => {
+  const handleGenChange = (direction) => {
     let num = currentDexGen;
     if (direction < 0) {
       if (currentDexGen === 1) {
@@ -112,7 +111,7 @@ const Dex = () => {
   const toggleSinglePokeOpen = () => {
     setState({
       ...state,
-      singlePokeOpen: !state.singlePokeOpen
+      singlePokeOpen: !state.singlePokeOpen,
     });
   };
 
@@ -122,7 +121,6 @@ const Dex = () => {
         activePoke={activePoke}
         singlePokeOpen={state.singlePokeOpen}
         toggleSinglePokeOpen={toggleSinglePokeOpen}
-        index={state.index}
       />
       <Grid item container direction="row" className={classes.middleContent}>
         <SpriteSide

@@ -4,38 +4,47 @@ const DexReducer = (state, action) => {
     case "toggleOpen":
       return {
         ...state,
-        open: !state.open
+        open: !state.open,
       };
     case "updateGenList":
       let updatedGenList = state.genList.slice();
       updatedGenList[state.currentDexGen - 1].pokes = action.newPokemon;
       return {
         ...state,
-        genList: updatedGenList
+        genList: updatedGenList,
       };
     case "updateCurrentDexGen":
       return {
         ...state,
-        currentDexGen: action.newGen
+        currentDexGen: action.newGen,
       };
     case "updateGlobalIndex":
       return {
         ...state,
-        globalIndex: action.newIndex
+        globalIndex: action.newIndex,
       };
     case "updateSinglePokeUrl":
-      let currentSinglePoke = state.genList.slice();
-      currentSinglePoke[state.currentDexGen - 1].pokes[
+      let currentSinglePokeUrl = state.genList.slice();
+      currentSinglePokeUrl[state.currentDexGen - 1].pokes[
         state.globalIndex
-      ].urlObj = action.updatedNewPoke;
+      ].urlObj = action.updatedNewPokeUrl;
       return {
         ...state,
-        genList: currentSinglePoke
+        genList: currentSinglePokeUrl,
+      };
+    case "updateSinglePokeName":
+      let currentSinglePokeName = state.genList.slice();
+      currentSinglePokeName[state.currentDexGen - 1].pokes[
+        state.globalIndex
+      ].nameUrlObj = action.updatedNewPokeName;
+      return {
+        ...state,
+        genList: currentSinglePokeName,
       };
     case "updateLoading":
       return {
         ...state,
-        loading: false
+        loading: false,
       };
 
     default:

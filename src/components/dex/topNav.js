@@ -9,30 +9,25 @@ import {
   Typography,
   IconButton,
   ArrowDownward,
-  ArrowUpward
+  ArrowUpward,
 } from "../../theme/themIndex";
 import theme from "../../theme/muiTheme";
-import SinglePoke from "./singlePoke";
+import SinglePoke from "./single_poke_components/singlePoke";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   topNav: {
     zIndex: "2",
-    boxShadow: `-4px 0px 6px ${theme.palette.primary.dark}`
+    boxShadow: `-4px 0px 6px ${theme.palette.primary.dark}`,
   },
   top: {
     background: `linear-gradient(135deg, white 20%, transparent 20%)`,
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(1),
-    alignSelf: "flex-start"
-  }
+    alignSelf: "flex-start",
+  },
 }));
 
-const TopNav = ({
-  activePoke,
-  singlePokeOpen,
-  toggleSinglePokeOpen,
-  index
-}) => {
+const TopNav = ({ activePoke, singlePokeOpen, toggleSinglePokeOpen }) => {
   const classes = useStyles();
 
   const [tabs, setTabs] = useState(0);
@@ -71,10 +66,10 @@ const TopNav = ({
         paddingTop: !singlePokeOpen ? "0px" : "10px",
         background: singlePokeOpen
           ? `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.dark})`
-          : `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.main})`
+          : `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.main})`,
       }}
     >
-      {style => (
+      {(style) => (
         <Grid
           style={style}
           item
@@ -84,9 +79,7 @@ const TopNav = ({
           className={classes.topNav}
         >
           {closedTopNav}
-          {singlePokeOpen && (
-            <SinglePoke activePoke={activePoke} index={index} />
-          )}
+          {singlePokeOpen && <SinglePoke singlePokeOpen={singlePokeOpen} />}
         </Grid>
       )}
     </Spring>

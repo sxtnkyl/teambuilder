@@ -1,9 +1,9 @@
 import React from "react";
-import { makeStyles } from "../../theme/themIndex";
+import { makeStyles } from "../../../theme/themIndex";
 import { Spring, config } from "react-spring/renderprops";
 // import { withGesture } from "react-with-gesture";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   singleItem: {
     background: "",
     position: "absolute",
@@ -11,18 +11,18 @@ const useStyles = makeStyles(theme => ({
     height: "70%",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
     // boxShadow: `inset 1px 1px 4px ${theme.palette.primary.dark}, inset -1px -1px 4px ${theme.palette.primary.dark}`
   },
   img: {
-    height: "100%"
+    height: "100%",
   },
   indicator: {
     height: "100%",
     border: `${theme.palette.secondary.wrappers.main} 8px solid`,
     clipPath:
-      "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)"
-  }
+      "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
+  },
 }));
 
 //content = sprite
@@ -83,16 +83,16 @@ const Slider = ({ img, offsetRadius, index, delta }) => {
         top: `${
           offsetRadius === 0 ? 50 : 50 + (offsetFromMiddle * 50) / offsetRadius
         }%`,
-        opacity: distanceFactor * distanceFactor
+        opacity: distanceFactor * distanceFactor,
       }}
       config={config.gentle}
     >
-      {style => (
+      {(style) => (
         <div
           className={classes.singleItem}
           style={{
             ...style,
-            zIndex: Math.abs(Math.abs(offsetFromMiddle) - 2)
+            zIndex: Math.abs(Math.abs(offsetFromMiddle) - 2),
           }}
         >
           <img

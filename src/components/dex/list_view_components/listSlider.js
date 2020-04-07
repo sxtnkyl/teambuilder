@@ -5,12 +5,12 @@ import {
   ListItemText,
   Typography,
   Button,
-  Details
-} from "../../theme/themIndex";
+  Details,
+} from "../../../theme/themIndex";
 import { Spring, config } from "react-spring/renderprops";
 // import { withGesture } from "react-with-gesture";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   indicator: {
     background: "white",
     boxShadow: `2px 2px 3px ${theme.palette.primary.dark}`,
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     border: `${theme.palette.secondary.wrappers.main} 2px solid`,
     position: "absolute",
     transformOrigin: "50% 50%",
-    width: "95%"
+    width: "95%",
   },
   tag: {
     background: "linear-gradient(145deg, #dc3c31, #ff483a)",
@@ -27,20 +27,20 @@ const useStyles = makeStyles(theme => ({
     border: `${theme.palette.primary.main} 2px solid`,
     position: "absolute",
     transformOrigin: "50% 50%",
-    width: "90%"
+    width: "90%",
   },
   button: {
     border: "none",
     width: "100%",
     background: theme.palette.secondary.light,
     clipPath:
-      "polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)"
+      "polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)",
   },
   leftPointer: {
     transform: "rotate(90deg)",
     marginRight: theme.spacing(2),
-    color: theme.palette.secondary.wrappers.main
-  }
+    color: theme.palette.secondary.wrappers.main,
+  },
 }));
 
 //content = sprite
@@ -101,15 +101,15 @@ const ListSlider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
         top: `${
           offsetRadius === 0 ? 50 : 50 + (offsetFromMiddle * 50) / offsetRadius
         }%`,
-        opacity: distanceFactor > 0 ? 1 : 0
+        opacity: distanceFactor > 0 ? 1 : 0,
       }}
       config={config.gentle}
     >
-      {style => (
+      {(style) => (
         <ListItem
           style={{
             ...style,
-            zIndex: Math.abs(Math.abs(offsetFromMiddle) - 2)
+            zIndex: Math.abs(Math.abs(offsetFromMiddle) - 2),
           }}
           className={hasIndicator}
         >

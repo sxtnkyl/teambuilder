@@ -1,10 +1,10 @@
 import React from "react";
-import { Slider, Grid, makeStyles } from "../../theme/themIndex";
+import { Slider, Grid, makeStyles } from "../../../theme/themIndex";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   indexSlider: {
-    background: ""
-  }
+    background: "",
+  },
 }));
 
 const IndexSlider = ({ index, slides, moveIndexBySlider }) => {
