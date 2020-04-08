@@ -16,20 +16,13 @@ import makeSinglePoke from "../../../utility/makeSinglePoke";
 import { useDexContext } from "../../../context/globalContext";
 import Details from "./details";
 
-//body made of cards sorted by tabs:
+//This component fetches data and displays the corresponding active tab
 
 //MOVES: moves(name/type/power/acc) by levelup, tm, egg //expand to see individual class/pp/descrip
 //STATS: abilities/typing matchups, base stats
 //BREEDING: egg groups happy growth rate hatch counter
 
 const useStyles = makeStyles((theme) => ({
-  singlePoke: {
-    background: "",
-    minHeight: "84%",
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
-    overflowY: "auto",
-  },
   card: {
     background: "white",
     boxShadow: `2px 2px 3px ${theme.palette.primary.dark}`,
@@ -42,30 +35,25 @@ const SinglePoke = ({ singlePokeOpen }) => {
   const classes = useStyles();
   const [{ genList, currentDexGen, globalIndex }, dispatch] = useDexContext();
 
-  //things in global state
-  let slides = genList[currentDexGen - 1].pokes;
-  let currentSinglePoke = slides[globalIndex];
-  let currentUrlObj = currentSinglePoke.urlObj;
-  let currentNameUrlObj = currentSinglePoke.nameUrlObj;
-
-  const [ready, isReady] = useState(false);
-
-  //catch cases
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    //index changed and data already saved
-    if (
-      currentUrlObj.flavor_text_entries.length !== 0 &&
-      currentNameUrlObj.types.length !== 0
-    ) {
-      isReady(true);
-    }
-    //no data in global state, fetch it
-    else if (
-      currentUrlObj.flavor_text_entries.length === 0 &&
-      currentNameUrlObj.types.length === 0
-    ) {
-      isReady(false);
+    //things in global state
+    let slides = genList[currentDexGen - 1].pokes;
+    let currentSinglePoke = slides[globalIndex];
+    let currentUrlObj = currentSinglePoke.urlObj;
+    let currentNameUrlObj = currentSinglePoke.nameUrlObj;
+
+    let checkData = () => {
+      return currentUrlObj.flavor_text_entries.length &&
+        currentNameUrlObj.types.length
+        ? setReady(true)
+        : setReady(false);
+    };
+    checkData();
+
+    if (!ready) {
       makeSinglePoke(currentSinglePoke)
+        .then(setReady(false))
         .then((data) => {
           dispatch({
             type: "updateSinglePokeUrl",
@@ -78,21 +66,60 @@ const SinglePoke = ({ singlePokeOpen }) => {
             updatedNewPokeName: data.namedata,
           });
         })
-        .then(isReady(true));
+        //slight artificial delay for animation
+        .then(
+          setTimeout(() => {
+            setReady(true);
+          }, 1000)
+        );
+      //real-time loading
+      // .then(setReady(true));
     }
   }, [globalIndex, singlePokeOpen]);
 
+  //catch cases
+  // useEffect(() => {
+  //   //index changed and data already saved
+  //   // if (!ready) {
+  //   //   setReady(true);
+  //   // }
+  //   //no data in global state, fetch it
+  //   if (ready) {
+  //     makeSinglePoke(genList[currentDexGen - 1].pokes[globalIndex])
+  //       .then(setReady(false))
+  //       .then((data) => {
+  //         dispatch({
+  //           type: "updateSinglePokeUrl",
+  //           // newPokemon: (selectedGen.pokes = pokeArr)
+  //           updatedNewPokeUrl: data.urldata,
+  //         });
+  //         dispatch({
+  //           type: "updateSinglePokeName",
+  //           // newPokemon: (selectedGen.pokes = pokeArr)
+  //           updatedNewPokeName: data.namedata,
+  //         });
+  //       })
+  //       //slight artificial delay for animation
+  //       .then(
+  //         setTimeout(() => {
+  //           setReady(true);
+  //         }, 1000)
+  //       );
+  //     //real-time loading
+  //     // .then(setReady(true));
+  //   }
+  // }, [ready]);
+
   return (
-    <Grid
-      item
-      xs={12}
-      container
-      justify="space-between"
-      alignItems="center"
-      className={classes.singlePoke}
-    >
-      {ready ? <Details currentSinglePoke={currentSinglePoke} /> : "Loading..."}
-    </Grid>
+    <>
+      {ready ? (
+        <Details
+          currentSinglePoke={genList[currentDexGen - 1].pokes[globalIndex]}
+        />
+      ) : (
+        "Loading..."
+      )}
+    </>
   );
 };
 

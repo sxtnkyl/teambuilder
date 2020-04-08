@@ -8,7 +8,9 @@ import {
   ArrowUpward,
 } from "../../theme/themIndex";
 import TopNav from "./topNav";
+import SinglePoke from "./single_poke_components/singlePoke";
 import BotNav from "./botNav";
+
 import SpriteSide from "./list_view_components/spriteSide";
 import ListSide from "./list_view_components/listSide";
 import IndexSlider from "./list_view_components/indexSlider";
@@ -19,12 +21,22 @@ const useStyles = makeStyles((theme) => ({
   container: {
     background: "",
     height: "100%",
-    overflow: "hidden",
+    maxHeight: "100%",
     borderRadius: theme.shape.borderRadius * 2,
+    overflow: "hidden",
   },
-  middleContent: {
+  listView: {
     background: "",
-    flexGrow: "1",
+    flex: "1",
+  },
+  singlePokeView: {
+    margin: theme.spacing(1),
+    background: "",
+    flex: "1",
+    overflow: "auto",
+    "::-webkit-scrollbar-thumb": {
+      color: theme.palette.secondary.main,
+    },
   },
 }));
 
@@ -116,38 +128,67 @@ const Dex = () => {
   };
 
   return (
-    <Grid container direction="column" className={classes.container}>
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      className={classes.container}
+    >
       <TopNav
         activePoke={activePoke}
         singlePokeOpen={state.singlePokeOpen}
         toggleSinglePokeOpen={toggleSinglePokeOpen}
       />
-      <Grid item container direction="row" className={classes.middleContent}>
-        <SpriteSide
-          slides={slides}
-          index={state.index}
-          offsetRadius={state.offsetRadiusSprite}
-          showNavigation={state.showNavigation}
-          moveSlide={moveSlide}
-          modBySlidesLength={modBySlidesLength}
-          moveIndexBySlider={moveIndexBySlider}
-        />
-        <ListSide
-          slides={slides}
-          index={state.index}
-          offsetRadius={state.offsetRadiusList}
-          showNavigation={state.showNavigation}
-          moveSlide={moveSlide}
-          modBySlidesLength={modBySlidesLength}
-          moveIndexBySlider={moveIndexBySlider}
-        />
-        <IndexSlider
-          index={state.index}
-          slides={slides}
-          moveIndexBySlider={moveIndexBySlider}
-        />
-      </Grid>
-      <BotNav handleGenChange={handleGenChange} moveSlide={moveSlide} />
+
+      {state.singlePokeOpen ? (
+        <Grid
+          xs={11}
+          item
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          spacing={2}
+          className={classes.singlePokeView}
+        >
+          <SinglePoke singlePokeOpen={state.singlePokeOpen} />
+        </Grid>
+      ) : (
+        <Grid item container direction="row" className={classes.listView}>
+          <SpriteSide
+            slides={slides}
+            index={state.index}
+            offsetRadius={state.offsetRadiusSprite}
+            showNavigation={state.showNavigation}
+            moveSlide={moveSlide}
+            modBySlidesLength={modBySlidesLength}
+            moveIndexBySlider={moveIndexBySlider}
+          />
+          <ListSide
+            slides={slides}
+            index={state.index}
+            offsetRadius={state.offsetRadiusList}
+            showNavigation={state.showNavigation}
+            moveSlide={moveSlide}
+            modBySlidesLength={modBySlidesLength}
+            moveIndexBySlider={moveIndexBySlider}
+          />
+          <IndexSlider
+            index={state.index}
+            slides={slides}
+            moveIndexBySlider={moveIndexBySlider}
+          />
+        </Grid>
+      )}
+
+      {/* <Grid item className={classes.middleContent}>
+        test
+      </Grid> */}
+      <BotNav
+        handleGenChange={handleGenChange}
+        moveSlide={moveSlide}
+        singlePokeOpen={state.singlePokeOpen}
+      />
     </Grid>
   );
 };

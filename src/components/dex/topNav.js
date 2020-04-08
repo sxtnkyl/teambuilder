@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { animated, useSpring, config } from "react-spring";
 import { Spring } from "react-spring/renderprops";
 import {
   Grid,
@@ -17,13 +16,17 @@ import SinglePoke from "./single_poke_components/singlePoke";
 const useStyles = makeStyles((theme) => ({
   topNav: {
     zIndex: "2",
-    boxShadow: `-4px 0px 6px ${theme.palette.primary.dark}`,
+    boxShadow: `0px 4px 4px ${theme.palette.primary.dark}`,
+    minHeight: "8%",
   },
   top: {
     background: `linear-gradient(135deg, white 20%, transparent 20%)`,
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(1),
-    alignSelf: "flex-start",
+    paddingBottom: theme.spacing(1),
+  },
+  tabs: {
+    marginLeft: "auto",
   },
 }));
 
@@ -36,7 +39,7 @@ const TopNav = ({ activePoke, singlePokeOpen, toggleSinglePokeOpen }) => {
   };
   const headers = ["Details", "Moves", "Stats", "Breeding"];
   const headerTabs = (
-    <Tabs value={tabs} onChange={handleTabs}>
+    <Tabs value={tabs} onChange={handleTabs} className={classes.tabs}>
       {headers.map((header, index) => (
         <Tab key={index} label={`${header}`} />
       ))}
@@ -62,11 +65,10 @@ const TopNav = ({ activePoke, singlePokeOpen, toggleSinglePokeOpen }) => {
   return (
     <Spring
       to={{
-        height: !singlePokeOpen ? "7%" : "92%",
-        paddingTop: !singlePokeOpen ? "0px" : "10px",
+        paddingTop: !singlePokeOpen ? "0px" : `${theme.spacing(2)}`,
         background: singlePokeOpen
-          ? `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.dark})`
-          : `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.main})`,
+          ? `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.light})`
+          : `linear-gradient(${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
       }}
     >
       {(style) => (
@@ -79,7 +81,6 @@ const TopNav = ({ activePoke, singlePokeOpen, toggleSinglePokeOpen }) => {
           className={classes.topNav}
         >
           {closedTopNav}
-          {singlePokeOpen && <SinglePoke singlePokeOpen={singlePokeOpen} />}
         </Grid>
       )}
     </Spring>

@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
+import { Spring } from "react-spring/renderprops";
 import {
   Grid,
   makeStyles,
   Typography,
   IconButton,
   ArrowDownward,
-  ArrowUpward
+  ArrowUpward,
 } from "../../theme/themIndex";
+import theme from "../../theme/muiTheme";
 import { useDexContext } from "../../context/globalContext";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   botNav: {
     zIndex: "2",
-    background: `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.main})`,
-    minHeight: "8%",
-    boxShadow: `4px 0px 6px ${theme.palette.primary.dark}`
+    background: `linear-gradient(${theme.palette.secondary.main}, ${theme.palette.secondary.dark})`,
+    mixHeight: "8%",
+    boxShadow: `0px -4px 4px ${theme.palette.primary.dark}`,
+    marginTop: "auto",
   },
   genNavs: {},
-  listNavs: {}
+  listNavs: {},
 }));
 
-const BotNav = ({ handleGenChange, moveSlide }) => {
+const BotNav = ({ handleGenChange, moveSlide, singlePokeOpen }) => {
   const classes = useStyles();
   const [{ currentDexGen }, dispatch] = useDexContext();
 
@@ -46,18 +49,46 @@ const BotNav = ({ handleGenChange, moveSlide }) => {
     </Grid>
   );
 
+  // return (
+  //   <Grid
+  //     item
+  //     container
+  //     justify="space-between"
+  //     alignItems="center"
+  //     className={classes.botNav}
+  //   >
+  //     {genNavButtons}
+  //     <Typography className={classes.genLabel}>Gen: {currentDexGen}</Typography>
+  //     {listNavButtons}
+  //   </Grid>
+  // );
   return (
-    <Grid
-      item
-      container
-      justify="space-between"
-      alignItems="center"
-      className={classes.botNav}
+    <Spring
+      to={{
+        paddingTop: !singlePokeOpen ? "0px" : `${theme.spacing(1)}`,
+        paddingBottom: !singlePokeOpen ? "0px" : `${theme.spacing(1)}`,
+        background: singlePokeOpen
+          ? `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.light})`
+          : `linear-gradient(${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
+      }}
     >
-      {genNavButtons}
-      <Typography className={classes.genLabel}>Gen: {currentDexGen}</Typography>
-      {listNavButtons}
-    </Grid>
+      {(style) => (
+        <Grid
+          style={style}
+          item
+          container
+          justify="space-between"
+          alignItems="center"
+          className={classes.botNav}
+        >
+          {genNavButtons}
+          <Typography className={classes.genLabel}>
+            Gen: {currentDexGen}
+          </Typography>
+          {listNavButtons}
+        </Grid>
+      )}
+    </Spring>
   );
 };
 
