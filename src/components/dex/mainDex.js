@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Grid,
-  makeStyles,
-  Typography,
-  IconButton,
-  ArrowDownward,
-  ArrowUpward,
-} from "../../theme/themIndex";
+import { Grid, makeStyles } from "../../theme/themIndex";
 import TopNav from "./topNav";
 import SinglePoke from "./single_poke_components/singlePoke";
 import BotNav from "./botNav";
@@ -14,6 +7,7 @@ import BotNav from "./botNav";
 import SpriteSide from "./list_view_components/spriteSide";
 import ListSide from "./list_view_components/listSide";
 import IndexSlider from "./list_view_components/indexSlider";
+
 import makeSlides from "../../utility/makeSlides";
 import { useDexContext } from "../../context/globalContext";
 
@@ -30,12 +24,22 @@ const useStyles = makeStyles((theme) => ({
     flex: "1",
   },
   singlePokeView: {
-    margin: theme.spacing(1),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    paddingRight: theme.spacing(4),
     background: "",
     flex: "1",
     overflow: "auto",
-    "::-webkit-scrollbar-thumb": {
-      color: theme.palette.secondary.main,
+    "&::-webkit-scrollbar": {
+      width: theme.spacing(1),
+      opacity: "0.5",
+    },
+    "&::-webkit-scrollbar-track": {
+      width: theme.spacing(2),
+      backgroundColor: theme.palette.primary.light,
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: theme.palette.primary.main,
     },
   },
 }));
@@ -50,6 +54,7 @@ const Dex = () => {
     offsetRadiusSprite: 2,
     offsetRadiusList: 4,
     index: 0,
+    activeTab: 0,
     showNavigation: true,
     singlePokeOpen: false,
   });
@@ -127,6 +132,10 @@ const Dex = () => {
     });
   };
 
+  const handleTabs = (e, newtab) => {
+    setState({ ...state, activeTab: newtab });
+  };
+
   return (
     <Grid
       container
@@ -138,6 +147,8 @@ const Dex = () => {
         activePoke={activePoke}
         singlePokeOpen={state.singlePokeOpen}
         toggleSinglePokeOpen={toggleSinglePokeOpen}
+        handleTabs={handleTabs}
+        tabs={state.activeTab}
       />
 
       {state.singlePokeOpen ? (
@@ -146,12 +157,14 @@ const Dex = () => {
           item
           container
           direction="row"
-          justify="center"
           alignItems="center"
           spacing={2}
           className={classes.singlePokeView}
         >
-          <SinglePoke singlePokeOpen={state.singlePokeOpen} />
+          <SinglePoke
+            singlePokeOpen={state.singlePokeOpen}
+            activeTab={state.activeTab}
+          />
         </Grid>
       ) : (
         <Grid item container direction="row" className={classes.listView}>
@@ -180,10 +193,6 @@ const Dex = () => {
           />
         </Grid>
       )}
-
-      {/* <Grid item className={classes.middleContent}>
-        test
-      </Grid> */}
       <BotNav
         handleGenChange={handleGenChange}
         moveSlide={moveSlide}

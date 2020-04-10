@@ -11,18 +11,18 @@ const carbon =
 const defaultTheme = createMuiTheme({
   palette: {
     primary: {
-      main: blueGrey[900]
+      main: blueGrey[900],
     },
     secondary: {
       main: lightBlue["A400"],
       wrappers: {
-        main: red[500]
+        main: red[500],
       },
       carbonTexture: {
-        main: carbon
-      }
-    }
-  }
+        main: carbon,
+      },
+    },
+  },
 });
 
 const theme = createMuiTheme({
@@ -30,8 +30,8 @@ const theme = createMuiTheme({
     primary: defaultTheme.palette.primary,
     secondary: defaultTheme.palette.secondary,
     background: {
-      paper: defaultTheme.palette.secondary.light
-    }
+      paper: defaultTheme.palette.secondary.light,
+    },
   },
   spacing: defaultTheme.spacing,
   typography: {
@@ -41,18 +41,18 @@ const theme = createMuiTheme({
       color: "white",
       fontWeight: "700",
       padding: defaultTheme.spacing(3),
-      width: "100%"
+      width: "100%",
     },
     h5: {
       color: defaultTheme.palette.primary.main,
-      fontWeight: "700"
+      fontWeight: "700",
     },
     body1: {
       textTransform: "uppercase",
       textAlign: "center",
       color: defaultTheme.palette.primary.main,
-      fontWeight: "700"
-    }
+      fontWeight: "700",
+    },
   },
   overrides: {
     MuiContainer: {
@@ -66,79 +66,79 @@ const theme = createMuiTheme({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        overflow: "hidden"
-      }
+        overflow: "hidden",
+      },
     },
     MuiButton: {
       outlined: {
         "&:hover": {
-          background: "white"
-        }
-      }
+          background: "white",
+        },
+      },
     },
     MuiGrid: {
-      container: {}
+      container: {},
     },
     MuiIconButton: {
       root: {
         marginLeft: defaultTheme.spacing(1),
         marginRight: defaultTheme.spacing(1),
-        color: defaultTheme.palette.primary.dark
-      }
+        color: defaultTheme.palette.primary.dark,
+      },
     },
     MuiBackdrop: {
       root: {
-        backgroundColor: fade(defaultTheme.palette.secondary.dark, 0.4)
-      }
+        backgroundColor: fade(defaultTheme.palette.secondary.dark, 0.4),
+      },
     },
     MuiPaper: {
       elevation16: {
         zIndex: "110",
         backgroundColor: fade(defaultTheme.palette.secondary.dark, 0.2),
         backdropFilter: "blur(15px)",
-        boxShadow: defaultTheme.shadows[20]
-      }
+        boxShadow: defaultTheme.shadows[20],
+      },
     },
     MuiTabs: {
       root: {},
       indicator: {
-        background: defaultTheme.palette.primary.dark
-      }
+        background: defaultTheme.palette.primary.dark,
+      },
     },
     MuiTab: {
       wrapper: {
         color: defaultTheme.palette.primary.dark,
         fontSize: defaultTheme.typography.body1.fontSize,
-        fontWeight: "700"
-      }
+        fontWeight: "700",
+      },
     },
     MuiSlider: {
       root: {
         color: defaultTheme.palette.primary.dark,
         background: "",
-        height: "80% !important"
+        height: "80% !important",
       },
       rail: {
         color: defaultTheme.palette.primary.light,
         width: `50% !important`,
-        opacity: "0.75"
+        opacity: "0.75",
       },
       track: {
         color: "transparent",
-        width: `50% !important`
+        width: `50% !important`,
       },
       mark: {
-        width: "50%"
+        width: "50%",
       },
       thumb: {
         color: defaultTheme.palette.secondary.wrappers.main,
         width: `90% !important`,
         height: `10px !important`,
         border: `2px solid ${defaultTheme.palette.primary.main}`,
-        borderRadius: defaultTheme.spacing(2)
-      }
-    }
-  }
+        borderRadius: defaultTheme.spacing(2),
+      },
+    },
+  },
 });
 
 export default theme;

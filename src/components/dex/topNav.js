@@ -30,13 +30,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TopNav = ({ activePoke, singlePokeOpen, toggleSinglePokeOpen }) => {
+const TopNav = ({
+  activePoke,
+  singlePokeOpen,
+  toggleSinglePokeOpen,
+  tabs,
+  handleTabs,
+}) => {
   const classes = useStyles();
 
-  const [tabs, setTabs] = useState(0);
-  const handleTabs = (e, newtab) => {
-    setTabs(newtab);
-  };
   const headers = ["Details", "Moves", "Stats", "Breeding"];
   const headerTabs = (
     <Tabs value={tabs} onChange={handleTabs} className={classes.tabs}>

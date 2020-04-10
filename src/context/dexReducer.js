@@ -41,6 +41,15 @@ const DexReducer = (state, action) => {
         ...state,
         genList: currentSinglePokeName,
       };
+    case "updateSingleMoveset":
+      let currentPokeMoveset = state.genList.slice();
+      currentPokeMoveset[state.currentDexGen - 1].pokes[
+        state.globalIndex
+      ].nameUrlObj.moves = action.updatedMoveset;
+      return {
+        ...state,
+        genList: currentPokeMoveset,
+      };
     case "updateLoading":
       return {
         ...state,
