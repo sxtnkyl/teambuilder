@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import Details from "./details";
+import BasicInfo from "./basicinfo";
 import Moves from "./moves";
 import Stats from "./stats";
 import Breeding from "./breeding";
@@ -33,7 +33,7 @@ const SinglePoke = ({ activeTab }) => {
 
   const tab =
     activeTab === 0 ? (
-      <Details />
+      <BasicInfo />
     ) : activeTab === 1 ? (
       <Moves />
     ) : activeTab === 2 ? (

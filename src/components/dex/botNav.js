@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     background: `linear-gradient(${theme.palette.secondary.main}, ${theme.palette.secondary.dark})`,
     mixHeight: "8%",
     boxShadow: `0px -4px 4px ${theme.palette.primary.dark}`,
-    marginTop: "auto",
+    marginTop: theme.spacing(2),
   },
   genNavs: {},
   listNavs: {},

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: "2",
     boxShadow: `0px 4px 4px ${theme.palette.primary.dark}`,
     minHeight: "8%",
+    marginBottom: theme.spacing(2),
   },
   top: {
     background: `linear-gradient(135deg, white 20%, transparent 20%)`,

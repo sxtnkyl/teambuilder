@@ -32,7 +32,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  Slider
+  Slider,
+  Chip,
 } from "@material-ui/core";
 
 import {
@@ -42,10 +43,11 @@ import {
   DoneRounded,
   ArrowUpward,
   ArrowDownward,
-  Details
+  Details,
 } from "@material-ui/icons";
 
 import MenuIcon from "@material-ui/icons/Menu";
+import DoneIcon from "@material-ui/icons/Done";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -92,5 +94,7 @@ export {
   ListItem,
   ListItemText,
   Details,
-  Slider
+  Slider,
+  Chip,
+  DoneIcon,
 };

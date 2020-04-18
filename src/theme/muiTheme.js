@@ -2,7 +2,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { blueGrey, red, lightBlue } from "@material-ui/core/colors";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 //uses black scale
-//
+//https://www.fonts.com/font/microsoft-corporation/verdana
 const carbon =
   "linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424)";
 
@@ -43,9 +43,19 @@ const theme = createMuiTheme({
       padding: defaultTheme.spacing(3),
       width: "100%",
     },
+    h3: {
+      textTransform: "uppercase",
+      textAlign: "center",
+      fontWeight: "700",
+    },
     h5: {
       color: defaultTheme.palette.primary.main,
       fontWeight: "700",
+    },
+    h6: {
+      textAlign: "center",
+      color: defaultTheme.palette.primary.main,
+      fontWeight: "600",
     },
     body1: {
       textTransform: "uppercase",
@@ -76,6 +86,17 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiChip: {
+      root: {
+        // boxShadow: `4px 4px 6px ${defaultTheme.palette.primary.dark}`,
+        textTransform: "uppercase",
+      },
+      outlined: {
+        backgroundColor: "white",
+        color: defaultTheme.palette.primary.main,
+        fontWeight: "700",
+      },
+    },
     MuiGrid: {
       container: {},
     },
@@ -97,6 +118,11 @@ const theme = createMuiTheme({
         backgroundColor: fade(defaultTheme.palette.secondary.dark, 0.2),
         backdropFilter: "blur(15px)",
         boxShadow: defaultTheme.shadows[20],
+      },
+    },
+    MuiMobileStepper: {
+      root: {
+        background: "none",
       },
     },
     MuiTabs: {

@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     flex: "1",
   },
   singlePokeView: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     paddingRight: theme.spacing(4),
     background: "",
     flex: "1",
@@ -150,7 +150,7 @@ const Dex = () => {
         handleTabs={handleTabs}
         tabs={state.activeTab}
       />
-
+      {/* add condition for gen not yet loaded to prevent crash on singlePokeOpen && gen change */}
       {state.singlePokeOpen ? (
         <Grid
           xs={11}
@@ -158,6 +158,7 @@ const Dex = () => {
           container
           direction="row"
           alignItems="center"
+          justify="center"
           spacing={2}
           className={classes.singlePokeView}
         >
