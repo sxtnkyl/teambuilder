@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     border: `${theme.palette.secondary.wrappers.main} 2px solid`,
     position: "absolute",
     transformOrigin: "50% 50%",
-    width: "95%",
+    width: "50%",
   },
   tag: {
     background: "linear-gradient(145deg, #dc3c31, #ff483a)",

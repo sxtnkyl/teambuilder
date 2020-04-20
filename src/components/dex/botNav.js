@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   botNav: {
     zIndex: "2",
     background: `linear-gradient(${theme.palette.secondary.main}, ${theme.palette.secondary.dark})`,
-    mixHeight: "8%",
+    minHeight: "8%",
     boxShadow: `0px -4px 4px ${theme.palette.primary.dark}`,
     marginTop: theme.spacing(2),
   },
