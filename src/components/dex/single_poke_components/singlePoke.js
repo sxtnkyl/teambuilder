@@ -8,6 +8,8 @@ import Breeding from "./breeding";
 import makeSinglePoke from "../../../utility/makeSinglePoke";
 import { useDexContext } from "../../../context/globalContext";
 
+//Determines which component to render based on activeTab value
+
 const SinglePoke = ({ activeTab }) => {
   const [{ genList, currentDexGen, globalIndex }, dispatch] = useDexContext();
 

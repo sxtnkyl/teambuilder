@@ -52,7 +52,7 @@ const Dex = () => {
   const [state, setState] = useState({
     goToSlide: 0,
     offsetRadiusSprite: 2,
-    offsetRadiusList: 4,
+    offsetRadiusList: 3,
     index: 0,
     activeTab: 0,
     showNavigation: true,
@@ -156,10 +156,9 @@ const Dex = () => {
           xs={11}
           item
           container
-          direction="row"
+          spacing={2}
           alignItems="center"
           justify="center"
-          spacing={2}
           className={classes.singlePokeView}
         >
           <SinglePoke

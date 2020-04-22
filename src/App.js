@@ -17,7 +17,7 @@ import Dex from "./components/dex/mainDex";
 // import TrainerCard from "./components/trainerCard/trainerCard";
 
 const App = () => {
-  console.log(DexState);
+  // console.log(DexState);
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />

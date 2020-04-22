@@ -1,29 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { animated, useSpring, config } from "react-spring";
 import {
   Grid,
   makeStyles,
-  Paper,
   Typography,
   Chip,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  ExpandMoreIcon,
 } from "../../../theme/themIndex";
 import { useDexContext } from "../../../context/globalContext";
+import EnhancedTable from "./sortedTable";
 
 const useStyles = makeStyles((theme) => ({
   gridcard: {
     marginBottom: theme.spacing(2),
-    background: `linear-gradient(180deg, ${theme.palette.secondary.wrappers.main} 30%, white 30%)`,
-    boxShadow: `4px 4px 6px ${theme.palette.primary.main}`,
-    borderRadius: theme.spacing(2),
-    border: `${theme.palette.primary.main} 3px solid`,
-    overflow: "hidden",
-  },
-  card: {
-    background: "white",
+    background: theme.palette.secondary.wrappers.main,
+    boxShadow: `4px 4px 6px ${theme.palette.primary.dark}`,
+    borderRadius: theme.shape.borderRadius,
     border: `${theme.palette.primary.main} 2px solid`,
-    boxShadow: `inset 2px 2px 3px ${theme.palette.primary.dark}, inset -2px -2px 3px ${theme.palette.primary.dark}`,
-    borderRadius: theme.spacing(2),
-    maxHeight: "100%",
+    overflow: "hidden",
   },
   buttons: {
     border: `1px solid ${theme.palette.secondary.light}`,
@@ -32,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.secondary.light,
     },
   },
+  cardTitle: {
+    height: "30%",
+  },
 }));
 
-//MOVES: display by game version
-//moves by levelup, tm, egg
-//expand to see individual (name/type/power/acc)class/pp/descrip
 const Moves = () => {
   const classes = useStyles();
   const [{ genList, currentDexGen, globalIndex }, dispatch] = useDexContext();
@@ -46,8 +42,8 @@ const Moves = () => {
 
   //global state has been updated from array of objects to object of game objects
   let movesAlreadySorted = Array.isArray(nameUrlObj.moves);
-  movesAlreadySorted && console.log(nameUrlObj);
-  movesAlreadySorted && console.log(urlObj);
+  // movesAlreadySorted && console.log(nameUrlObj);
+  // movesAlreadySorted && console.log(urlObj);
 
   useEffect(() => {
     //turn initial arrray of moves into game objects
@@ -154,6 +150,11 @@ const Moves = () => {
     </Grid>
   ));
 
+  //simple expansion panel for levelup, tm, and egg
+  //each panel has a sorted table, row for each move in panel,
+  //columns = (name/type/power/acc)class/pp/descrip
+  //need to make fetch req for each move....YIKES!
+
   const makeLevelupMoves = !movesAlreadySorted
     ? currentSinglePoke.nameUrlObj.moves[activeGen]["levelup"]
         .sort((a, b) => {
@@ -184,18 +185,20 @@ const Moves = () => {
         })
     : "loading";
 
-  const makeEggMoves = !movesAlreadySorted
-    ? currentSinglePoke.nameUrlObj.moves[activeGen]["egg"]
-        .sort((a, b) => {
-          let x = a.id;
-          let y = b.id;
-          // Compare the 2 keys
-          return x < y ? -1 : x > y ? 1 : 0;
-        })
-        .map((m) => {
-          return <Typography key={m.id}>{m.id}</Typography>;
-        })
-    : "loading";
+  const makeEggMoves =
+    !movesAlreadySorted &&
+    currentSinglePoke.nameUrlObj.moves[activeGen]["egg"].length
+      ? currentSinglePoke.nameUrlObj.moves[activeGen]["egg"]
+          .sort((a, b) => {
+            let x = a.id;
+            let y = b.id;
+            // Compare the 2 keys
+            return x < y ? -1 : x > y ? 1 : 0;
+          })
+          .map((m) => {
+            return <Typography key={m.id}>{m.id}</Typography>;
+          })
+      : "no egg moves";
 
   return (
     <>
@@ -209,15 +212,56 @@ const Moves = () => {
       >
         {gameButtons}
       </Grid>
-      <Grid item xs={9} className={classes.gridcard} id="levelup-moves">
-        <Paper className={classes.card}>{makeLevelupMoves}</Paper>
+      <Grid item xs={12} className={classes.gridcard}>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="levelup-moves"
+            id="levelup-moves"
+          >
+            <Typography variant="h5">Level-Up Moves</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <EnhancedTable id="Level-Up Moves" />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
       </Grid>
-      <Grid item xs={9} className={classes.gridcard} id="machine-moves">
-        <Paper className={classes.card}>{makeMachineMoves}</Paper>
+      {/* <Grid item xs={10} className={classes.gridcard}>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="levelup-moves"
+            id="levelup-moves"
+          >
+            <Typography variant="h5">Level-Up Moves</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>{makeLevelupMoves}</ExpansionPanelDetails>
+        </ExpansionPanel>
       </Grid>
-      <Grid item xs={9} className={classes.gridcard} id="egg-moves">
-        <Paper className={classes.card}>{makeEggMoves}</Paper>
+      <Grid item xs={10} className={classes.gridcard}>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="machine-moves"
+            id="machine-moves"
+          >
+            <Typography variant="h5">Machine Moves</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>{makeMachineMoves}</ExpansionPanelDetails>
+        </ExpansionPanel>
       </Grid>
+      <Grid item xs={10} className={classes.gridcard}>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="egg-moves"
+            id="egg-moves"
+          >
+            <Typography variant="h5">Egg Moves</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>{makeEggMoves}</ExpansionPanelDetails>
+        </ExpansionPanel>
+      </Grid> */}
     </>
   );
 };

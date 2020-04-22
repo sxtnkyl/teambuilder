@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { animated, useSpring, config } from "react-spring";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   makeStyles,
@@ -14,21 +13,20 @@ import typeConverter from "../../../utility/typeConverter";
 import { useDexContext } from "../../../context/globalContext";
 
 const useStyles = makeStyles((theme) => ({
-  spritecard: {
-    height: "80%",
+  gridcard: {
+    height: "100%",
     marginBottom: theme.spacing(2),
-    // background: `linear-gradient(180deg, ${theme.palette.secondary.wrappers.main} 30%, white 30%)`,
-    background: `linear-gradient(140deg, ${theme.palette.secondary.wrappers.main} 0%, white 10%, white 90%, ${theme.palette.secondary.wrappers.main} 100%)`,
-    boxShadow: `4px 4px 6px ${theme.palette.primary.main}`,
-    borderRadius: theme.spacing(2),
-    border: `${theme.palette.primary.main} 3px solid`,
+    background: `linear-gradient(180deg, ${theme.palette.secondary.wrappers.main} 30%, white 30%)`,
+    boxShadow: `4px 4px 6px ${theme.palette.primary.dark}`,
+    borderRadius: theme.shape.borderRadius,
+    border: `${theme.palette.primary.main} 2px solid`,
     overflow: "hidden",
   },
   sprite: {
     background: "white",
     border: `${theme.palette.primary.main} 2px solid`,
-    boxShadow: `inset 2px 2px 3px ${theme.palette.primary.dark}, inset -2px -2px 3px ${theme.palette.primary.dark}`,
-    borderRadius: theme.spacing(2),
+    boxShadow: `inset 2px 2px 3px ${theme.palette.primary.light}, inset -2px -2px 3px ${theme.palette.primary.light}`,
+    borderRadius: theme.shape.borderRadius,
     maxHeight: "100%",
   },
   full: {
@@ -36,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   cardTitle: {
-    minHeight: "30%",
+    height: "30%",
   },
   // frosty: {
   //   boxShadow: `inset 2px 2px 3px ${theme.palette.primary.dark}, inset -2px -2px 3px ${theme.palette.primary.dark}`,
@@ -49,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 //DETAILS: sprite(forms)/name/height/weight/typing, flavor texts(foreach obj => obj.language.name == 'en'), evo chain
 const BasicInfo = () => {
   const classes = useStyles();
-  const [{ genList, currentDexGen, globalIndex }, dispatch] = useDexContext();
+  const [{ genList, currentDexGen, globalIndex }] = useDexContext();
   let currentSinglePoke = genList[currentDexGen - 1].pokes[globalIndex];
 
   const { img, dexNo, name, nameUrlObj, urlObj } = currentSinglePoke;
@@ -74,7 +72,7 @@ const BasicInfo = () => {
     });
 
     setTexts(allFlavorTexts);
-  }, []);
+  }, [urlObj.flavor_text_entries]);
 
   function heightAdjuster(num) {
     let str = num.toString();
@@ -112,41 +110,46 @@ const BasicInfo = () => {
   // const handleSlideDirection = prevIndex < textIndex ? "right" : "left";
 
   const flavorTextCard = processedTexts && (
-    <Grid item xs={9} justify="center" container className={classes.spritecard}>
+    <Grid
+      item
+      xs={10}
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+      className={classes.gridcard}
+    >
+      <Grid
+        item
+        container
+        justify="center"
+        alignItems="center"
+        className={classes.cardTitle}
+      >
+        <Typography variant="h4">Descriptions</Typography>
+      </Grid>
+
       <Grid
         item
         xs={10}
         container
-        direction="column"
-        justify="space-between"
+        justify="center"
         alignItems="center"
+        style={{ flex: "1" }}
       >
-        <Grid
-          item
-          container
-          justify="center"
-          alignItems="center"
-          className={classes.cardTitle}
-        >
-          <Typography variant="h3">Descriptions</Typography>
-        </Grid>
-
-        <Grid
-          item
-          container
-          direction="column"
-          justify="space-around"
-          alignItems="center"
-          style={{ flex: "1" }}
-        >
+        <Grid item>
           <Typography variant="h6">
             {processedTexts[textIndex].flavor_text}
           </Typography>
+        </Grid>
+        <Grid item>
           <Typography variant="h6" style={{ textTransform: "uppercase" }}>
             {processedTexts[textIndex].version.name}
           </Typography>
         </Grid>
+      </Grid>
 
+      <Grid item style={{ minHeight: "20%" }}>
         <MobileStepper
           steps={processedTexts.length}
           position="static"
@@ -177,13 +180,15 @@ const BasicInfo = () => {
 
   return (
     <>
-      <Grid item xs={9} container className={classes.spritecard}>
+      <Grid
+        item
+        xs={10}
+        container
+        justify="space-around"
+        className={classes.gridcard}
+      >
         <Grid item xs={6} className={classes.sprite}>
-          <img
-            className={classes.full}
-            src={currentSinglePoke.img}
-            alt="sprite"
-          />
+          <img className={classes.full} src={img} alt="sprite" />
         </Grid>
         <Grid item xs={6} container direction="column" justify="space-between">
           <Grid
@@ -193,7 +198,7 @@ const BasicInfo = () => {
             alignItems="center"
             className={classes.cardTitle}
           >
-            <Typography variant="h3">{currentSinglePoke.name}</Typography>
+            <Typography variant="h4">{name}</Typography>
           </Grid>
 
           <Grid
@@ -204,16 +209,15 @@ const BasicInfo = () => {
             alignItems="center"
             style={{ flex: "1" }}
           >
-            <Typography variant="body1">#{currentSinglePoke.dexNo}</Typography>
+            <Typography variant="h6">#{dexNo}</Typography>
             <Typography variant="h6">Height: {meterHeight}</Typography>
-            <Typography variant="h6">
-              Weight: {currentSinglePoke.nameUrlObj.weight} kg
-            </Typography>
+            <Typography variant="h6">Weight: {nameUrlObj.weight} kg</Typography>
             <Typography variant="h6">
               Typings:{" "}
               {typings.map((t) => (
                 <Chip
                   key={t.type}
+                  variant="outlined"
                   style={{ backgroundColor: t.hex, marginLeft: "8px" }}
                   label={t.type}
                 />

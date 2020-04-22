@@ -34,6 +34,9 @@ import {
   ListItemText,
   Slider,
   Chip,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
 } from "@material-ui/core";
 
 import {
@@ -48,6 +51,7 @@ import {
 
 import MenuIcon from "@material-ui/icons/Menu";
 import DoneIcon from "@material-ui/icons/Done";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -97,4 +101,8 @@ export {
   Slider,
   Chip,
   DoneIcon,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  ExpandMoreIcon,
 };

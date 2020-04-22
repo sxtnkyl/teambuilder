@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Spring } from "react-spring/renderprops";
 import {
   Grid,
@@ -19,13 +19,11 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: `0px -4px 4px ${theme.palette.primary.dark}`,
     marginTop: theme.spacing(2),
   },
-  genNavs: {},
-  listNavs: {},
 }));
 
 const BotNav = ({ handleGenChange, moveSlide, singlePokeOpen }) => {
   const classes = useStyles();
-  const [{ currentDexGen }, dispatch] = useDexContext();
+  const [{ currentDexGen }] = useDexContext();
 
   const genNavButtons = (
     <Grid item className={classes.genNavs}>
@@ -49,19 +47,6 @@ const BotNav = ({ handleGenChange, moveSlide, singlePokeOpen }) => {
     </Grid>
   );
 
-  // return (
-  //   <Grid
-  //     item
-  //     container
-  //     justify="space-between"
-  //     alignItems="center"
-  //     className={classes.botNav}
-  //   >
-  //     {genNavButtons}
-  //     <Typography className={classes.genLabel}>Gen: {currentDexGen}</Typography>
-  //     {listNavButtons}
-  //   </Grid>
-  // );
   return (
     <Spring
       to={{

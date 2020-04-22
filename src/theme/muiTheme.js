@@ -43,7 +43,7 @@ const theme = createMuiTheme({
       padding: defaultTheme.spacing(3),
       width: "100%",
     },
-    h3: {
+    h4: {
       textTransform: "uppercase",
       textAlign: "center",
       fontWeight: "700",
@@ -95,6 +95,8 @@ const theme = createMuiTheme({
         backgroundColor: "white",
         color: defaultTheme.palette.primary.main,
         fontWeight: "700",
+        border: `${defaultTheme.palette.primary.main} 2px solid`,
+        boxShadow: `2px 2px 3px ${defaultTheme.palette.primary.dark}`,
       },
     },
     MuiGrid: {
@@ -112,6 +114,20 @@ const theme = createMuiTheme({
         backgroundColor: fade(defaultTheme.palette.secondary.dark, 0.4),
       },
     },
+    MuiExpansionPanelSummary: {
+      root: {
+        "&$expanded": {
+          background: defaultTheme.palette.secondary.wrappers.main,
+        },
+      },
+    },
+    MuiExpansionPanelDetails: {
+      root: {
+        background: "white",
+        border: `${defaultTheme.palette.primary.main} 2px solid`,
+        boxShadow: `inset 2px 2px 3px ${defaultTheme.palette.primary.light}, inset -2px -2px 3px ${defaultTheme.palette.primary.light}`,
+      },
+    },
     MuiPaper: {
       elevation16: {
         zIndex: "110",
@@ -123,6 +139,13 @@ const theme = createMuiTheme({
     MuiMobileStepper: {
       root: {
         background: "none",
+      },
+    },
+    MuiTableRow: {
+      root: {
+        "&$hover:hover": {
+          backgroundColor: defaultTheme.palette.secondary.wrappers.main,
+        },
       },
     },
     MuiTabs: {

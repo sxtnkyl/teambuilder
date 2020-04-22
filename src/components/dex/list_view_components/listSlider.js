@@ -14,16 +14,16 @@ const useStyles = makeStyles((theme) => ({
   indicator: {
     background: "white",
     boxShadow: `2px 2px 3px ${theme.palette.primary.dark}`,
-    borderRadius: theme.spacing(5),
+    borderRadius: theme.shape.borderRadius,
     border: `${theme.palette.secondary.wrappers.main} 2px solid`,
     position: "absolute",
     transformOrigin: "50% 50%",
-    width: "50%",
+    width: "95%",
   },
   tag: {
-    background: "linear-gradient(145deg, #dc3c31, #ff483a)",
+    background: theme.palette.secondary.wrappers.main,
     boxShadow: `4px 4px 6px ${theme.palette.primary.dark}`,
-    borderRadius: theme.spacing(5),
+    borderRadius: theme.shape.borderRadius,
     border: `${theme.palette.primary.main} 2px solid`,
     position: "absolute",
     transformOrigin: "50% 50%",
@@ -101,7 +101,6 @@ const ListSlider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
         top: `${
           offsetRadius === 0 ? 50 : 50 + (offsetFromMiddle * 50) / offsetRadius
         }%`,
-        opacity: distanceFactor > 0 ? 1 : 0,
       }}
       config={config.gentle}
     >

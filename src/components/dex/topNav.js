@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { Spring } from "react-spring/renderprops";
 import {
   Grid,
@@ -11,7 +11,6 @@ import {
   ArrowUpward,
 } from "../../theme/themIndex";
 import theme from "../../theme/muiTheme";
-import SinglePoke from "./single_poke_components/singlePoke";
 
 const useStyles = makeStyles((theme) => ({
   topNav: {
