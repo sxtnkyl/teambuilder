@@ -41,13 +41,13 @@ const Moves = () => {
   const { nameUrlObj, urlObj } = currentSinglePoke;
 
   //global state has been updated from array of objects to object of game objects
-  let movesAlreadySorted = Array.isArray(nameUrlObj.moves);
+  let movesAlreadySorted = !Array.isArray(nameUrlObj.moves);
   // movesAlreadySorted && console.log(nameUrlObj);
   // movesAlreadySorted && console.log(urlObj);
 
   useEffect(() => {
     //turn initial arrray of moves into game objects
-    if (movesAlreadySorted) {
+    if (!movesAlreadySorted) {
       let moves = nameUrlObj.moves;
       //unnecessary sorting, but good for practice!
       //initial sort of moves by game version
@@ -138,55 +138,63 @@ const Moves = () => {
     setActiveGen(newGen);
   };
 
-  const gameButtons = games.map((g) => (
-    <Grid item key={g}>
-      <Chip
-        color="primary"
-        variant={g !== activeGen ? "outlined" : "default"}
-        clickable
-        onClick={handleClick(g)}
-        label={g}
-      />
-    </Grid>
-  ));
+  const gameButtons =
+    movesAlreadySorted &&
+    games.map((g) => (
+      <Grid item key={g}>
+        <Chip
+          color="primary"
+          variant={g !== activeGen ? "outlined" : "default"}
+          clickable
+          onClick={handleClick(g)}
+          label={g}
+          disabled={!currentSinglePoke.nameUrlObj.moves.hasOwnProperty(g)}
+        />
+      </Grid>
+    ));
 
   //simple expansion panel for levelup, tm, and egg
   //each panel has a sorted table, row for each move in panel,
   //columns = (name/type/power/acc)class/pp/descrip
   //need to make fetch req for each move....YIKES!
 
-  const makeLevelupMoves = !movesAlreadySorted
-    ? currentSinglePoke.nameUrlObj.moves[activeGen]["levelup"]
-        .sort((a, b) => {
-          let x = a.level_learned_at;
-          let y = b.level_learned_at;
-          // Compare the 2 keys
-          return x < y ? -1 : x > y ? 1 : 0;
-        })
-        .map((m) => {
-          return (
-            <Typography key={m.id}>
-              {m.level_learned_at}, {m.id}
-            </Typography>
-          );
-        })
-    : "loading";
+  //makeSomething creates array to pass into enhanced table
+  const makeLevelupMoves =
+    movesAlreadySorted &&
+    currentSinglePoke.nameUrlObj.moves[activeGen]["levelup"].length
+      ? currentSinglePoke.nameUrlObj.moves[activeGen]["levelup"]
+          .sort((a, b) => {
+            let x = a.level_learned_at;
+            let y = b.level_learned_at;
+            // Compare the 2 keys
+            return x < y ? -1 : x > y ? 1 : 0;
+          })
+          .map((m) => {
+            return (
+              <Typography key={m.id}>
+                {m.level_learned_at}, {m.id}
+              </Typography>
+            );
+          })
+      : "no levelup moves";
 
-  const makeMachineMoves = !movesAlreadySorted
-    ? currentSinglePoke.nameUrlObj.moves[activeGen]["machine"]
-        .sort((a, b) => {
-          let x = a.id;
-          let y = b.id;
-          // Compare the 2 keys
-          return x < y ? -1 : x > y ? 1 : 0;
-        })
-        .map((m) => {
-          return <Typography key={m.id}>{m.id}</Typography>;
-        })
-    : "loading";
+  const makeMachineMoves =
+    movesAlreadySorted &&
+    currentSinglePoke.nameUrlObj.moves[activeGen]["machine"].length
+      ? currentSinglePoke.nameUrlObj.moves[activeGen]["machine"]
+          .sort((a, b) => {
+            let x = a.id;
+            let y = b.id;
+            // Compare the 2 keys
+            return x < y ? -1 : x > y ? 1 : 0;
+          })
+          .map((m) => {
+            return <Typography key={m.id}>{m.id}</Typography>;
+          })
+      : "no technical machine moves";
 
   const makeEggMoves =
-    !movesAlreadySorted &&
+    movesAlreadySorted &&
     currentSinglePoke.nameUrlObj.moves[activeGen]["egg"].length
       ? currentSinglePoke.nameUrlObj.moves[activeGen]["egg"]
           .sort((a, b) => {
@@ -204,7 +212,7 @@ const Moves = () => {
     <>
       <Grid
         item
-        xs={12}
+        xs={11}
         spacing={1}
         container
         justify="center"

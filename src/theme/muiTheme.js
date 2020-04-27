@@ -144,7 +144,7 @@ const theme = createMuiTheme({
     MuiTableRow: {
       root: {
         "&$hover:hover": {
-          backgroundColor: defaultTheme.palette.secondary.wrappers.main,
+          backgroundColor: defaultTheme.palette.secondary.main,
         },
       },
     },
