@@ -22,6 +22,39 @@ const useStyles = makeStyles((theme) => ({
     border: `${theme.palette.primary.main} 2px solid`,
     overflow: "hidden",
   },
+  flavorTextCard: {
+    minHeight: "100%",
+    marginBottom: theme.spacing(2),
+    background: `transparent`,
+    borderRadius: theme.shape.borderRadius,
+    boxShadow: `4px 4px 6px ${theme.palette.primary.dark}`,
+    border: `${theme.palette.primary.main} 2px solid`,
+    overflow: "hidden",
+    padding: "0px !important",
+  },
+  flavorTextCardTitle: {
+    height: "30%",
+    padding: "0px !important",
+    border: `8px solid ${theme.palette.secondary.wrappers.main}`,
+    borderBottom: "none !important",
+    background: `linear-gradient(135deg, white 0%, white 55%, ${theme.palette.secondary.wrappers.main} 55%)`,
+  },
+  flavorTextCardInner: {
+    flex: "1",
+    background: "transparent",
+    border: `8px solid ${theme.palette.secondary.wrappers.main}`,
+    boxShadow: `inset 2px 2px 3px ${theme.palette.primary.light}, inset -2px -2px 3px ${theme.palette.primary.light}`,
+    backdropFilter: "blur(5px)",
+  },
+  innerCardHeader: {
+    textAlign: "center",
+    fontStyle: "italic",
+    textTransform: "uppercase",
+    background: `linear-gradient(135deg, transparent 20%, white 20%, white 80%, transparent 80%)`,
+    width: "100%",
+    marginTop: "8px",
+    marginBottom: "16px",
+  },
   sprite: {
     background: "white",
     border: `${theme.palette.primary.main} 2px solid`,
@@ -83,7 +116,7 @@ const BasicInfo = () => {
       return `${str[0]}.${str[1]} m`;
     } else return `${str[0]}${str[1]}.${str[2]} m`;
   }
-  const meterHeight = heightAdjuster(78);
+  const meterHeight = heightAdjuster(nameUrlObj.height);
 
   const typings = [];
   nameUrlObj.types.forEach((t) => typings.push(typeConverter(t.type.name)));
@@ -117,66 +150,81 @@ const BasicInfo = () => {
       direction="column"
       justify="center"
       alignItems="center"
-      className={classes.gridcard}
+      className={classes.flavorTextCard}
     >
       <Grid
         item
         container
-        justify="center"
+        justify="space-between"
         alignItems="center"
-        className={classes.cardTitle}
+        className={classes.flavorTextCardTitle}
       >
-        <Typography variant="h4">Descriptions</Typography>
+        <Grid
+          item
+          style={{
+            paddingLeft: "16px",
+            paddingBottom: "8px",
+            paddingTop: "8px",
+          }}
+        >
+          <Typography variant="h4">Pokedex Entries</Typography>
+        </Grid>
       </Grid>
 
       <Grid
         item
-        xs={10}
         container
-        justify="center"
+        direction="column"
+        justify="space-between"
         alignItems="center"
-        style={{ flex: "1" }}
+        className={classes.flavorTextCardInner}
       >
-        <Grid item>
-          <Typography variant="h6">
-            {processedTexts[textIndex].flavor_text}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography
-            variant="h6"
-            style={{ textTransform: "uppercase", fontStyle: "oblique" }}
-          >
-            -{processedTexts[textIndex].version.name}
-          </Typography>
-        </Grid>
-      </Grid>
+        <Grid
+          item
+          xs={10}
+          container
+          direction="column"
+          style={{ marginTop: "16px", marginBottom: "16px" }}
+        >
+          <Grid item>
+            <Typography variant="h5" className={classes.innerCardHeader}>
+              {processedTexts[textIndex].version.name}
+            </Typography>
+          </Grid>
 
-      <Grid item style={{ minHeight: "20%" }}>
-        <MobileStepper
-          steps={processedTexts.length}
-          position="static"
-          variant="dots"
-          activeStep={textIndex}
-          nextButton={
-            <Button
-              size="small"
-              onClick={handleNext}
-              disabled={textIndex === processedTexts.length - 1}
-            >
-              <KeyboardArrowRight />
-            </Button>
-          }
-          backButton={
-            <Button
-              size="small"
-              onClick={handleBack}
-              disabled={textIndex === 0}
-            >
-              <KeyboardArrowLeft />
-            </Button>
-          }
-        />
+          <Grid item>
+            <Typography variant="body1">
+              {processedTexts[textIndex].flavor_text}
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={10} style={{ marginTop: "8px", marginBottom: "8px" }}>
+          <MobileStepper
+            steps={processedTexts.length}
+            position="static"
+            variant="dots"
+            activeStep={textIndex}
+            nextButton={
+              <Button
+                size="small"
+                onClick={handleNext}
+                disabled={textIndex === processedTexts.length - 1}
+              >
+                <KeyboardArrowRight />
+              </Button>
+            }
+            backButton={
+              <Button
+                size="small"
+                onClick={handleBack}
+                disabled={textIndex === 0}
+              >
+                <KeyboardArrowLeft />
+              </Button>
+            }
+          />
+        </Grid>
       </Grid>
     </Grid>
   );

@@ -116,8 +116,18 @@ const theme = createMuiTheme({
     },
     MuiExpansionPanelSummary: {
       root: {
+        background: `linear-gradient(135deg, white 0%, white 55%, ${defaultTheme.palette.secondary.wrappers.main} 55%)`,
+        padding: "0 0 0 16px",
         "&$expanded": {
-          background: defaultTheme.palette.secondary.wrappers.main,
+          // background: defaultTheme.palette.secondary.wrappers.main,
+          marginBottom: defaultTheme.spacing(1),
+        },
+      },
+      content: {
+        margin: "0px",
+        "&$expanded": {
+          // background: defaultTheme.palette.secondary.wrappers.main,
+          margin: "0px",
         },
       },
     },
@@ -129,6 +139,9 @@ const theme = createMuiTheme({
       },
     },
     MuiPaper: {
+      root: {
+        backgroundColor: "transparent",
+      },
       elevation16: {
         zIndex: "110",
         backgroundColor: fade(defaultTheme.palette.secondary.dark, 0.2),

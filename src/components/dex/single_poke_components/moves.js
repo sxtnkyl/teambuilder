@@ -221,55 +221,19 @@ const Moves = () => {
         {gameButtons}
       </Grid>
       <Grid item xs={12} className={classes.gridcard}>
-        <ExpansionPanel>
+        <ExpansionPanel elevation={0}>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="levelup-moves"
             id="levelup-moves"
           >
-            <Typography variant="h5">Level-Up Moves</Typography>
+            <Typography variant="h4">Level-Up Moves</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <EnhancedTable id="Level-Up Moves" />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </Grid>
-      {/* <Grid item xs={10} className={classes.gridcard}>
-        <ExpansionPanel>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="levelup-moves"
-            id="levelup-moves"
-          >
-            <Typography variant="h5">Level-Up Moves</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>{makeLevelupMoves}</ExpansionPanelDetails>
-        </ExpansionPanel>
-      </Grid>
-      <Grid item xs={10} className={classes.gridcard}>
-        <ExpansionPanel>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="machine-moves"
-            id="machine-moves"
-          >
-            <Typography variant="h5">Machine Moves</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>{makeMachineMoves}</ExpansionPanelDetails>
-        </ExpansionPanel>
-      </Grid>
-      <Grid item xs={10} className={classes.gridcard}>
-        <ExpansionPanel>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="egg-moves"
-            id="egg-moves"
-          >
-            <Typography variant="h5">Egg Moves</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>{makeEggMoves}</ExpansionPanelDetails>
-        </ExpansionPanel>
-      </Grid> */}
     </>
   );
 };

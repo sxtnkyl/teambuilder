@@ -14,18 +14,28 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     padding: "0px !important",
   },
-  statCard: {
-    flex: "1",
-    background: "transparent",
-    border: `8px solid ${theme.palette.secondary.wrappers.main}`,
-    backdropFilter: "blur(5px)",
-  },
-  cardTitle: {
+  gridCardTitle: {
     height: "30%",
     padding: "0px !important",
     border: `8px solid ${theme.palette.secondary.wrappers.main}`,
     borderBottom: "none !important",
     background: `linear-gradient(135deg, white 0%, white 33%, ${theme.palette.secondary.wrappers.main} 33%)`,
+  },
+  gridCardInner: {
+    flex: "1",
+    background: "transparent",
+    border: `8px solid ${theme.palette.secondary.wrappers.main}`,
+    boxShadow: `inset 2px 2px 3px ${theme.palette.primary.light}, inset -2px -2px 3px ${theme.palette.primary.light}`,
+    backdropFilter: "blur(5px)",
+  },
+  innerCardHeader: {
+    textAlign: "center",
+    fontStyle: "italic",
+    textTransform: "uppercase",
+    background: `linear-gradient(135deg, transparent 20%, white 20%, white 80%, transparent 80%)`,
+    width: "100%",
+    marginTop: "8px",
+    marginBottom: "16px",
   },
 }));
 
@@ -113,7 +123,7 @@ const Stats = () => {
         container
         justify="space-between"
         alignItems="center"
-        className={classes.cardTitle}
+        className={classes.gridCardTitle}
       >
         <Grid
           item
@@ -132,7 +142,7 @@ const Stats = () => {
         container
         justify="space-around"
         alignItems="center"
-        className={classes.statCard}
+        className={classes.gridCardInner}
       >
         {allStats.map((s) => (
           <Grid
@@ -191,7 +201,7 @@ const Stats = () => {
         container
         justify="space-between"
         alignItems="center"
-        className={classes.cardTitle}
+        className={classes.gridCardTitle}
       >
         <Grid
           item
@@ -210,7 +220,7 @@ const Stats = () => {
         container
         justify="space-around"
         alignItems="center"
-        className={classes.statCard}
+        className={classes.gridCardInner}
       >
         {allAbilities.map((a) => (
           <Grid
@@ -219,17 +229,9 @@ const Stats = () => {
             container
             direction="column"
             justify="center"
-            style={{ marginTop: "8px", marginBottom: "8px" }}
+            style={{ marginTop: "16px", marginBottom: "16px" }}
           >
-            <Typography
-              variant="h4"
-              style={{
-                background: `linear-gradient(135deg, transparent 20%, white 20%, white 80%, transparent 80%)`,
-                width: "100%",
-                marginTop: "8px",
-                marginBottom: "8px",
-              }}
-            >
+            <Typography variant="h5" className={classes.innerCardHeader}>
               {a.id}
               {a.hidden && (
                 <Chip
@@ -241,12 +243,7 @@ const Stats = () => {
               )}
             </Typography>
 
-            <Typography
-              variant="body1"
-              style={{
-                alignSelf: "flex-end",
-              }}
-            >
+            <Typography variant="body1">
               - some fil text some fil text some fil text some fil text some fil
               text some fil text some fil text some fil text some fil text
             </Typography>
