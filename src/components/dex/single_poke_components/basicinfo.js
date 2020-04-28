@@ -143,8 +143,11 @@ const BasicInfo = () => {
           </Typography>
         </Grid>
         <Grid item>
-          <Typography variant="h6" style={{ textTransform: "uppercase" }}>
-            {processedTexts[textIndex].version.name}
+          <Typography
+            variant="h6"
+            style={{ textTransform: "uppercase", fontStyle: "oblique" }}
+          >
+            -{processedTexts[textIndex].version.name}
           </Typography>
         </Grid>
       </Grid>
@@ -209,7 +212,7 @@ const BasicInfo = () => {
             alignItems="center"
             style={{ flex: "1" }}
           >
-            <Typography variant="h6">#{dexNo}</Typography>
+            <Typography variant="h6">{urlObj.genera[2].genus}</Typography>
             <Typography variant="h6">Height: {meterHeight}</Typography>
             <Typography variant="h6">Weight: {nameUrlObj.weight} kg</Typography>
             <Typography variant="h6">

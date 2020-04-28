@@ -27,6 +27,9 @@ const defaultTheme = createMuiTheme({
 
 const theme = createMuiTheme({
   palette: {
+    text: {
+      primary: defaultTheme.palette.primary.main,
+    },
     primary: defaultTheme.palette.primary,
     secondary: defaultTheme.palette.secondary,
     background: {
@@ -49,18 +52,15 @@ const theme = createMuiTheme({
       fontWeight: "700",
     },
     h5: {
-      color: defaultTheme.palette.primary.main,
       fontWeight: "700",
     },
     h6: {
       textAlign: "center",
-      color: defaultTheme.palette.primary.main,
       fontWeight: "600",
     },
     body1: {
       textTransform: "uppercase",
       textAlign: "center",
-      color: defaultTheme.palette.primary.main,
       fontWeight: "700",
     },
   },

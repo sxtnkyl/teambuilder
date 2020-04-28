@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   top: {
-    background: `linear-gradient(135deg, white 20%, transparent 20%)`,
-    paddingLeft: theme.spacing(3),
+    paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
     paddingBottom: theme.spacing(1),
+    overflow: "hidden",
   },
   tabs: {
     marginLeft: "auto",
@@ -56,7 +56,15 @@ const TopNav = ({
       alignItems="center"
       className={classes.top}
     >
-      <Typography variant="h5">{activePoke.name}</Typography>
+      <Typography variant="h5">#{activePoke.dexNo}</Typography>
+      {singlePokeOpen ? (
+        <img
+          src={activePoke.img}
+          style={{ position: "absolute", left: "8%", height: "60px" }}
+        />
+      ) : (
+        <Typography variant="h5">{activePoke.name}</Typography>
+      )}
       {singlePokeOpen && headerTabs}
       <IconButton onClick={toggleSinglePokeOpen}>
         {singlePokeOpen ? <ArrowUpward /> : <ArrowDownward />}
@@ -68,9 +76,12 @@ const TopNav = ({
     <Spring
       to={{
         paddingTop: !singlePokeOpen ? "0px" : `${theme.spacing(2)}`,
+        // background: singlePokeOpen
+        //   ? `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.light})`
+        //   : `linear-gradient(${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
         background: singlePokeOpen
-          ? `linear-gradient(${theme.palette.secondary.light}, ${theme.palette.secondary.light})`
-          : `linear-gradient(${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
+          ? `linear-gradient(135deg, white 20%, ${theme.palette.secondary.main} 20%)`
+          : `linear-gradient(135deg, white 15%, ${theme.palette.secondary.main} 15%)`,
       }}
     >
       {(style) => (
