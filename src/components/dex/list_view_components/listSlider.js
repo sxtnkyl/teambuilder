@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     border: `${theme.palette.secondary.wrappers.main} 2px solid`,
     position: "absolute",
     transformOrigin: "50% 50%",
-    width: "95%",
+    width: "100%",
   },
   tag: {
     background: theme.palette.secondary.wrappers.main,
@@ -32,14 +32,17 @@ const useStyles = makeStyles((theme) => ({
   button: {
     border: "none",
     width: "100%",
-    background: theme.palette.secondary.light,
+    background: "white",
     clipPath:
       "polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)",
+    "&:hover": {
+      background: theme.palette.secondary.main,
+    },
   },
   leftPointer: {
     transform: "rotate(90deg)",
     marginRight: theme.spacing(2),
-    color: theme.palette.secondary.wrappers.main,
+    color: theme.palette.primary.dark,
   },
 }));
 
@@ -83,11 +86,11 @@ const ListSlider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
 
   //below center
   if (offsetFromMiddle > 0) {
-    translateY += translateYoffset;
+    translateY += translateYoffset + 15;
   }
   //above center
   else if (offsetFromMiddle < 0) {
-    translateY -= translateYoffset;
+    translateY -= translateYoffset + 15;
   }
 
   const hasIndicator = offsetFromMiddle === 0 ? classes.indicator : classes.tag;
@@ -112,15 +115,25 @@ const ListSlider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
           }}
           className={hasIndicator}
         >
-          {distanceFactor === 1 && <Details className={classes.leftPointer} />}
           <Button
             variant="outlined"
             className={classes.button}
+            df={distanceFactor}
             onClick={handleButtonClick}
             disabled={!(distanceFactor > 0)}
+            style={{ background: distanceFactor === 1 && "red" }}
           >
+            {/* {distanceFactor === 1 ? (
+              <Details className={classes.leftPointer} />
+            ) : (
+              <Typography variant="h6">{dexNo}</Typography>
+            )} */}
             <Typography variant="h6">{dexNo}</Typography>
-            <ListItemText>{name}</ListItemText>
+            <ListItemText>
+              <Typography variant={distanceFactor === 1 ? "h5" : "body1"}>
+                {name}
+              </Typography>
+            </ListItemText>
           </Button>
         </ListItem>
       )}
