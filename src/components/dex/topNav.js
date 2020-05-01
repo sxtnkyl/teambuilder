@@ -39,7 +39,8 @@ const TopNav = ({
 }) => {
   const classes = useStyles();
 
-  const headers = ["Details", "Moves", "Stats", "Breeding"];
+  //removed breeding deatils, save for later version
+  const headers = ["Details", "Moves", "Stats"];
   const headerTabs = (
     <Tabs value={tabs} onChange={handleTabs} className={classes.tabs}>
       {headers.map((header, index) => (
@@ -60,6 +61,7 @@ const TopNav = ({
       {singlePokeOpen ? (
         <img
           src={activePoke.img}
+          alt="currentpoke-sprite"
           style={{ position: "absolute", left: "8%", height: "60px" }}
         />
       ) : (

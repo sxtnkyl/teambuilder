@@ -58,6 +58,7 @@ const Dex = () => {
     showNavigation: true,
     singlePokeOpen: false,
   });
+
   useEffect(() => {
     makeSlides(currentDexGen, genList, dispatch);
 

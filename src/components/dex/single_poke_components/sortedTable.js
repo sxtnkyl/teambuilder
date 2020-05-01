@@ -8,8 +8,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +37,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//example arr that sortedTable will get in order to make rows
+//will receive arr of objects(single moves), made by makeMoves in moves component
+//headers = [name,type,category,power,acc,prio,pp,descrip]
+//const rows = [];
+// makeMovesObj.forEach(move => {
+//   rows.push(createData(move))
+// })
+
+// const headCells = [
+//   {
+//     id: "name",
+//     numeric: false,
+//     label: "Move Name",
+//   },
+//   { id: "type", numeric: false, label: "Type" },
+//   { id: "category", numeric: false, label: "Category" },
+//   { id: "power", numeric: true, label: "Power" },
+//   { id: "acc", numeric: true, label: "Accuracy" },
+//   { id: "prio", numeric: true, label: "Priority" },
+//   { id: "pp", numeric: true, label: "PP" },
+//   { id: "descrip", numeric: false, label: "Description" },
+// ];
+
+// function createData(obj) {
+//   const { name,type,category,power,acc,prio,pp,descrip } = obj;
+//   return { name,type,category,power,acc,prio,pp,descrip };
+// }
+
+//temp row data
 const rows = [
   createData("Cupcake", 305, 3.7, 67, 4.3),
   createData("Donut", 452, 25.0, 51, 4.9),
@@ -54,7 +81,7 @@ const rows = [
   createData("Nougat", 360, 19.0, 9, 37.0),
   createData("Oreo", 437, 18.0, 63, 4.0),
 ];
-
+//temp head cells
 const headCells = [
   {
     id: "name",
@@ -66,7 +93,7 @@ const headCells = [
   { id: "carbs", numeric: true, label: "Carbs (g)" },
   { id: "protein", numeric: true, label: "Protein (g)" },
 ];
-
+//temp create data func
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
@@ -132,26 +159,8 @@ function EnhancedTableHead(props) {
   );
 }
 
-const EnhancedTableToolbar = (props) => {
-  return (
-    <Toolbar>
-      <Typography
-        style={{
-          flex: "1 1 100%",
-        }}
-        variant="h6"
-        id={props.id}
-        component="div"
-      >
-        {props.id}
-      </Typography>
-    </Toolbar>
-  );
-};
-
 const EnhancedTable = (props) => {
   const classes = useStyles();
-  const { id } = props;
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
 
@@ -163,7 +172,6 @@ const EnhancedTable = (props) => {
 
   return (
     <div className={classes.root}>
-      {/* <EnhancedTableToolbar id={id} /> */}
       <TableContainer>
         <Table
           className={classes.table}
@@ -180,7 +188,7 @@ const EnhancedTable = (props) => {
           <TableBody>
             {stableSort(rows, getComparator(order, orderBy)).map(
               (row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
+                const labelId = `enhanced-table-${index}`;
 
                 return (
                   <TableRow hover tabIndex={-1} key={row.name}>

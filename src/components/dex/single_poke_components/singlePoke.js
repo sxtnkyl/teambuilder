@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import BasicInfo from "./basicinfo";
 import Moves from "./moves";
 import Stats from "./stats";
-import Breeding from "./breeding";
 
 import makeSinglePoke from "../../../utility/makeSinglePoke";
 import { useDexContext } from "../../../context/globalContext";
@@ -41,7 +40,7 @@ const SinglePoke = ({ activeTab }) => {
     ) : activeTab === 2 ? (
       <Stats />
     ) : (
-      <Breeding />
+      "<Breeding />"
     );
 
   return currentPokeDataIsLoaded ? tab : `Loading...`;

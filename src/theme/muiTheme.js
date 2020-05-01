@@ -63,6 +63,9 @@ const theme = createMuiTheme({
       textAlign: "center",
       fontWeight: "700",
     },
+    subtitle2: {
+      color: defaultTheme.palette.primary.light,
+    },
   },
   overrides: {
     MuiContainer: {
@@ -116,11 +119,12 @@ const theme = createMuiTheme({
     },
     MuiExpansionPanelSummary: {
       root: {
+        border: `8px solid ${defaultTheme.palette.secondary.wrappers.main}`,
         background: `linear-gradient(135deg, white 0%, white 55%, ${defaultTheme.palette.secondary.wrappers.main} 55%)`,
-        padding: "0 0 0 16px",
         "&$expanded": {
           // background: defaultTheme.palette.secondary.wrappers.main,
-          marginBottom: defaultTheme.spacing(1),
+          borderBottom: "none !important",
+          marginBottom: defaultTheme.spacing(0),
         },
       },
       content: {
@@ -133,9 +137,10 @@ const theme = createMuiTheme({
     },
     MuiExpansionPanelDetails: {
       root: {
-        background: "white",
-        border: `${defaultTheme.palette.primary.main} 2px solid`,
+        background: "transparent",
+        border: `8px solid ${defaultTheme.palette.secondary.wrappers.main}`,
         boxShadow: `inset 2px 2px 3px ${defaultTheme.palette.primary.light}, inset -2px -2px 3px ${defaultTheme.palette.primary.light}`,
+        backdropFilter: "blur(7px)",
       },
     },
     MuiPaper: {
@@ -157,7 +162,16 @@ const theme = createMuiTheme({
     MuiTableRow: {
       root: {
         "&$hover:hover": {
-          backgroundColor: defaultTheme.palette.secondary.main,
+          backgroundColor: defaultTheme.palette.secondary.wrappers.main,
+        },
+        "&$hover:hover .MuiTableCell-root": {
+          fontWeight: "bold",
+          fontSize: "1rem",
+        },
+        "&$hover:hover th": {
+          background: `linear-gradient(135deg, white 0%, white 75%, transparent 75%)`,
+          paddingTop: defaultTheme.spacing(1),
+          paddingBottom: defaultTheme.spacing(1),
         },
       },
     },

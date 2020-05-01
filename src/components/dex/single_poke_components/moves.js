@@ -14,8 +14,9 @@ import EnhancedTable from "./sortedTable";
 
 const useStyles = makeStyles((theme) => ({
   gridcard: {
+    padding: "0px !important",
     marginBottom: theme.spacing(2),
-    background: theme.palette.secondary.wrappers.main,
+    background: "transparent",
     boxShadow: `4px 4px 6px ${theme.palette.primary.dark}`,
     borderRadius: theme.shape.borderRadius,
     border: `${theme.palette.primary.main} 2px solid`,
@@ -38,7 +39,7 @@ const Moves = () => {
   const [{ genList, currentDexGen, globalIndex }, dispatch] = useDexContext();
   let currentSinglePoke = genList[currentDexGen - 1].pokes[globalIndex];
 
-  const { nameUrlObj, urlObj } = currentSinglePoke;
+  const { nameUrlObj } = currentSinglePoke;
 
   //global state has been updated from array of objects to object of game objects
   let movesAlreadySorted = !Array.isArray(nameUrlObj.moves);
@@ -153,60 +154,29 @@ const Moves = () => {
       </Grid>
     ));
 
-  //simple expansion panel for levelup, tm, and egg
-  //each panel has a sorted table, row for each move in panel,
-  //columns = (name/type/power/acc)class/pp/descrip
-  //need to make fetch req for each move....YIKES!
+  //simple expansion panel for levelup, tm, and egg moves
+  //each panel has a sorted table, row for each move in panel
 
-  //makeSomething creates array to pass into enhanced table
-  const makeLevelupMoves =
-    movesAlreadySorted &&
-    currentSinglePoke.nameUrlObj.moves[activeGen]["levelup"].length
-      ? currentSinglePoke.nameUrlObj.moves[activeGen]["levelup"]
-          .sort((a, b) => {
-            let x = a.level_learned_at;
-            let y = b.level_learned_at;
-            // Compare the 2 keys
-            return x < y ? -1 : x > y ? 1 : 0;
-          })
-          .map((m) => {
-            return (
-              <Typography key={m.id}>
-                {m.level_learned_at}, {m.id}
-              </Typography>
-            );
-          })
-      : "no levelup moves";
+  //makeSomething creates array to pass into enhanced table,
 
-  const makeMachineMoves =
-    movesAlreadySorted &&
-    currentSinglePoke.nameUrlObj.moves[activeGen]["machine"].length
-      ? currentSinglePoke.nameUrlObj.moves[activeGen]["machine"]
-          .sort((a, b) => {
-            let x = a.id;
-            let y = b.id;
-            // Compare the 2 keys
-            return x < y ? -1 : x > y ? 1 : 0;
-          })
-          .map((m) => {
-            return <Typography key={m.id}>{m.id}</Typography>;
-          })
-      : "no technical machine moves";
+  /////////Due to api structure, move data must be fetched for each move (TOO MANY FETCHES!) skip this for now
+  //need to structure for row making, pass into createData in sortedTable component
+  //Make a function (makeMachineMoves) that creates an array of objects-
+  //an object for each move with keys of name,type,category,power,acc,prio,pp,descrip
+  //then pass into <EnhancedTable />
 
-  const makeEggMoves =
-    movesAlreadySorted &&
-    currentSinglePoke.nameUrlObj.moves[activeGen]["egg"].length
-      ? currentSinglePoke.nameUrlObj.moves[activeGen]["egg"]
-          .sort((a, b) => {
-            let x = a.id;
-            let y = b.id;
-            // Compare the 2 keys
-            return x < y ? -1 : x > y ? 1 : 0;
-          })
-          .map((m) => {
-            return <Typography key={m.id}>{m.id}</Typography>;
-          })
-      : "no egg moves";
+  const makeMachineMoves = [
+    {
+      name: "movename",
+      type: "fire",
+      category: "physical",
+      power: 80,
+      acc: 100,
+      prio: 0,
+      pp: 10,
+      descrip: "flavor text entry",
+    },
+  ];
 
   return (
     <>
@@ -220,6 +190,7 @@ const Moves = () => {
       >
         {gameButtons}
       </Grid>
+
       <Grid item xs={12} className={classes.gridcard}>
         <ExpansionPanel elevation={0}>
           <ExpansionPanelSummary
@@ -230,7 +201,40 @@ const Moves = () => {
             <Typography variant="h4">Level-Up Moves</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <EnhancedTable id="Level-Up Moves" />
+            <EnhancedTable
+              id="Level-Up Moves"
+              makeMovesObj={makeMachineMoves}
+            />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </Grid>
+
+      <Grid item xs={12} className={classes.gridcard}>
+        <ExpansionPanel elevation={0}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="machine-moves"
+            id="machine-moves"
+          >
+            <Typography variant="h4">TM Moves</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <EnhancedTable id="TM Moves" />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </Grid>
+
+      <Grid item xs={12} className={classes.gridcard}>
+        <ExpansionPanel elevation={0}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="egg-moves"
+            id="egg-moves"
+          >
+            <Typography variant="h4">Egg Moves</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <EnhancedTable id="Egg Moves" />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </Grid>

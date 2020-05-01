@@ -13,7 +13,7 @@ import typeConverter from "../../../utility/typeConverter";
 import { useDexContext } from "../../../context/globalContext";
 
 const useStyles = makeStyles((theme) => ({
-  gridcard: {
+  spriteCard: {
     height: "100%",
     marginBottom: theme.spacing(2),
     background: `linear-gradient(180deg, ${theme.palette.secondary.wrappers.main} 30%, white 30%)`,
@@ -22,7 +22,14 @@ const useStyles = makeStyles((theme) => ({
     border: `${theme.palette.primary.main} 2px solid`,
     overflow: "hidden",
   },
-  flavorTextCard: {
+  sprite: {
+    background: "white",
+    border: `${theme.palette.primary.main} 2px solid`,
+    boxShadow: `inset 2px 2px 3px ${theme.palette.primary.light}, inset -2px -2px 3px ${theme.palette.primary.light}`,
+    borderRadius: theme.shape.borderRadius,
+    maxHeight: "100%",
+  },
+  card: {
     minHeight: "100%",
     marginBottom: theme.spacing(2),
     background: `transparent`,
@@ -32,14 +39,14 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     padding: "0px !important",
   },
-  flavorTextCardTitle: {
+  cardTitle: {
     height: "30%",
     padding: "0px !important",
     border: `8px solid ${theme.palette.secondary.wrappers.main}`,
     borderBottom: "none !important",
     background: `linear-gradient(135deg, white 0%, white 55%, ${theme.palette.secondary.wrappers.main} 55%)`,
   },
-  flavorTextCardInner: {
+  cardInner: {
     flex: "1",
     background: "transparent",
     border: `8px solid ${theme.palette.secondary.wrappers.main}`,
@@ -55,35 +62,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "8px",
     marginBottom: "16px",
   },
-  sprite: {
-    background: "white",
-    border: `${theme.palette.primary.main} 2px solid`,
-    boxShadow: `inset 2px 2px 3px ${theme.palette.primary.light}, inset -2px -2px 3px ${theme.palette.primary.light}`,
-    borderRadius: theme.shape.borderRadius,
-    maxHeight: "100%",
-  },
-  full: {
-    height: "100%",
-    width: "100%",
-  },
-  cardTitle: {
-    height: "30%",
-  },
-  // frosty: {
-  //   boxShadow: `inset 2px 2px 3px ${theme.palette.primary.dark}, inset -2px -2px 3px ${theme.palette.primary.dark}`,
-  //   borderRadius: theme.spacing(2),
-  //   maxHeight: "100%",
-  //   backdropFilter: "blur(5px)",
-  // },
 }));
 
-//DETAILS: sprite(forms)/name/height/weight/typing, flavor texts(foreach obj => obj.language.name == 'en'), evo chain
+//DETAILS: sprite(forms)/name/height/weight/typing, flavor texts(foreach obj => obj.language.name == 'en'), abilities
 const BasicInfo = () => {
   const classes = useStyles();
   const [{ genList, currentDexGen, globalIndex }] = useDexContext();
   let currentSinglePoke = genList[currentDexGen - 1].pokes[globalIndex];
 
-  const { img, dexNo, name, nameUrlObj, urlObj } = currentSinglePoke;
+  const { img, name, nameUrlObj, urlObj } = currentSinglePoke;
+  const { abilities, types } = currentSinglePoke.nameUrlObj;
 
   const [processedTexts, setTexts] = useState(null);
   //make all the filter texts (english only, remove \n regex, filter duplicates)
@@ -118,8 +106,18 @@ const BasicInfo = () => {
   }
   const meterHeight = heightAdjuster(nameUrlObj.height);
 
+  //need to fetch ability descrips
+  const allAbilities = [];
+  abilities.forEach((a) => {
+    let ab = {};
+    ab.id = a.ability.name;
+    ab.hidden = a.is_hidden;
+    ab.url = a.ability.url;
+    allAbilities.push(ab);
+  });
+
   const typings = [];
-  nameUrlObj.types.forEach((t) => typings.push(typeConverter(t.type.name)));
+  types.forEach((t) => typings.push(typeConverter(t.type.name)));
 
   const [textIndex, setIndex] = useState(0);
   const handleNext = () => {
@@ -130,17 +128,75 @@ const BasicInfo = () => {
     textIndex > 0 && setIndex((prevActiveStep) => prevActiveStep - 1);
   };
 
-  //////for future animation use, swipable-views
-  //transition, if > textIndex transition neg, else pos
-  // function usePrevious(value) {
-  //   const ref = useRef();
-  //   useEffect(() => {
-  //     ref.current = value;
-  //   });
-  //   return ref.current;
-  // }
-  // const prevIndex = usePrevious(textIndex);
-  // const handleSlideDirection = prevIndex < textIndex ? "right" : "left";
+  const abilitiesCard = allAbilities.length && (
+    <Grid
+      item
+      xs={10}
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+      className={classes.card}
+      id="abilities-card"
+    >
+      <Grid
+        item
+        container
+        justify="space-between"
+        alignItems="center"
+        className={classes.cardTitle}
+      >
+        <Grid
+          item
+          style={{
+            paddingLeft: "16px",
+            paddingBottom: "8px",
+            paddingTop: "8px",
+          }}
+        >
+          <Typography variant="h4">Abilities</Typography>
+        </Grid>
+      </Grid>
+
+      <Grid
+        item
+        container
+        justify="space-around"
+        alignItems="center"
+        className={classes.cardInner}
+        style={{ paddingBottom: "16px" }}
+      >
+        {allAbilities.map((a) => (
+          <Grid
+            key={a.id}
+            item
+            xs={10}
+            container
+            direction="column"
+            justify="center"
+            style={{ marginTop: "16px" }}
+          >
+            <Typography variant="h5" className={classes.innerCardHeader}>
+              {a.id}
+              {a.hidden && (
+                <Chip
+                  variant="outlined"
+                  disabled
+                  label="hidden"
+                  style={{ position: "absolute", left: "80%" }}
+                />
+              )}
+            </Typography>
+
+            <Typography variant="body1">
+              - some fil text some fil text some fil text some fil text some fil
+              text some fil text some fil text some fil text some fil text
+            </Typography>
+          </Grid>
+        ))}
+      </Grid>
+    </Grid>
+  );
 
   const flavorTextCard = processedTexts && (
     <Grid
@@ -150,14 +206,14 @@ const BasicInfo = () => {
       direction="column"
       justify="center"
       alignItems="center"
-      className={classes.flavorTextCard}
+      className={classes.card}
     >
       <Grid
         item
         container
         justify="space-between"
         alignItems="center"
-        className={classes.flavorTextCardTitle}
+        className={classes.cardTitle}
       >
         <Grid
           item
@@ -177,7 +233,7 @@ const BasicInfo = () => {
         direction="column"
         justify="space-between"
         alignItems="center"
-        className={classes.flavorTextCardInner}
+        className={classes.cardInner}
       >
         <Grid
           item
@@ -236,10 +292,18 @@ const BasicInfo = () => {
         xs={10}
         container
         justify="space-around"
-        className={classes.gridcard}
+        className={classes.spriteCard}
+        id="sprite-card"
       >
         <Grid item xs={6} className={classes.sprite}>
-          <img className={classes.full} src={img} alt="sprite" />
+          <img
+            style={{
+              height: "100%",
+              width: "100%",
+            }}
+            src={img}
+            alt="sprite"
+          />
         </Grid>
         <Grid item xs={6} container direction="column" justify="space-between">
           <Grid
@@ -247,7 +311,7 @@ const BasicInfo = () => {
             container
             justify="center"
             alignItems="center"
-            className={classes.cardTitle}
+            style={{ height: "30%" }}
           >
             <Typography variant="h4">{name}</Typography>
           </Grid>
@@ -277,7 +341,7 @@ const BasicInfo = () => {
           </Grid>
         </Grid>
       </Grid>
-
+      {abilitiesCard}
       {processedTexts ? flavorTextCard : ""}
     </>
   );

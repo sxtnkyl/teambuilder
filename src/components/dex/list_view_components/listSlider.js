@@ -5,7 +5,6 @@ import {
   ListItemText,
   Typography,
   Button,
-  Details,
 } from "../../../theme/themIndex";
 import { Spring, config } from "react-spring/renderprops";
 // import { withGesture } from "react-with-gesture";
