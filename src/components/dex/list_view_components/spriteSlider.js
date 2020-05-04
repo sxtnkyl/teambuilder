@@ -22,11 +22,12 @@ const useStyles = makeStyles((theme) => ({
     border: `${theme.palette.secondary.wrappers.main} 8px solid`,
     clipPath:
       "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
+    cursor: "pointer",
   },
 }));
 
 //content = sprite
-const Slider = ({ img, offsetRadius, index, delta }) => {
+const Slider = ({ img, offsetRadius, index, delta, toggleSinglePokeOpen }) => {
   const classes = useStyles();
   //calculated for each +2/-2 from index
   // console.log(index, offsetRadius);
@@ -100,6 +101,7 @@ const Slider = ({ img, offsetRadius, index, delta }) => {
             src={img}
             alt="poke-sprite"
             onError={imgError}
+            onClick={offsetFromMiddle === 0 && toggleSinglePokeOpen}
           />
         </div>
       )}

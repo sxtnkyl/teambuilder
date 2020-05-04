@@ -177,6 +177,7 @@ const Dex = () => {
             moveSlide={moveSlide}
             modBySlidesLength={modBySlidesLength}
             moveIndexBySlider={moveIndexBySlider}
+            toggleSinglePokeOpen={toggleSinglePokeOpen}
           />
           <ListSide
             slides={slides}
