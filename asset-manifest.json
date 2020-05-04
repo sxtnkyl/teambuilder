@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/teambuilder/static/js/main.9c11bac0.chunk.js",
+    "main.js.map": "/teambuilder/static/js/main.9c11bac0.chunk.js.map",
+    "runtime-main.js": "/teambuilder/static/js/runtime-main.a818480a.js",
+    "runtime-main.js.map": "/teambuilder/static/js/runtime-main.a818480a.js.map",
+    "static/js/2.45c94d58.chunk.js": "/teambuilder/static/js/2.45c94d58.chunk.js",
+    "static/js/2.45c94d58.chunk.js.map": "/teambuilder/static/js/2.45c94d58.chunk.js.map",
+    "index.html": "/teambuilder/index.html",
+    "precache-manifest.b25b93ab3a4094e643dd9786a869b945.js": "/teambuilder/precache-manifest.b25b93ab3a4094e643dd9786a869b945.js",
+    "service-worker.js": "/teambuilder/service-worker.js",
+    "static/js/2.45c94d58.chunk.js.LICENSE": "/teambuilder/static/js/2.45c94d58.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a818480a.js",
+    "static/js/2.45c94d58.chunk.js",
+    "static/js/main.9c11bac0.chunk.js"
+  ]
+}
