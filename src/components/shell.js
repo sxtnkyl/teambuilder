@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { animated, useSpring, config } from "react-spring";
-import theme from "../../theme/muiTheme";
-import { makeStyles, Button } from "../../theme/themIndex";
-import { useDexContext } from "../../context/globalContext";
+import theme from "../theme/muiTheme";
+import { makeStyles, Button } from "../theme/themIndex";
+import { useDexContext } from "../context/globalContext";
 
 //underlens for blue shadow
 const lensShellActive =
@@ -47,14 +47,14 @@ const bpLines =
 const speakerHoles =
   "radial-gradient(black 15%, transparent 16%) 0 0, radial-gradient(black 15%, transparent 16%) 8px 8px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   //full container, position for other parts
   wrap: {
     height: "100%",
     width: "100%",
     background: "transparent",
     position: "absolute",
-    zIndex: "40"
+    zIndex: "40",
   },
   innerBody: {
     height: "50%",
@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme => ({
     left: "10%",
     top: "25%",
     background: theme.palette.primary.dark,
-    boxShadow: shellShadow
+    boxShadow: shellShadow,
   },
   //////TOP COMPONENTS
   top: {
@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
     borderTopLeftRadius: theme.spacing(5),
     borderTopRightRadius: theme.spacing(5),
     boxShadow: shellShadow,
-    background: shellGradientTop
+    background: shellGradientTop,
   },
   //relative to top
   powerLight: {
@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
     top: "25%",
     background: "#00cc00",
     borderRadius: "50%",
-    boxShadow: cornerShadow
+    boxShadow: cornerShadow,
   },
   //relative to top
   shoulderTop: {
@@ -100,7 +100,7 @@ const useStyles = makeStyles(theme => ({
     right: "0%",
     borderBottomLeftRadius: theme.spacing(5),
     borderTopRightRadius: theme.spacing(5),
-    boxShadow: cornerShadow
+    boxShadow: cornerShadow,
   },
   //relative to top
   screenInlineTop: {
@@ -111,7 +111,7 @@ const useStyles = makeStyles(theme => ({
     top: "30%",
     background: shellGradientTop,
     boxShadow: screenInlineShadow,
-    borderRadius: theme.shape.borderRadius
+    borderRadius: theme.shape.borderRadius,
   },
   //////BOTTOM COMPONENTS
   bottom: {
@@ -125,19 +125,19 @@ const useStyles = makeStyles(theme => ({
     borderBottomLeftRadius: theme.spacing(5),
     borderBottomRightRadius: theme.spacing(5),
     boxShadow: shellShadow,
-    backgroundImage: shellGradientBottom
+    backgroundImage: shellGradientBottom,
   },
   //relative to bottom
   speakerHoles: {
-    height: "100px",
-    width: "100px",
+    height: "35%",
+    width: "8%",
     position: "absolute",
     right: "5%",
     top: "30%",
     backgroundColor: "transparent",
     backgroundSize: "20px 20px",
     background: speakerHoles,
-    transform: "rotate(45deg)"
+    transform: "rotate(45deg)",
   },
   //relative to bottom
   shoulderBottom: {
@@ -149,7 +149,7 @@ const useStyles = makeStyles(theme => ({
     right: "0%",
     borderTopLeftRadius: theme.spacing(5),
     borderBottomRightRadius: theme.spacing(5),
-    boxShadow: cornerShadow
+    boxShadow: cornerShadow,
   },
   //relative to bottom
   screenInlineBottom: {
@@ -161,7 +161,7 @@ const useStyles = makeStyles(theme => ({
     background: shellGradientBottom,
     // background: theme.palette.primary.dark,
     boxShadow: screenInlineShadow,
-    borderRadius: theme.shape.borderRadius
+    borderRadius: theme.shape.borderRadius,
   },
   //////put screen in center of wrap
   screen: {
@@ -174,7 +174,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "100px 100px, 100px 100px, 20px 20px, 20px 20px",
     packgroundPosition: "-2px -2px, -2px -2px, -1px -1px, -1px -1px",
     boxShadow: screenShadow,
-    borderRadius: theme.shape.borderRadius * 2
+    borderRadius: theme.shape.borderRadius * 2,
   },
   //////relative to wrap
   lensArm: {
@@ -187,7 +187,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: theme.shape.borderRadius,
     borderStyle: "black 3px double",
     boxShadow: screenInlineShadow,
-    background: shellGradientBottom
+    background: shellGradientBottom,
   },
   //////relative to wrap
   lensShell: {
@@ -198,13 +198,13 @@ const useStyles = makeStyles(theme => ({
     borderRadius: theme.spacing(5),
     borderStyle: "black 3px double",
     boxShadow: shellShadow,
-    background: shellGradientBottom
+    background: shellGradientBottom,
   },
   //relative to lensShell
   underLens: {
     height: "100%",
     width: "100%",
-    background: lensShellActive
+    background: lensShellActive,
   },
   //relative to lensShell
   lens: {
@@ -214,7 +214,7 @@ const useStyles = makeStyles(theme => ({
     top: "10%",
     left: "10%",
     borderRadius: "50%",
-    boxShadow: shellShadow
+    boxShadow: shellShadow,
   },
   //relative to lens
   lensReflection: {
@@ -227,8 +227,8 @@ const useStyles = makeStyles(theme => ({
     borderLeft: "60px solid transparent",
     borderRight: "60px solid transparent",
     borderTop: "90px solid hsla(199, 100%, 80%, .15)",
-    borderRadius: "50%"
-  }
+    borderRadius: "50%",
+  },
 }));
 
 //SPRING CHANGES FOR EACH COMPONENT
@@ -244,30 +244,30 @@ const Shell = ({ children }) => {
   ////screen: spring height and top
   const screenSpring = useSpring({
     height: open ? "70%" : "0%",
-    top: open ? "15%" : "50%"
+    top: open ? "15%" : "50%",
   });
   const lensGlow = useSpring({
     background: !hover
       ? "radial-gradient(circle at center, hsla(199, 100%, 35%, 1) 20%, hsla(199, 100%, 80%, .7) 40%, hsla(199, 100%, 80%, .6) 50%, hsla(199, 100%, 25%, 1) 80%)"
       : "radial-gradient(circle at center, hsla(199, 100%, 35%, 0.5) 8%, hsla(199, 100%, 80%, .7) 10%, hsla(199, 100%, 80%, .6) 60%, hsla(199, 100%, 25%, 1) 80%)",
-    config: config.slow
+    config: config.slow,
   });
   const underGlow = useSpring({
     background: !hover
       ? "radial-gradient(circle at center, hsla(199, 100%, 60%, 1) 60%, hsla(199,100%,75%, .07) 70%)"
       : "radial-gradient(circle at center, hsla(199, 100%, 70%, 1) 60%, hsla(199,100%,85%, .2) 73%)",
-    borderRadius: theme.spacing(5)
+    borderRadius: theme.spacing(5),
   });
   const lensRetract = useSpring({
-    x: open ? 0 : 1
+    x: open ? 0 : 1,
   });
   const shellTopSpring = useSpring({
     top: open ? "0%" : "10%",
-    config: config.slow
+    config: config.slow,
   });
   const shellBottomSpring = useSpring({
     bottom: open ? "0%" : "10%",
-    config: config.slow
+    config: config.slow,
   });
 
   const lensArm = <div className={classes.lensArm} />;
@@ -301,10 +301,10 @@ const Shell = ({ children }) => {
       style={lensGlow}
       className={classes.lens}
       onClick={() => dispatch({ type: "toggleOpen" })}
-      onMouseEnter={e => {
+      onMouseEnter={(e) => {
         setHover(true);
       }}
-      onMouseLeave={e => {
+      onMouseLeave={(e) => {
         setHover(false);
       }}
     >
@@ -320,10 +320,10 @@ const Shell = ({ children }) => {
       style={{
         left: lensRetract.x
           .interpolate({ range: [0, 0.5, 1], output: [1, -6.5, 10] })
-          .interpolate(x => `${x}%`),
+          .interpolate((x) => `${x}%`),
         zIndex: lensRetract.x
           .interpolate({ range: [0, 0.5, 0.55, 1], output: [80, 80, 65, 65] })
-          .interpolate(x => `${x}`)
+          .interpolate((x) => `${x}`),
       }}
       className={classes.lensShell}
     >

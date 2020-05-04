@@ -4,7 +4,7 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "./theme/muiTheme";
 import { Container } from "./theme/themIndex";
-import Shell from "./components/dexWrapper/shell";
+import Shell from "./components/shell";
 
 // import { Route } from "react-router";
 
@@ -14,10 +14,8 @@ import DexProvider from "./context/globalContext";
 import DexReducer from "./context/dexReducer";
 
 import Dex from "./components/dex/mainDex";
-// import TrainerCard from "./components/trainerCard/trainerCard";
 
 const App = () => {
-  // console.log(DexState);
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
@@ -26,7 +24,7 @@ const App = () => {
           <SpringModalMenu />
           <Shell>
             <Dex />
-            {/* <Overlay />
+            {/*Future use- backend DB and user auth
         <Route exact path="/trainercard" component={trainerCard} />
         <Route exact path="/" component={Dex} />
         <Route exact path="/teambuilder" component={teamBuilder} />
