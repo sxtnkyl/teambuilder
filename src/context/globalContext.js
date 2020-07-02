@@ -7,44 +7,44 @@ const gens = [
     gen: 1,
     limit: 151,
     offset: 0,
-    pokes: []
+    pokes: [],
   },
   {
     gen: 2,
     limit: 100,
     offset: 151,
-    pokes: []
+    pokes: [],
   },
   {
     gen: 3,
     limit: 135,
     offset: 251,
-    pokes: []
+    pokes: [],
   },
   {
     gen: 4,
     limit: 108,
     offset: 386,
-    pokes: []
+    pokes: [],
   },
   {
     gen: 5,
     limit: 155,
     offset: 494,
-    pokes: []
+    pokes: [],
   },
   {
     gen: 6,
     limit: 72,
     offset: 649,
-    pokes: []
+    pokes: [],
   },
   {
     gen: 7,
     limit: 86,
     offset: 721,
-    pokes: []
-  }
+    pokes: [],
+  },
 ];
 
 export const DexState = {
@@ -56,7 +56,7 @@ export const DexState = {
   //currently selected gen to display in dex component
   currentDexGen: 1,
   globalIndex: 0,
-  loading: false
+  loading: false,
 };
 
 const DexContext = createContext();

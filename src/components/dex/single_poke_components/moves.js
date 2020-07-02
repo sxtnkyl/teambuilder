@@ -43,11 +43,9 @@ const Moves = () => {
 
   //global state has been updated from array of objects to object of game objects
   let movesAlreadySorted = !Array.isArray(nameUrlObj.moves);
-  // movesAlreadySorted && console.log(nameUrlObj);
-  // movesAlreadySorted && console.log(urlObj);
 
   useEffect(() => {
-    //turn initial arrray of moves into game objects
+    //turn initial arrray of moves into "game-name": {}
     if (!movesAlreadySorted) {
       let moves = nameUrlObj.moves;
       //unnecessary sorting, but good for practice!
@@ -75,7 +73,7 @@ const Moves = () => {
       }
       const sortedByGame = makeGameVersionMovesets(moves);
 
-      //sorts a single game object by key 'move_learn_method'
+      //sorts a single game object 'game-name':{learn_method: []}
       function sortedByLearnMethod(obj) {
         const sortedByLearnMethod = { levelup: [], machine: [], egg: [] };
         Object.entries(obj).forEach(([move, data]) => {
@@ -103,13 +101,13 @@ const Moves = () => {
       };
       const newSortedByGame = gamesSortedByLearnMethod(sortedByGame);
 
-      //replace global state nameUrlObj.moves
+      //update global state nameUrlObj.moves
       dispatch({
         type: "updateSingleMoveset",
         updatedMoveset: newSortedByGame,
       });
     }
-  }, []);
+  }, [movesAlreadySorted, nameUrlObj.moves, dispatch]);
 
   const games = [
     "crystal",
@@ -134,7 +132,7 @@ const Moves = () => {
 
   const [activeGen, setActiveGen] = useState("ultra-sun-ultra-moon");
 
-  const handleClick = (label) => (event) => {
+  const handleGenClick = (label) => (event) => {
     let newGen = label;
     setActiveGen(newGen);
   };
@@ -147,36 +145,18 @@ const Moves = () => {
           color="primary"
           variant={g !== activeGen ? "outlined" : "default"}
           clickable
-          onClick={handleClick(g)}
+          onClick={handleGenClick(g)}
           label={g}
           disabled={!currentSinglePoke.nameUrlObj.moves.hasOwnProperty(g)}
         />
       </Grid>
     ));
 
-  //simple expansion panel for levelup, tm, and egg moves
-  //each panel has a sorted table, row for each move in panel
+  /////////Due to api structure, too may calls to get all moves- made own json for simple lookup
 
-  //makeSomething creates array to pass into enhanced table,
-
-  /////////Due to api structure, move data must be fetched for each move (TOO MANY FETCHES!) skip this for now
-  //need to structure for row making, pass into createData in sortedTable component
-  //Make a function (makeMachineMoves) that creates an array of objects-
-  //an object for each move with keys of name,type,category,power,acc,prio,pp,descrip
-  //then pass into <EnhancedTable />
-
-  const makeMachineMoves = [
-    {
-      name: "movename",
-      type: "fire",
-      category: "physical",
-      power: 80,
-      acc: 100,
-      prio: 0,
-      pp: 10,
-      descrip: "flavor text entry",
-    },
-  ];
+  //currentMovset is {learnMehtod: [{id(movename), level_learned_at, move_learn_method:{name, url(learnmethod)}, url(move), version_group:{name} }...]
+  //pass to <EnhancedTable />
+  let currentMoveset = nameUrlObj.moves[activeGen];
 
   return (
     <>
@@ -190,54 +170,59 @@ const Moves = () => {
       >
         {gameButtons}
       </Grid>
+      {currentMoveset ? (
+        <>
+          <Grid item xs={12} className={classes.gridcard}>
+            <ExpansionPanel elevation={0}>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="levelup-moves"
+                id="levelup-moves"
+              >
+                <Typography variant="h4">Level-Up Moves</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <EnhancedTable
+                  id="Level-Up Moves"
+                  moveset={currentMoveset.levelup}
+                />
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Grid>
 
-      <Grid item xs={12} className={classes.gridcard}>
-        <ExpansionPanel elevation={0}>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="levelup-moves"
-            id="levelup-moves"
-          >
-            <Typography variant="h4">Level-Up Moves</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <EnhancedTable
-              id="Level-Up Moves"
-              makeMovesObj={makeMachineMoves}
-            />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </Grid>
+          <Grid item xs={12} className={classes.gridcard}>
+            <ExpansionPanel elevation={0}>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="machine-moves"
+                id="machine-moves"
+              >
+                <Typography variant="h4">TM Moves</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <EnhancedTable id="TM Moves" moveset={currentMoveset.machine} />
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Grid>
 
-      <Grid item xs={12} className={classes.gridcard}>
-        <ExpansionPanel elevation={0}>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="machine-moves"
-            id="machine-moves"
-          >
-            <Typography variant="h4">TM Moves</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <EnhancedTable id="TM Moves" />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </Grid>
-
-      <Grid item xs={12} className={classes.gridcard}>
-        <ExpansionPanel elevation={0}>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="egg-moves"
-            id="egg-moves"
-          >
-            <Typography variant="h4">Egg Moves</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <EnhancedTable id="Egg Moves" />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </Grid>
+          <Grid item xs={12} className={classes.gridcard}>
+            <ExpansionPanel elevation={0}>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="egg-moves"
+                id="egg-moves"
+              >
+                <Typography variant="h4">Egg Moves</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <EnhancedTable id="Egg Moves" moveset={currentMoveset.egg} />
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Grid>
+        </>
+      ) : (
+        "loading..."
+      )}
     </>
   );
 };

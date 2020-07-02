@@ -161,22 +161,24 @@ const theme = createMuiTheme({
     },
     MuiTableRow: {
       root: {
+        "& .MuiTableCell-root": {
+          fontWeight: "600",
+        },
         "&$hover:hover": {
-          backgroundColor: defaultTheme.palette.secondary.wrappers.main,
+          background: `linear-gradient(135deg, white 0%, white 15%, transparent 15%)`,
         },
-        "&$hover:hover .MuiTableCell-root": {
-          fontWeight: "bold",
-          fontSize: "1rem",
-        },
-        "&$hover:hover th": {
-          background: `linear-gradient(135deg, white 0%, white 75%, transparent 75%)`,
-          paddingTop: defaultTheme.spacing(1),
-          paddingBottom: defaultTheme.spacing(1),
-        },
+        // "&$hover:hover th": {
+        //   background: `linear-gradient(135deg, white 0%, white 75%, transparent 75%)`,
+        // },
       },
     },
     MuiTabs: {
-      root: {},
+      root: {
+        color: defaultTheme.palette.primary.light,
+        "& .MuiTab-textColorInherit.Mui-selected": {
+          color: defaultTheme.palette.primary.dark,
+        },
+      },
       indicator: {
         background: defaultTheme.palette.primary.dark,
       },
@@ -212,6 +214,7 @@ const theme = createMuiTheme({
         height: `10px !important`,
         border: `2px solid ${defaultTheme.palette.primary.main}`,
         borderRadius: defaultTheme.spacing(2),
+        cursor: "pointer",
       },
     },
   },

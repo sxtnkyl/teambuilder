@@ -27,10 +27,16 @@ const BotNav = ({ handleGenChange, moveSlide, singlePokeOpen }) => {
 
   const genNavButtons = (
     <Grid item className={classes.genNavs}>
-      <IconButton onClick={() => handleGenChange(-1)}>
+      <IconButton
+        onClick={() => handleGenChange(-1)}
+        disabled={singlePokeOpen ? true : false}
+      >
         <ArrowDownward />
       </IconButton>
-      <IconButton onClick={() => handleGenChange(1)}>
+      <IconButton
+        onClick={() => handleGenChange(1)}
+        disabled={singlePokeOpen ? true : false}
+      >
         <ArrowUpward />
       </IconButton>
     </Grid>

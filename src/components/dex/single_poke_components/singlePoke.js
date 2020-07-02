@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import BasicInfo from "./basicinfo";
 import Moves from "./moves";
 import Stats from "./stats";
 
+import useDebounceEffect from "../../../utility/useDebounceEffect";
 import makeSinglePoke from "../../../utility/makeSinglePoke";
 import { useDexContext } from "../../../context/globalContext";
 
 //Determines which component to render based on activeTab value
+//makes sure context has data, if not fetches data
 
 const SinglePoke = ({ activeTab }) => {
   const [{ genList, currentDexGen, globalIndex }, dispatch] = useDexContext();
@@ -17,7 +19,7 @@ const SinglePoke = ({ activeTab }) => {
     currentSinglePoke.urlObj.flavor_text_entries.length !== 0 &&
     currentSinglePoke.nameUrlObj.types.length !== 0;
 
-  useEffect(() => {
+  function gatherData() {
     if (!currentPokeDataIsLoaded) {
       makeSinglePoke(currentSinglePoke).then((data) => {
         dispatch({
@@ -30,7 +32,9 @@ const SinglePoke = ({ activeTab }) => {
         });
       });
     }
-  }, [currentSinglePoke, currentPokeDataIsLoaded, dispatch]);
+  }
+
+  useDebounceEffect(() => gatherData(), 500, [currentSinglePoke]);
 
   const tab =
     activeTab === 0 ? (

@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     background: "transparent",
     border: `8px solid ${theme.palette.secondary.wrappers.main}`,
     boxShadow: `inset 2px 2px 3px ${theme.palette.primary.light}, inset -2px -2px 3px ${theme.palette.primary.light}`,
-    backdropFilter: "blur(5px)",
+    backdropFilter: "blur(10px)",
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
   },
   innerCardHeader: {
@@ -41,9 +42,6 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "italic",
     textTransform: "uppercase",
     background: `linear-gradient(135deg, transparent 20%, white 20%, white 80%, transparent 80%)`,
-    width: "100%",
-    marginTop: "8px",
-    marginBottom: "16px",
   },
 }));
 
@@ -205,12 +203,10 @@ const Stats = () => {
   };
   filterTwoArrays();
 
-  console.log(matchupsArray);
-
   const matchupsCard = (
     <Grid
       item
-      xs={10}
+      xs={11}
       container
       direction="column"
       justify="center"
@@ -240,10 +236,10 @@ const Stats = () => {
       <Grid
         item
         container
-        justify="space-around"
+        justify="center"
         alignItems="center"
         className={classes.cardInner}
-        style={{ paddingBottom: "16px" }}
+        style={{ alignContent: "space-evenly" }}
       >
         {matchupsArray.map(
           (m) =>
@@ -254,8 +250,8 @@ const Stats = () => {
                 xs={10}
                 container
                 direction="column"
-                justify="center"
-                style={{ marginTop: "16px" }}
+                justify="space-evenly"
+                style={{ height: "120px" }}
               >
                 <Typography variant="h5" className={classes.innerCardHeader}>
                   {m.id}
@@ -276,6 +272,7 @@ const Stats = () => {
                       style={{
                         backgroundColor: typeConverter(t).hex,
                         marginLeft: "8px",
+                        marginRight: "8px",
                       }}
                     />
                   ))}
@@ -290,7 +287,7 @@ const Stats = () => {
   const statsTextCard = allStats.length && (
     <Grid
       item
-      xs={10}
+      xs={11}
       container
       direction="column"
       justify="center"

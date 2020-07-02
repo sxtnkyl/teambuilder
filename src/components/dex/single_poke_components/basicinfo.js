@@ -11,6 +11,7 @@ import {
 } from "../../../theme/themIndex";
 import typeConverter from "../../../utility/typeConverter";
 import { useDexContext } from "../../../context/globalContext";
+import abilityJSON from "../../../utility/abilityAndMoves.json";
 
 const useStyles = makeStyles((theme) => ({
   spriteCard: {
@@ -51,7 +52,9 @@ const useStyles = makeStyles((theme) => ({
     background: "transparent",
     border: `8px solid ${theme.palette.secondary.wrappers.main}`,
     boxShadow: `inset 2px 2px 3px ${theme.palette.primary.light}, inset -2px -2px 3px ${theme.palette.primary.light}`,
-    backdropFilter: "blur(5px)",
+    backdropFilter: "blur(10px)",
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   innerCardHeader: {
     textAlign: "center",
@@ -95,6 +98,12 @@ const BasicInfo = () => {
     setTexts(allFlavorTexts);
   }, [urlObj.flavor_text_entries]);
 
+  const findGenera = () => {
+    let index = urlObj.genera.findIndex((i) => i.language.name === "en");
+    return urlObj.genera[index].genus;
+  };
+  const generaText = findGenera();
+
   function heightAdjuster(num) {
     let str = num.toString();
     if (str.length === 1) {
@@ -112,7 +121,7 @@ const BasicInfo = () => {
     let ab = {};
     ab.id = a.ability.name;
     ab.hidden = a.is_hidden;
-    ab.url = a.ability.url;
+    ab.data = abilityJSON.abilities.list[a.ability.name].data;
     allAbilities.push(ab);
   });
 
@@ -131,7 +140,7 @@ const BasicInfo = () => {
   const abilitiesCard = allAbilities.length && (
     <Grid
       item
-      xs={10}
+      xs={11}
       container
       direction="column"
       justify="center"
@@ -161,10 +170,10 @@ const BasicInfo = () => {
       <Grid
         item
         container
-        justify="space-around"
+        justify="center"
         alignItems="center"
         className={classes.cardInner}
-        style={{ paddingBottom: "16px" }}
+        style={{ alignContent: "space-evenly" }}
       >
         {allAbilities.map((a) => (
           <Grid
@@ -174,7 +183,6 @@ const BasicInfo = () => {
             container
             direction="column"
             justify="center"
-            style={{ marginTop: "16px" }}
           >
             <Typography variant="h5" className={classes.innerCardHeader}>
               {a.id}
@@ -188,9 +196,8 @@ const BasicInfo = () => {
               )}
             </Typography>
 
-            <Typography variant="body1">
-              - some fil text some fil text some fil text some fil text some fil
-              text some fil text some fil text some fil text some fil text
+            <Typography variant="body1" style={{ textTransform: "none" }}>
+              {a.data}
             </Typography>
           </Grid>
         ))}
@@ -201,12 +208,13 @@ const BasicInfo = () => {
   const flavorTextCard = processedTexts && (
     <Grid
       item
-      xs={10}
+      xs={11}
       container
       direction="column"
       justify="center"
       alignItems="center"
       className={classes.card}
+      style={{ minHeight: "80%" }}
     >
       <Grid
         item
@@ -223,7 +231,7 @@ const BasicInfo = () => {
             paddingTop: "8px",
           }}
         >
-          <Typography variant="h4">Pokedex Entries</Typography>
+          <Typography variant="h4">Text Entries</Typography>
         </Grid>
       </Grid>
 
@@ -231,7 +239,6 @@ const BasicInfo = () => {
         item
         container
         direction="column"
-        justify="space-between"
         alignItems="center"
         className={classes.cardInner}
       >
@@ -240,7 +247,7 @@ const BasicInfo = () => {
           xs={10}
           container
           direction="column"
-          style={{ marginTop: "16px", marginBottom: "16px" }}
+          style={{ marginTop: "16px", marginBottom: "16px", flex: 1 }}
         >
           <Grid item>
             <Typography variant="h5" className={classes.innerCardHeader}>
@@ -248,8 +255,16 @@ const BasicInfo = () => {
             </Typography>
           </Grid>
 
-          <Grid item>
-            <Typography variant="body1">
+          <Grid
+            item
+            style={{
+              display: "flex",
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="body1" style={{ textTransform: "none" }}>
               {processedTexts[textIndex].flavor_text}
             </Typography>
           </Grid>
@@ -289,7 +304,7 @@ const BasicInfo = () => {
     <>
       <Grid
         item
-        xs={10}
+        xs={11}
         container
         justify="space-around"
         className={classes.spriteCard}
@@ -324,7 +339,7 @@ const BasicInfo = () => {
             alignItems="center"
             style={{ flex: "1" }}
           >
-            <Typography variant="h6">{urlObj.genera[2].genus}</Typography>
+            <Typography variant="h6">{generaText}</Typography>
             <Typography variant="h6">Height: {meterHeight}</Typography>
             <Typography variant="h6">Weight: {nameUrlObj.weight} kg</Typography>
             <Typography variant="h6">

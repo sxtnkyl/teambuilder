@@ -31,7 +31,10 @@ const useStyles = makeStyles((theme) => ({
   button: {
     border: "none",
     width: "100%",
-    background: "white",
+    background: (props) =>
+      props.distanceFactor === 1
+        ? theme.palette.secondary.wrappers.main
+        : "white",
     clipPath:
       "polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)",
     "&:hover": {
@@ -46,18 +49,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //content = sprite
-const ListSlider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
+const ListSlider = ({
+  dexNo,
+  name,
+  offsetRadius,
+  index,
+  moveSlide,
+  toggleSinglePokeOpen,
+  delta,
+}) => {
   //delta for future gesture use
-  const classes = useStyles();
 
   const offsetFromMiddle = index - offsetRadius;
   // const totalPresentables = 2 * offsetRadius + 1;
   //for opacity- increase denominator to increase opacity (ex. ofsetRadius+1)
   const distanceFactor = 1 - Math.abs(offsetFromMiddle / offsetRadius);
-
-  const handleButtonClick = () => {
-    moveSlide(offsetFromMiddle);
-  };
+  const props = { distanceFactor };
+  const classes = useStyles(props);
 
   //value for spring- dist from center  //////need to formulate closer offsets that works for offsetRadius of both 1(1) and 2(25)
   const translateYoffset =
@@ -92,6 +100,12 @@ const ListSlider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
     translateY -= translateYoffset + 15;
   }
 
+  const handleButtonClick = () => {
+    return offsetFromMiddle === 0
+      ? toggleSinglePokeOpen()
+      : moveSlide(offsetFromMiddle);
+  };
+
   const hasIndicator = offsetFromMiddle === 0 ? classes.indicator : classes.tag;
 
   //if lastPoke = dexNo & offsetFromMiddle = offsetRadius
@@ -117,10 +131,7 @@ const ListSlider = ({ dexNo, name, offsetRadius, index, moveSlide, delta }) => {
           <Button
             variant="outlined"
             className={classes.button}
-            df={distanceFactor}
             onClick={handleButtonClick}
-            disabled={!(distanceFactor > 0)}
-            style={{ background: distanceFactor === 1 && "red" }}
           >
             {/* {distanceFactor === 1 ? (
               <Details className={classes.leftPointer} />

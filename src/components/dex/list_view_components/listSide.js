@@ -19,7 +19,14 @@ const useStyles = makeStyles((theme) => ({
 const ListSide = (props) => {
   const classes = useStyles();
 
-  const { slides, index, offsetRadius, moveSlide, modBySlidesLength } = props;
+  const {
+    slides,
+    index,
+    offsetRadius,
+    moveSlide,
+    modBySlidesLength,
+    toggleSinglePokeOpen,
+  } = props;
 
   //confirm data types
   ListSide.propTypes = {
@@ -68,6 +75,7 @@ const ListSide = (props) => {
           moveSlide={moveSlide}
           offsetRadius={clampOffsetRadius(offsetRadius)}
           index={index}
+          toggleSinglePokeOpen={toggleSinglePokeOpen}
         />
       ))}
     </Grid>

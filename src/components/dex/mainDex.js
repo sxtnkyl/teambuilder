@@ -24,15 +24,15 @@ const useStyles = makeStyles((theme) => ({
     flex: "1",
   },
   singlePokeView: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-    paddingRight: theme.spacing(4),
+    width: "95%",
+    padding: theme.spacing(2),
     background: "",
     flex: "1",
-    overflow: "auto",
+    overflowY: "scroll",
     "&::-webkit-scrollbar": {
       width: theme.spacing(1),
       opacity: "0.5",
+      cursor: "pointer",
     },
     "&::-webkit-scrollbar-track": {
       width: theme.spacing(2),
@@ -66,11 +66,10 @@ const Dex = () => {
     if (globalIndex !== state.index) {
       dispatch({
         type: "updateGlobalIndex",
-        // newPokemon: (selectedGen.pokes = pokeArr)
         newIndex: state.index,
       });
     }
-  }, [currentDexGen, state.index]);
+  }, [currentDexGen, genList, dispatch, globalIndex, state.index]);
 
   const activePoke =
     typeof slides[state.index] !== "undefined"
@@ -80,17 +79,14 @@ const Dex = () => {
   const moveIndexBySlider = (i) => {
     setState({
       ...state,
-      // goToSlide: null,
       index: i,
     });
   };
 
-  //////need to set limit on renders//////
   //pass 1 or -1 as direction
   const moveSlide = (direction) => {
     setState({
       ...state,
-      // goToSlide: null,
       index: modBySlidesLength(state.index + direction),
     });
   };
@@ -151,10 +147,8 @@ const Dex = () => {
         handleTabs={handleTabs}
         tabs={state.activeTab}
       />
-      {/* add condition for gen not yet loaded to prevent crash on singlePokeOpen && gen change */}
       {state.singlePokeOpen ? (
         <Grid
-          xs={11}
           item
           container
           spacing={2}
@@ -187,6 +181,7 @@ const Dex = () => {
             moveSlide={moveSlide}
             modBySlidesLength={modBySlidesLength}
             moveIndexBySlider={moveIndexBySlider}
+            toggleSinglePokeOpen={toggleSinglePokeOpen}
           />
           <IndexSlider
             index={state.index}

@@ -101,7 +101,7 @@ const Slider = ({ img, offsetRadius, index, delta, toggleSinglePokeOpen }) => {
             src={img}
             alt="poke-sprite"
             onError={imgError}
-            onClick={offsetFromMiddle === 0 && toggleSinglePokeOpen}
+            onClick={offsetFromMiddle === 0 ? toggleSinglePokeOpen : null}
           />
         </div>
       )}
