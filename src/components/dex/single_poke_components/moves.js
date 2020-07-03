@@ -8,6 +8,7 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   ExpandMoreIcon,
+  Skeleton,
 } from "../../../theme/themIndex";
 import { useDexContext } from "../../../context/globalContext";
 import EnhancedTable from "./sortedTable";
@@ -185,6 +186,7 @@ const Moves = () => {
                 <EnhancedTable
                   id="Level-Up Moves"
                   moveset={currentMoveset.levelup}
+                  levelup={true}
                 />
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -200,7 +202,11 @@ const Moves = () => {
                 <Typography variant="h4">TM Moves</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <EnhancedTable id="TM Moves" moveset={currentMoveset.machine} />
+                <EnhancedTable
+                  id="TM Moves"
+                  moveset={currentMoveset.machine}
+                  levelup={false}
+                />
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </Grid>
@@ -215,13 +221,31 @@ const Moves = () => {
                 <Typography variant="h4">Egg Moves</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <EnhancedTable id="Egg Moves" moveset={currentMoveset.egg} />
+                <EnhancedTable
+                  id="Egg Moves"
+                  moveset={currentMoveset.egg}
+                  levelup={false}
+                />
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </Grid>
         </>
       ) : (
-        "loading..."
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            background: "",
+            overflow: "hidden",
+          }}
+        >
+          <Skeleton
+            animation="wave"
+            variant="rect"
+            height={"100%"}
+            width={"100%"}
+          />
+        </div>
       )}
     </>
   );

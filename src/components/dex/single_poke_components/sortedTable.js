@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
+import {
+  makeStyles,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Collapse,
+  Typography,
+} from "../../../theme/themIndex";
 
 import moveJSON from "../../../utility/abilityAndMoves.json";
 
@@ -39,26 +43,6 @@ const useStyles = makeStyles((theme) => ({
 //will receive arr of objects(single moves), made by makeMoves in moves component
 //headers = [name,type,category,power,acc,prio,pp,descrip]
 //obj { name, type, category, power, acc, prio, pp, effect_chance, descrip }
-//const rows = [];
-// makeMovesObj.forEach(move => {
-//   rows.push(createData(move))
-// })
-
-const headCells = [
-  {
-    id: "name",
-    numeric: false,
-    label: "Name",
-  },
-  { id: "type", numeric: false, label: "Type" },
-  { id: "category", numeric: false, label: "Category" },
-  { id: "power", numeric: true, label: "Power" },
-  { id: "acc", numeric: true, label: "Accuracy" },
-  { id: "prio", numeric: true, label: "Priority" },
-  { id: "pp", numeric: true, label: "PP" },
-  { id: "effectchance", numeric: true, label: "Effect Chance" },
-  { id: "descrip", numeric: false, label: "Description" },
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -87,15 +71,38 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-  const { classes, order, orderBy, onRequestSort } = props;
+  const { classes, order, orderBy, onRequestSort, levelup } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
+  const headCells = [
+    {
+      id: "name",
+      numeric: false,
+      label: "Name",
+    },
+    { id: "type", numeric: false, label: "Type" },
+    { id: "category", numeric: false, label: "Category" },
+    { id: "power", numeric: true, label: "Power" },
+    { id: "acc", numeric: true, label: "Accuracy" },
+    { id: "prio", numeric: true, label: "Priority" },
+    { id: "pp", numeric: true, label: "PP" },
+    { id: "effectchance", numeric: true, label: "Effect Chance" },
+    { id: "descrip", numeric: false, label: "Description" },
+  ];
+
+  const withLevelup = [...headCells];
+  withLevelup.splice(1, 0, {
+    id: "lvl",
+    numeric: true,
+    label: "Learn at",
+  });
+
   return (
     <TableHead>
       <TableRow>
-        {headCells.map((headCell) => (
+        {(levelup ? withLevelup : headCells).map((headCell) => (
           <TableCell
             key={headCell.id}
             align="center"
@@ -121,11 +128,79 @@ function EnhancedTableHead(props) {
   );
 }
 
+function EnhancedTableRow(props) {
+  const [open, setOpen] = useState(false);
+  const { index, levelup } = props;
+  const {
+    name,
+    type,
+    category,
+    power,
+    acc,
+    prio,
+    pp,
+    effect_chance,
+    descrip,
+  } = props.row;
+  return (
+    <>
+      <TableRow hover={true} tabIndex={-1} key={index}>
+        <TableCell
+          component="th"
+          id={index}
+          scope="row"
+          padding="none"
+          style={{ paddingLeft: "8px" }}
+        >
+          {name.toUpperCase()}
+        </TableCell>
+        {levelup && <TableCell align="right">{props.row.lvl}</TableCell>}
+        <TableCell align="right">{type}</TableCell>
+        <TableCell align="right">{category}</TableCell>
+        <TableCell align="right">{power === null ? "-" : power}</TableCell>
+        <TableCell align="right">{acc === null ? "-" : acc}</TableCell>
+        <TableCell align="right">{prio}</TableCell>
+        <TableCell align="right">{pp}</TableCell>
+        <TableCell align="right">
+          {effect_chance === null ? "-" : effect_chance}
+        </TableCell>
+        <TableCell
+          align="right"
+          onClick={() => setOpen(!open)}
+          style={{ cursor: "pointer" }}
+        >
+          ...
+        </TableCell>
+      </TableRow>
+
+      <TableRow key={name}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Typography
+              variant="body2"
+              gutterBottom
+              component="div"
+              style={{
+                fontWeight: "600",
+                paddingTop: "8px",
+                paddingBottom: "8px",
+              }}
+            >
+              {descrip}
+            </Typography>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </>
+  );
+}
 const EnhancedTable = (props) => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("type");
-  const { moveset } = props;
+  const { moveset, levelup } = props;
+  //ascend or descend
+  const [order, setOrder] = useState("asc");
+  //by which column
+  const [orderBy, setOrderBy] = useState(levelup ? "lvl" : "type");
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -135,7 +210,9 @@ const EnhancedTable = (props) => {
 
   let rows = [];
   moveset.forEach((move) => {
-    rows.push(moveJSON.moves.list[move.id].data);
+    let moveData = moveJSON.moves.list[move.id].data;
+    if (levelup === true) moveData.lvl = move.level_learned_at;
+    rows.push(moveData);
   });
 
   return (
@@ -152,49 +229,18 @@ const EnhancedTable = (props) => {
             order={order}
             orderBy={orderBy}
             onRequestSort={handleRequestSort}
+            levelup={levelup}
           />
           <TableBody>
             {stableSort(rows, getComparator(order, orderBy)).map(
               (row, index) => {
-                const labelId = `enhanced-table-${index}`;
-                const {
-                  name,
-                  type,
-                  category,
-                  power,
-                  acc,
-                  prio,
-                  pp,
-                  effect_chance,
-                  descrip,
-                } = row;
-
                 return (
-                  <TableRow hover={true} tabIndex={-1} key={row.name}>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                      style={{ paddingLeft: "8px" }}
-                    >
-                      {name}
-                    </TableCell>
-                    <TableCell align="right">{type}</TableCell>
-                    <TableCell align="right">{category}</TableCell>
-                    <TableCell align="right">
-                      {power === null ? "-" : power}
-                    </TableCell>
-                    <TableCell align="right">
-                      {acc === null ? "-" : acc}
-                    </TableCell>
-                    <TableCell align="right">{prio}</TableCell>
-                    <TableCell align="right">{pp}</TableCell>
-                    <TableCell align="right">
-                      {effect_chance === null ? "-" : effect_chance}
-                    </TableCell>
-                    <TableCell align="right">test</TableCell>
-                  </TableRow>
+                  <EnhancedTableRow
+                    key={index}
+                    row={row}
+                    index={index}
+                    levelup={levelup}
+                  />
                 );
               }
             )}

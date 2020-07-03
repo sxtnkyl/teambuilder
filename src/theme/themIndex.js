@@ -37,6 +37,14 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Collapse,
 } from "@material-ui/core";
 
 import {
@@ -54,6 +62,8 @@ import DoneIcon from "@material-ui/icons/Done";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { withStyles } from "@material-ui/core/styles";
+
+import Skeleton from "@material-ui/lab/Skeleton";
 
 export {
   makeStyles,
@@ -105,4 +115,13 @@ export {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   ExpandMoreIcon,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Collapse,
+  Skeleton,
 };

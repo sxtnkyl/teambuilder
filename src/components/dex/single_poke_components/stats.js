@@ -371,6 +371,13 @@ const Stats = () => {
             }}
           />
           <Typography variant="subtitle2">
+            <div
+              style={{
+                height: "10px",
+                background:
+                  "linear-gradient(90deg, #f44336 0%, #f44336 25%, #ff9800 25%, #ff9800 50%, #ffeb3b 50%, #ffeb3b 75%, #4caf50 75%)",
+              }}
+            />
             {"*normalized to <20, <40, <60, >60 percentile of each stat"}
           </Typography>
         </Grid>

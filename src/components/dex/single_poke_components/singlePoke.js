@@ -4,6 +4,8 @@ import BasicInfo from "./basicinfo";
 import Moves from "./moves";
 import Stats from "./stats";
 
+import { Skeleton } from "../../../theme/themIndex";
+
 import useDebounceEffect from "../../../utility/useDebounceEffect";
 import makeSinglePoke from "../../../utility/makeSinglePoke";
 import { useDexContext } from "../../../context/globalContext";
@@ -47,6 +49,24 @@ const SinglePoke = ({ activeTab }) => {
       "<Breeding />"
     );
 
-  return currentPokeDataIsLoaded ? tab : `Loading...`;
+  return currentPokeDataIsLoaded ? (
+    tab
+  ) : (
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        background: "",
+        overflow: "hidden",
+      }}
+    >
+      <Skeleton
+        animation="wave"
+        variant="rect"
+        height={"100%"}
+        width={"100%"}
+      />
+    </div>
+  );
 };
 export default SinglePoke;

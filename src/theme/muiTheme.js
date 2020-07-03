@@ -63,6 +63,10 @@ const theme = createMuiTheme({
       textAlign: "center",
       fontWeight: "700",
     },
+    subtitle1: {
+      fontWeight: "500",
+      color: defaultTheme.palette.primary.dark,
+    },
     subtitle2: {
       color: defaultTheme.palette.primary.light,
     },
@@ -165,7 +169,7 @@ const theme = createMuiTheme({
           fontWeight: "600",
         },
         "&$hover:hover": {
-          background: `linear-gradient(135deg, white 0%, white 15%, transparent 15%)`,
+          background: `linear-gradient(135deg, white 0%, white 17%, transparent 17%)`,
         },
         // "&$hover:hover th": {
         //   background: `linear-gradient(135deg, white 0%, white 75%, transparent 75%)`,
@@ -215,6 +219,13 @@ const theme = createMuiTheme({
         border: `2px solid ${defaultTheme.palette.primary.main}`,
         borderRadius: defaultTheme.spacing(2),
         cursor: "pointer",
+      },
+    },
+    MuiSkeleton: {
+      wave: {
+        animation: "$wave 1s linear -0.5s infinite alternate",
+        background:
+          "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
       },
     },
   },
