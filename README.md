@@ -18,8 +18,9 @@ Future features:
 
 Built with:
 
-#### `Reactjs` `Material-UI` `React Spring`
+#### `Reactjs` `Material-UI` `React Spring` `Axios`
 
 Applied Concepts:
 
-###### `Reactjs` `Global Context/Redux Structure` `Axios fetching` `Proptype verification` `Debouncing` `Data Flow/Fetching Structure`
+###### `Global Context/Redux Structure` `HTTP Request Methods` `Advanced Animations`
+###### `Proptype Verification` `Debouncing` `Data Flow/Fetching Structure`
