@@ -1,4 +1,4 @@
-## Welcome to Team Builder!
+## Welcome to Pokedex2020!
 Come and check it out [HERE](https://sxtnkyl.github.io/teambuilder/)!
 
 This is a desktop app to browse through Pokemon data with an actual Pokedex! This 'Dex uses efficient API fetches to dynamically load, display, and store a Poke's data.
